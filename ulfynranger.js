@@ -17,48 +17,67 @@ let divcontainer = document.getElementById("container")
 let emptySlot = -1
 let money = 0
 let lastmoney = -1
+let playerNumberStatsShown=0
+let playerNumberStatsChanged=-1
+let itemNumberStatsChanged=-1
 
 function startGame() {
-    myGamePiece = new component(30, 30, "red", 160, 270);
+    myGamePiece = new component(30, 30, "#ff0000", 160, 270);
     myGamePiece.gravity = 0.5;
     myGamePiece.type="player"
+    myGamePiece.colour="#ff0000"
     myGamePiece.name="Raphael"
     myGamePiece.maxhp=100
     myGamePiece.hp=100
     myGamePiece.atkCD=0
+    myGamePiece.atkRateMult=1
+    myGamePiece.damageMult=1
+    myGamePiece.rangeMult=1
     myGamePiece.item=items[0]
-    myGamePiece2 = new component(30, 30, "blue", 120, 270);
+    myGamePiece2 = new component(30, 30, "#0000ff", 120, 270);
     myGamePiece2.gravity = 0.5;
     myGamePiece2.type="player"
+    myGamePiece2.colour="#0000ff"
     myGamePiece2.name="Donatello"
     myGamePiece2.hp=100
     myGamePiece2.maxhp=100
     myGamePiece2.atkCD=0
+    myGamePiece2.atkRateMult=1
+    myGamePiece2.damageMult=1
+    myGamePiece2.rangeMult=1
     myGamePiece2.item=items[0]
-    myGamePiece3 = new component(30, 30, "green", 80, 270);
+    myGamePiece3 = new component(30, 30, "#00ff00", 80, 270);
     myGamePiece3.gravity = 0.5;
     myGamePiece3.type="player"
+    myGamePiece3.colour="#00ff00"
     myGamePiece3.name="Michaelangelo"
     myGamePiece3.hp=100
     myGamePiece3.maxhp=100
     myGamePiece3.atkCD=0
+    myGamePiece3.atkRateMult=1
+    myGamePiece3.damageMult=1
+    myGamePiece3.rangeMult=1
     myGamePiece3.item=items[0]
-    myGamePiece4 = new component(30, 30, "yellow", 40, 270);
+    myGamePiece4 = new component(30, 30, "#ffff00", 40, 270);
     myGamePiece4.gravity = 0.5;
     myGamePiece4.type="player"
+    myGamePiece4.colour="#ffff00"
     myGamePiece4.name="Master Splinter"
     myGamePiece4.hp=100
     myGamePiece4.maxhp=100
     myGamePiece4.atkCD=0
+    myGamePiece4.atkRateMult=1
+    myGamePiece4.damageMult=1
+    myGamePiece4.rangeMult=1
     myGamePiece4.item=items[0]
     myGameArea.start();
 }
 
-items[0]={name:"None",damageMin:10,damageMax:10,range:11,atkRate:100,maxSummons:0,lifeSteal:0,defence:0,type:"None", colour:'#b4b4b4', worth:0}
-items[1]={name:"Test Sword",damageMin:2,damageMax:4,range:40,atkRate:50,maxSummons:0,lifeSteal:0,defence:0,type:"Sword", colour:'#a83232', worth:10}
-items[2]={name:"Test Shield",damageMin:1,damageMax:1,range:20,atkRate:100,maxSummons:0,lifeSteal:0,defence:1,type:"Shield", colour:'#75a832', worth:10}
-items[3]={name:"Test Bow",damageMin:1,damageMax:3,range:160,atkRate:66,maxSummons:0,lifeSteal:0,defence:0,type:"Bow", colour:'#634f1c', worth:10}
-items[4]={name:"Test Staff",damageMin:0,damageMax:1,range:200,atkRate:200,maxSummons:1,lifeSteal:0,defence:0,type:"Staff", colour:'#660033', worth:10}
+items[0]={name:"None",damageMin:1,damageMax:1,range:11,atkRate:100,lifeSteal:0,defence:0,type:"None", colour:'#b4b4b4', worth:0}
+items[1]={name:"Test Sword",damageMin:2,damageMax:4,range:40,atkRate:50,lifeSteal:0,defence:0,type:"Sword", colour:'#a83232', worth:10}
+items[2]={name:"Test Shield",damageMin:1,damageMax:1,range:20,atkRate:100,lifeSteal:0,defence:1,type:"Shield", colour:'#75a832', worth:10}
+items[3]={name:"Test Bow",damageMin:1,damageMax:3,range:160,atkRate:66,lifeSteal:0,defence:0,type:"Bow", colour:'#634f1c', worth:10}
+items[4]={name:"Test Staff",damageMin:0,damageMax:1,range:20000,atkRate:200,lifeSteal:0,defence:0,type:"Staff", colour:'#660033', worth:10}
 
 function addItem(player, itemID){
     switch(player){
@@ -108,6 +127,18 @@ divcontainer.insertBefore(moneyBox, divcontainer.firstChild)
 sellItemBox=document.createElement("div");
 sellItemBox.setAttribute("id", `sellItemBox`)
 divcontainer.insertBefore(sellItemBox, divcontainer.firstChild)
+playerStatsBox=document.createElement("div");
+playerStatsBox.setAttribute("id", `playerStatsBox`)
+divcontainer.appendChild(playerStatsBox, divcontainer.firstChild)
+playerStatsPic=document.createElement("div");
+playerStatsPic.setAttribute("id", `playerStatsPic`)
+divcontainer.appendChild(playerStatsPic, divcontainer.firstChild)
+itemStatsBox=document.createElement("div");
+itemStatsBox.setAttribute("id", `itemStatsBox`)
+divcontainer.appendChild(itemStatsBox, divcontainer.firstChild)
+itemStatsPic=document.createElement("div");
+itemStatsPic.setAttribute("id", `itemStatsPic`)
+divcontainer.appendChild(itemStatsPic, divcontainer.firstChild)
 
 for(n=0;n<buttonsToMake;n++){
     inv[n]={
@@ -155,6 +186,10 @@ for(e=0;e<inv.length;e++){
 
 
 function clickButton(num){
+
+    if(num<4){
+        playerNumberStatsShown=num;
+    }
     
     if(lastslot>-1){
     tmpObj=inv[num].storedItem
@@ -210,7 +245,59 @@ var myGameArea = {
 
 function randomDmg(min, max) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min)
-  }
+}
+
+function refreshPlayerStatsBox(){
+    if(playerNumberStatsChanged!==playerNumberStatsShown){
+    switch(playerNumberStatsShown){
+        case 0:
+            playerNumberStatsShown=myGamePiece4
+            break;
+        case 1:
+            playerNumberStatsShown=myGamePiece3
+            break;
+        case 2:
+            playerNumberStatsShown=myGamePiece2
+            break;
+        case 3:
+            playerNumberStatsShown=myGamePiece
+            break;
+        default:
+            break;
+    }
+
+    playerStatsBox.innerHTML=`
+    <br />
+    Health: ${playerNumberStatsShown.hp}/${playerNumberStatsShown.maxhp}<br/>
+    Damage: ${playerNumberStatsShown.item.damageMin*playerNumberStatsShown.damageMult} - ${playerNumberStatsShown.item.damageMax*playerNumberStatsShown.damageMult}<br/>
+    Range: ${playerNumberStatsShown.item.range*playerNumberStatsShown.rangeMult}<br/>
+    Attack Delay: ${playerNumberStatsShown.item.atkRate*playerNumberStatsShown.atkRateMult}<br/>
+    Defence: ${playerNumberStatsShown.item.defence}<br/>
+    Lifesteal: ${playerNumberStatsShown.item.lifeSteal}
+    `
+    playerStatsPic.style.background=playerNumberStatsShown.colour
+    playerNumberStatsChanged=playerNumberStatsShown
+}
+}
+
+function refreshItemStatsBox(){
+    if(lastslot!==-1&&items[inv[lastslot].storedItem].name!=="None"){
+        if(itemNumberStatsChanged!==items[inv[lastslot].storedItem]){
+    itemStatsBox.innerHTML=`
+    <br/>
+    Name: ${items[inv[lastslot].storedItem].name}<br/>
+    Damage: ${items[inv[lastslot].storedItem].damageMin} - ${items[inv[lastslot].storedItem].damageMax}<br/>
+    Range: ${items[inv[lastslot].storedItem].range}<br/>
+    Attack Delay: ${items[inv[lastslot].storedItem].atkRate}<br/>
+    Defence: ${items[inv[lastslot].storedItem].defence}<br/>
+    Lifesteal: ${items[inv[lastslot].storedItem].lifeSteal}<br/>
+    Value: £${items[inv[lastslot].storedItem].worth}
+    `
+    itemStatsPic.style.background=items[inv[lastslot].storedItem].colour
+itemNumberStatsChanged=lastslot
+        }
+    }
+}
 
 
 function component(width, height, color, x, y) {//draw new boxes
@@ -238,15 +325,15 @@ function component(width, height, color, x, y) {//draw new boxes
         }
         
         if(this.type==="enemy"){
-            ctx.fillStyle = "red";
+            ctx.fillStyle = "#ff0000";
             ctx.fillRect(this.x, this.y-15, this.size, 4);
-            ctx.fillStyle = "green";
+            ctx.fillStyle = "#007f00";
             ctx.fillRect(this.x, this.y-15, (this.hp/this.maxhp)*this.size, 4);
         }
         if(this.type==="player"){
-            ctx.fillStyle = "red";
+            ctx.fillStyle = "#ff0000";
             ctx.fillRect(this.x, this.y-15, 30, 4);
-            ctx.fillStyle = "green";
+            ctx.fillStyle = "#007f00";
             ctx.fillRect(this.x, this.y-15, (this.hp/this.maxhp)*30, 4);
         }
         
@@ -492,6 +579,7 @@ function updateGameArea() {
     myGameArea.frameNo += 1;
 
     for(j=0;j<enemy.length;j++){
+        if(enemy[j].movementType="SlowWalk"){
         move = Math.floor(Math.random() * 100);
         if(move===4 ){
             enemy[j].x=enemy[j].x+1
@@ -499,6 +587,7 @@ function updateGameArea() {
         if(move===5 || move === 17){
             enemy[j].x=enemy[j].x-1
         }
+    }
         
         enemy[j].update()
         enemy[j].newPos()
@@ -513,6 +602,8 @@ function updateGameArea() {
     myGamePiece4.newPos();
     myGamePiece4.update();
     inv[14].storedItem=0
+    refreshPlayerStatsBox()
+    refreshItemStatsBox()
     if(lastmoney!==money){
         moneyBox.innerHTML = `Money: £${money}`;
         lastmoney=money
@@ -567,6 +658,10 @@ function drag(){
         block4ToMouseY = Math.abs(myGamePiece4.y+15-pointerY)
         if(blockToMouseX<30 && blockToMouseY<30){
         document.onmousemove = function(event) {
+            myGamePiece.atkCD=myGamePiece.item.atkRate
+            if(playerNumberStatsShown!==3){
+            playerNumberStatsShown=3
+            }
             pointerX = event.pageX-15-(window.innerWidth-960)/2;
         pointerY = event.pageY-15-(window.innerHeight-540)/2;
             blockToMouseX = Math.abs(myGamePiece.x-pointerX)
@@ -589,6 +684,10 @@ function drag(){
         }//dragging p1
         if(block2ToMouseX<30 && block2ToMouseY<30){
             document.onmousemove = function(event) {
+                if(playerNumberStatsShown!==2){
+                playerNumberStatsShown=2
+                }
+                myGamePiece2.atkCD=myGamePiece2.item.atkRate
                 pointerX = event.pageX-15-(window.innerWidth-960)/2;
         pointerY = event.pageY-15-(window.innerHeight-540)/2;
                 block2ToMouseX = Math.abs(myGamePiece2.x-pointerX)
@@ -611,6 +710,10 @@ function drag(){
         }//dragging p2
         if(block3ToMouseX<30 && block3ToMouseY<30){
             document.onmousemove = function(event) {
+                if(playerNumberStatsShown!==1){
+                playerNumberStatsShown=1
+                }
+                myGamePiece3.atkCD=myGamePiece3.item.atkRate
                 pointerX = event.pageX-15-(window.innerWidth-960)/2;
         pointerY = event.pageY-15-(window.innerHeight-540)/2;
                 block3ToMouseX = Math.abs(myGamePiece3.x-pointerX)
@@ -633,6 +736,10 @@ function drag(){
         }//dragging p3
         if(block4ToMouseX<30 && block4ToMouseY<30){
             document.onmousemove = function(event) {
+                if(playerNumberStatsShown!==0){
+                playerNumberStatsShown=0
+                }
+                myGamePiece4.atkCD=myGamePiece4.item.atkRate
                 pointerX = event.pageX-15-(window.innerWidth-960)/2;
         pointerY = event.pageY-15-(window.innerHeight-540)/2;
                 block4ToMouseX = Math.abs(myGamePiece4.x-pointerX)
@@ -672,6 +779,7 @@ function logKey(e) {
     enemy[i].hp=10
     enemy[i].maxhp=enemy[i].hp
     enemy[i].type="enemy"
+    enemy[i].movementType="SlowWalk"
     enemy[i].item=items[0]
     enemy[i].drops={
         coin:1,
@@ -696,6 +804,7 @@ function logKey(e) {
     enemy[i].hp=100
     enemy[i].maxhp=enemy[i].hp
     enemy[i].type="enemy"
+    enemy[i].movementType="SlowWalk"
     enemy[i].item=items[0]
     enemy[i].drops={
         coin:1,

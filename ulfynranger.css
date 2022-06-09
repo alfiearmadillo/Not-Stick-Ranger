@@ -30,52 +30,53 @@ body {
     margin: 2px;
     position: relative;
     left: -502px;
-    bottom:-229px;
+    bottom:-209px;
   }
   
   #icon0 {
-    background-color: yellow;
+    background-color: #ffff00;
     padding: 5px 20px;
     display: inline-block;
     position: relative;
     margin: 2px;
     left: -453px;
-    bottom: -199px;
+    bottom: -179px;
   }
 
   #icon1 {
-    background-color: green;
+    background-color: #00ff00;
     padding: 5px 20px;
     display: inline-block;
     position: relative;
     margin: 2px;
     left: -355px;
-    bottom: -199px;
+    bottom: -179px;
   }
   
   #icon2 {
-    background-color: blue;
+    background-color: #0000ff;
     padding: 5px 20px;
     display: inline-block;
     position:relative;
     margin: 2px;
     left: -257px;
-    bottom: -199px;
+    bottom: -179px;
   }
   
   #icon3 {
-    background-color: red;
+    background-color: #ff0000;
     padding: 5px 20px;
     display: inline-block;
     position: relative;
     margin: 2px;
     left: -159px;
-    bottom: -199px;
+    bottom: -179px;
   }
 
   #moneybox {
     position: relative;
-    background-color: rgb(166, 140, 89);
+    background-color: #b4b4b4;
+    border: 5px solid #8a8a8a;
     padding: 5px 20px;
     min-width: 104px;
   max-width: 104px;
@@ -98,7 +99,97 @@ body {
     min-width: 104px;
   max-width: 104px;
     left: 420px;
-    bottom: -306px;
+    bottom: -297px;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently*/
+   
+  }
+
+  #itemStatsBox {
+    position: relative;
+    z-index:1;
+    pointer-events: none;
+    padding: 5px 5px;
+    min-width: 138px;
+    max-width: 138px;
+    min-height: 148px;
+    max-height: 148px;
+    background-color: #b4b4b4;
+    border: 5px solid #8a8a8a;
+  
+    left: -324px;
+    bottom:49px;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently*/
+   
+  }
+
+  #itemStatsPic {
+    position: relative;
+    z-index:1;
+    pointer-events: none;
+    min-width: 128px;
+    max-width: 128px;
+    min-height: 10px;
+    max-height: 10px;
+    background-color: #b4b4b4;
+    border: 5px solid #8a8a8a;
+  
+    left: -314px;
+    bottom: 206px;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently*/
+   
+  }
+  
+  #playerStatsBox {
+    position: relative;
+    z-index:1;
+    pointer-events: none;
+    padding: 5px 5px;
+    min-width: 133px;
+    max-width: 133px;
+    min-height: 220px;
+    max-height: 220px;
+    background-color: #b4b4b4;
+    border: 5px solid #8a8a8a;
+  
+    left: -481px;
+    bottom: -139px;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently*/
+   
+  }
+
+  #playerStatsPic {
+    position: relative;
+    z-index:1;
+    pointer-events: none;
+    min-width: 123px;
+    max-width: 123px;
+    min-height: 10px;
+    max-height: 10px;
+    background-color: #b4b4b4;
+    border: 5px solid #8a8a8a;
+  
+    left: -471px;
+    bottom: 91px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
