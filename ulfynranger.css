@@ -30,7 +30,7 @@ body {
     margin: 2px;
     position: relative;
     left: -502px;
-    bottom:-279px;
+    bottom:-229px;
   }
   
   #icon0 {
@@ -40,7 +40,7 @@ body {
     position: relative;
     margin: 2px;
     left: -453px;
-    bottom: -249px;
+    bottom: -199px;
   }
 
   #icon1 {
@@ -50,7 +50,7 @@ body {
     position: relative;
     margin: 2px;
     left: -355px;
-    bottom: -249px;
+    bottom: -199px;
   }
   
   #icon2 {
@@ -60,7 +60,7 @@ body {
     position:relative;
     margin: 2px;
     left: -257px;
-    bottom: -249px;
+    bottom: -199px;
   }
   
   #icon3 {
@@ -70,7 +70,7 @@ body {
     position: relative;
     margin: 2px;
     left: -159px;
-    bottom: -249px;
+    bottom: -199px;
   }
 
   #moneybox {
@@ -80,7 +80,25 @@ body {
     min-width: 104px;
   max-width: 104px;
     left: -473px;
-    bottom: 264px;
+    bottom: 309px;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently*/
+   
+  }
+
+  #sellItemBox {
+    position: relative;
+    z-index:1;
+    pointer-events: none;
+    padding: 5px 20px;
+    min-width: 104px;
+  max-width: 104px;
+    left: 420px;
+    bottom: -306px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */

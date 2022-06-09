@@ -16,7 +16,7 @@ document.body.insertBefore(div, document.body.childNodes[0])
 let divcontainer = document.getElementById("container")
 let emptySlot = -1
 let money = 0
-
+let lastmoney = -1
 
 function startGame() {
     myGamePiece = new component(30, 30, "red", 160, 270);
@@ -105,6 +105,9 @@ function makeButtons(count){
 moneyBox=document.createElement("div");
 moneyBox.setAttribute("id", `moneybox`)
 divcontainer.insertBefore(moneyBox, divcontainer.firstChild)
+sellItemBox=document.createElement("div");
+sellItemBox.setAttribute("id", `sellItemBox`)
+divcontainer.insertBefore(sellItemBox, divcontainer.firstChild)
 
 for(n=0;n<buttonsToMake;n++){
     inv[n]={
@@ -119,12 +122,21 @@ function makeButtonLight(){
     if(this.style.background==="rgb(180, 180, 180)" || this.style.background===""){
     this.style.background='#d2d2d2'
     }
+    if(lastslot===14){
+        
+        if(items[inv[this.id].storedItem].worth===0){
+            sellItemBox.innerHTML = `Sell<br />Item`
+        }else{
+        sellItemBox.innerHTML = `Sell<br />£${items[inv[this.id].storedItem].worth}`
+        }
+    }
 }
 document.getElementById(n).addEventListener("mouseout", makeButtonDark);
 function makeButtonDark(){
     if(this.style.background==="rgb(210, 210, 210)"||this.style.background===""){
     this.style.background='#b4b4b4'
     }
+    
 }
 }
 
@@ -500,8 +512,20 @@ function updateGameArea() {
     myGamePiece3.update();
     myGamePiece4.newPos();
     myGamePiece4.update();
-    
-    moneyBox.innerHTML = `Money: ${money}`;
+    inv[14].storedItem=0
+    if(lastmoney!==money){
+        moneyBox.innerHTML = `Money: £${money}`;
+        lastmoney=money
+    }
+
+    if(lastslot!==-1){
+        if(items[inv[lastslot].storedItem].worth!==(undefined^0^null)){
+    sellItemBox.innerHTML = `Sell<br />£${items[inv[lastslot].storedItem].worth}`;
+        }
+    }else if(sellItemBox.innerHTML !== `Sell<br>Item`){
+        sellItemBox.innerHTML = `Sell<br />Item`;
+    }
+
     for(r=0;r<droppedItem.length;r++){
         if(droppedItem[r].data.cooldown>0){
             droppedItem[r].data.cooldown=droppedItem[r].data.cooldown-1
