@@ -5,6 +5,9 @@
 //heal and revive area
 //shop
 //world map
+
+
+
 var nearTarget=0
 var myGamePiece;
 //let dmgNum=[]
@@ -33,6 +36,7 @@ function startGame() {
     myGamePiece.atkRateMult=1
     myGamePiece.damageMult=1
     myGamePiece.rangeMult=1
+    myGamePiece.size=30
     myGamePiece.item=items[0]
     myGamePiece2 = new component(30, 30, "#0000ff", 120, 270);
     myGamePiece2.gravity = 0.5;
@@ -45,6 +49,7 @@ function startGame() {
     myGamePiece2.atkRateMult=1
     myGamePiece2.damageMult=1
     myGamePiece2.rangeMult=1
+    myGamePiece2.size=30
     myGamePiece2.item=items[0]
     myGamePiece3 = new component(30, 30, "#00ff00", 80, 270);
     myGamePiece3.gravity = 0.5;
@@ -57,6 +62,7 @@ function startGame() {
     myGamePiece3.atkRateMult=1
     myGamePiece3.damageMult=1
     myGamePiece3.rangeMult=1
+    myGamePiece3.size=30
     myGamePiece3.item=items[0]
     myGamePiece4 = new component(30, 30, "#ffff00", 40, 270);
     myGamePiece4.gravity = 0.5;
@@ -69,6 +75,7 @@ function startGame() {
     myGamePiece4.atkRateMult=1
     myGamePiece4.damageMult=1
     myGamePiece4.rangeMult=1
+    myGamePiece4.size=30
     myGamePiece4.item=items[0]
     myGameArea.start();
 }
@@ -330,17 +337,11 @@ function component(width, height, color, x, y) {//draw new boxes
             ctx.fillRect(this.x, this.y, this.width, this.height);
         }
         
-        if(this.type==="enemy"){
+        if(this.type==="enemy"||this.type==="player"){
             ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x, this.y-15, this.size, 4);
+            ctx.fillRect(this.x, this.y-15, this.size, 2);
             ctx.fillStyle = "#007f00";
-            ctx.fillRect(this.x, this.y-15, (this.hp/this.maxhp)*this.size, 4);
-        }
-        if(this.type==="player"){
-            ctx.fillStyle = "#ff0000";
-            ctx.fillRect(this.x, this.y-15, 30, 4);
-            ctx.fillStyle = "#007f00";
-            ctx.fillRect(this.x, this.y-15, (this.hp/this.maxhp)*30, 4);
+            ctx.fillRect(this.x-1, this.y-16, ((this.hp/this.maxhp)*this.size)+2, 4);
         }
         
     }
