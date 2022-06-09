@@ -1,11 +1,27 @@
-//constructors for player, enemy, item
-//items with drop chances to enemy, coins, healing, attacks
+//enemy attacks
 //players dying
 //stages
 //heal and revive area
 //shop
 //world map
 
+// xp
+// levels
+// skill points
+
+// enemy attacks
+// player dying
+// player revives
+// defence
+// paladin mechanic
+// save / load
+// ranged projectile?
+// sprites?
+// levels?
+
+// Idle game? Random enemy stats, weapon stats, scale off level
+// auto sell from floor upgrade, item despawn timer, shop for upgrades
+// enemy attacks, revival, auto revive
 
 
 var nearTarget=0
