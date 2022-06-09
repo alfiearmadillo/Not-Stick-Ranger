@@ -81,8 +81,8 @@ function startGame() {
 }
 
 items[0]={name:"None",damageMin:1,damageMax:1,range:11,atkRate:100,lifeSteal:0,defence:0,type:"None", colour:'#b4b4b4', worth:0}
-items[1]={name:"Test Sword",damageMin:2,damageMax:4,range:40,atkRate:50,lifeSteal:0,defence:0,type:"Sword", colour:'#a83232', worth:10}
-items[2]={name:"Test Shield",damageMin:1,damageMax:1,range:20,atkRate:100,lifeSteal:0,defence:1,type:"Shield", colour:'#75a832', worth:10}
+items[1]={name:"Test Sword",damageMin:2,damageMax:4,range:25,atkRate:50,lifeSteal:0,defence:0,type:"Sword", colour:'#a83232', worth:10}
+items[2]={name:"Test Shield",damageMin:1,damageMax:1,range:15,atkRate:100,lifeSteal:0,defence:1,type:"Shield", colour:'#75a832', worth:10}
 items[3]={name:"Test Bow",damageMin:1,damageMax:3,range:160,atkRate:66,lifeSteal:0,defence:0,type:"Bow", colour:'#634f1c', worth:10}
 items[4]={name:"Test Staff",damageMin:0,damageMax:1,range:20000,atkRate:200,lifeSteal:0,defence:0,type:"Staff", colour:'#660033', worth:10}
 
