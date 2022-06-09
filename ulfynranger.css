@@ -18,8 +18,8 @@ body {
   position:fixed;
   top:50%;
   left: 50%;
-  min-width: 824px;
-  max-width: 824px;
+  min-width: 1024px;
+  max-width: 1024px;
   float: inline-start;
   }
   
@@ -29,8 +29,8 @@ body {
     padding: 20px 20px;
     margin: 2px;
     position: relative;
-    left: -500px;
-    bottom:-300px;
+    left: -502px;
+    bottom:-279px;
   }
   
   #icon0 {
@@ -39,8 +39,8 @@ body {
     display: inline-block;
     position: relative;
     margin: 2px;
-    left: -451px;
-    bottom: -270px;
+    left: -453px;
+    bottom: -249px;
   }
 
   #icon1 {
@@ -49,8 +49,8 @@ body {
     display: inline-block;
     position: relative;
     margin: 2px;
-    left: -353px;
-    bottom: -270px;
+    left: -355px;
+    bottom: -249px;
   }
   
   #icon2 {
@@ -59,8 +59,8 @@ body {
     display: inline-block;
     position:relative;
     margin: 2px;
-    left: -255px;
-    bottom: -270px;
+    left: -257px;
+    bottom: -249px;
   }
   
   #icon3 {
@@ -69,7 +69,24 @@ body {
     display: inline-block;
     position: relative;
     margin: 2px;
-    left: -157px;
-    bottom: -270px;
+    left: -159px;
+    bottom: -249px;
+  }
+
+  #moneybox {
+    position: relative;
+    background-color: rgb(166, 140, 89);
+    padding: 5px 20px;
+    min-width: 104px;
+  max-width: 104px;
+    left: -473px;
+    bottom: 264px;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently*/
+   
   }
   

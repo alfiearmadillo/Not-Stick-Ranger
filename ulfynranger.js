@@ -1,6 +1,5 @@
 //constructors for player, enemy, item
 //items with drop chances to enemy, coins, healing, attacks
-//function to roll enemy drops
 //players dying
 //stages
 //heal and revive area
@@ -17,6 +16,7 @@ document.body.insertBefore(div, document.body.childNodes[0])
 let divcontainer = document.getElementById("container")
 let emptySlot = -1
 let money = 0
+
 
 function startGame() {
     myGamePiece = new component(30, 30, "red", 160, 270);
@@ -54,11 +54,11 @@ function startGame() {
     myGameArea.start();
 }
 
-items[0]={name:"None",damageMin:10,damageMax:10,range:11,atkRate:100,maxSummons:0,lifeSteal:0,defence:0,type:"None", colour:'#b4b4b4'}
-items[1]={name:"Test Sword",damageMin:2,damageMax:4,range:40,atkRate:50,maxSummons:0,lifeSteal:0,defence:0,type:"Sword", colour:'#a83232'}
-items[2]={name:"Test Shield",damageMin:1,damageMax:1,range:20,atkRate:100,maxSummons:0,lifeSteal:0,defence:1,type:"Shield", colour:'#75a832'}
-items[3]={name:"Test Bow",damageMin:1,damageMax:3,range:160,atkRate:66,maxSummons:0,lifeSteal:0,defence:0,type:"Bow", colour:'#634f1c'}
-items[4]={name:"Test Staff",damageMin:0,damageMax:1,range:200,atkRate:200,maxSummons:1,lifeSteal:0,defence:0,type:"Staff", colour:'#660033'}
+items[0]={name:"None",damageMin:10,damageMax:10,range:11,atkRate:100,maxSummons:0,lifeSteal:0,defence:0,type:"None", colour:'#b4b4b4', worth:0}
+items[1]={name:"Test Sword",damageMin:2,damageMax:4,range:40,atkRate:50,maxSummons:0,lifeSteal:0,defence:0,type:"Sword", colour:'#a83232', worth:10}
+items[2]={name:"Test Shield",damageMin:1,damageMax:1,range:20,atkRate:100,maxSummons:0,lifeSteal:0,defence:1,type:"Shield", colour:'#75a832', worth:10}
+items[3]={name:"Test Bow",damageMin:1,damageMax:3,range:160,atkRate:66,maxSummons:0,lifeSteal:0,defence:0,type:"Bow", colour:'#634f1c', worth:10}
+items[4]={name:"Test Staff",damageMin:0,damageMax:1,range:200,atkRate:200,maxSummons:1,lifeSteal:0,defence:0,type:"Staff", colour:'#660033', worth:10}
 
 function addItem(player, itemID){
     switch(player){
@@ -80,9 +80,10 @@ function addItem(player, itemID){
     player.item=items[itemID]
 }
 
-let buttonsToMake=12
+let buttonsToMake=15
 let inv = []
 let pIcons = []
+
 makeButtons(buttonsToMake);
 
 function makeButtons(count){
@@ -100,6 +101,10 @@ function makeButtons(count){
         divcontainer.appendChild(inv[p]);
     }
 }
+
+moneyBox=document.createElement("div");
+moneyBox.setAttribute("id", `moneybox`)
+divcontainer.insertBefore(moneyBox, divcontainer.firstChild)
 
 for(n=0;n<buttonsToMake;n++){
     inv[n]={
@@ -136,11 +141,20 @@ for(e=0;e<inv.length;e++){
 }
 
 
+
 function clickButton(num){
     
     if(lastslot>-1){
     tmpObj=inv[num].storedItem
-    inv[num].storedItem=inv[lastslot].storedItem
+    if(lastslot!==inv.length-1 && num!== inv.length-1){//switching inv slots around
+        inv[num].storedItem=inv[lastslot].storedItem
+        
+    }else{
+        inv[14].storedItem=0
+        money=money+items[inv[num].storedItem].worth
+        money=money+items[inv[lastslot].storedItem].worth
+        inv[num].storedItem=0
+    }
     inv[lastslot].storedItem=tmpObj
     tmpObj=null
     console.log(inv[num])
@@ -151,6 +165,7 @@ function clickButton(num){
     for(x=0;x<inv.length;x++){
         document.getElementById(x).style.background='#b4b4b4'
         document.getElementById(x).style.borderColor='#8a8a8a'
+        document.getElementById(inv.length-1).style.background='#5c5c5c'
     } 
     }else{
     lastslot = num
@@ -159,9 +174,11 @@ function clickButton(num){
     if(num<4){
         addItem(num, inv[num].storedItem)
     }
+    
     for(e=0;e<inv.length;e++){
         document.getElementById(e).style.background=items[inv[e].storedItem].colour
     }
+    document.getElementById(inv.length-1).style.background='#5c5c5c'
 }
 
 var myGameArea = {
@@ -194,14 +211,25 @@ function component(width, height, color, x, y) {//draw new boxes
     this.gravity = 0;
     this.gravitySpeed = 0;
     this.update = function() {
-        ctx = myGameArea.context;
-        ctx.fillStyle = color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        if(this.type==="item"||this.type==="health"||this.type==="coin"){
+            if((Math.floor(this.data.cooldown/5))%2===1){
+                
+            }else{
+                ctx = myGameArea.context;
+                ctx.fillStyle = color;
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+            }
+        }else{
+            ctx = myGameArea.context;
+            ctx.fillStyle = color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+        
         if(this.type==="enemy"){
             ctx.fillStyle = "red";
-            ctx.fillRect(this.x, this.y-15, 20, 4);
+            ctx.fillRect(this.x, this.y-15, this.size, 4);
             ctx.fillStyle = "green";
-            ctx.fillRect(this.x, this.y-15, (this.hp/this.maxhp)*20, 4);
+            ctx.fillRect(this.x, this.y-15, (this.hp/this.maxhp)*this.size, 4);
         }
         if(this.type==="player"){
             ctx.fillStyle = "red";
@@ -209,6 +237,7 @@ function component(width, height, color, x, y) {//draw new boxes
             ctx.fillStyle = "green";
             ctx.fillRect(this.x, this.y-15, (this.hp/this.maxhp)*30, 4);
         }
+        
     }
     this.newPos = function() {//find new positions
         this.gravitySpeed += this.gravity;
@@ -220,19 +249,19 @@ function component(width, height, color, x, y) {//draw new boxes
                 if(Math.abs(droppedItem[b].x - this.x) < 50 &&
                 (Math.abs(droppedItem[b].y - this.y) < 50)){
 
-                    emptySlot=inv.findIndex(element => element.storedItem===0 && element.invSlot>3)
+                    emptySlot=inv.findIndex(element => element.storedItem===0 && element.invSlot>3) //picking up items
 
-                    if(droppedItem[b].data.type==="coin"){
+                    if(droppedItem[b].type==="coin"&&droppedItem[b].data.cooldown===0){
                         money=money+droppedItem[b].data.value
                         droppedItem.splice(b, 1)
-                    }else if(droppedItem[b].data.type==="health"){
+                    }else if(droppedItem[b].type==="health"&&droppedItem[b].data.cooldown===0){
                         this.hp=this.hp+droppedItem[b].data.value
                         if(this.hp>this.maxhp){
                             this.hp=this.maxhp
                         }
                         droppedItem.splice(b, 1)
-                    }else if(droppedItem[b].data.type==="item"){
-                        if(emptySlot!==-1){
+                    }else if(droppedItem[b].type==="item"&&droppedItem[b].data.cooldown===0){
+                        if(emptySlot!==-1&&emptySlot!==inv.length-1){
                             inv[emptySlot].storedItem=droppedItem[b].data.value
                             droppedItem.splice(b, 1)
                             for(e=0;e<inv.length;e++){
@@ -244,6 +273,7 @@ function component(width, height, color, x, y) {//draw new boxes
                     }
                 }
             }
+            document.getElementById(inv.length-1).style.background='#5c5c5c'
         }
 
         this.hitBottom();
@@ -263,8 +293,8 @@ function component(width, height, color, x, y) {//draw new boxes
             if(this.type==="player"){
             nearTarget = closestEnemy(enemy, this.x)//logic to do only while on floor
             if(enemy.length!==0){
-                if (Math.abs(enemy[nearTarget].x - this.x) < this.item.range &&
-                   (Math.abs(enemy[nearTarget].y - this.y) < this.item.range)) {
+                if (Math.abs(enemy[nearTarget].x+(enemy[nearTarget].size/2-15) - this.x) < this.item.range+(enemy[nearTarget].size/2)+15&&
+                   ((Math.abs(enemy[nearTarget].y+(enemy[nearTarget].size/2) - this.y) < this.item.range+(enemy[nearTarget].size/2)) || (enemy[nearTarget].gravity>0&&enemy[nearTarget].gravitySpeed===0))) {
                     
                 if(this.atkCD<=0){
                     // if(this.item.pierce!==0){
@@ -296,82 +326,88 @@ function component(width, height, color, x, y) {//draw new boxes
                                 console.log("dropped coin")
                                 droppedItem[droppedItem.length] = new component(15, 15, "gold", enemy[nearTarget].x, enemy[nearTarget].y);
                                 droppedItem[droppedItem.length-1].data={
-                                    type:"coin",
-                                    value:enemy[nearTarget].drops.coin
+                                    value:enemy[nearTarget].drops.coin,
+                                    cooldown:150
                                 }
+                                droppedItem[droppedItem.length-1].type="coin"
                                 droppedItem[droppedItem.length-1].gravity = 0.5;
-                                droppedItem[droppedItem.length-1].speedX=(Math.random()*6)-3
-                                droppedItem[droppedItem.length-1].speedY=-Math.random()*9
+                                droppedItem[droppedItem.length-1].speedX=(Math.random()*6)-3+(enemy[nearTarget].size/200)
+                                droppedItem[droppedItem.length-1].speedY=-Math.random()*9-(enemy[nearTarget].size/100)
                             }
                         }
                         lootRoll=Math.random()*100
                         if(enemy[nearTarget].drops.healChance!==0){
                             if(lootRoll<enemy[nearTarget].drops.healChance){
                                 console.log("dropped hp")
-                                droppedItem[droppedItem.length] = new component(15, 15, "#ff756b", enemy[nearTarget].x, enemy[nearTarget].y);
+                                droppedItem[droppedItem.length] = new component(15, 15, "#ff756b", enemy[nearTarget].x+(enemy[nearTarget].size/2), enemy[nearTarget].y+(enemy[nearTarget].size/2));
                                 droppedItem[droppedItem.length-1].data={
-                                    type:"health",
-                                    value:enemy[nearTarget].drops.healPotion
+                                    value:enemy[nearTarget].drops.healPotion,
+                                    cooldown:150
                                 }
+                                droppedItem[droppedItem.length-1].type="health"
                                 droppedItem[droppedItem.length-1].gravity = 0.5;
-                                droppedItem[droppedItem.length-1].speedX=(Math.random()*3)-1.5
-                                droppedItem[droppedItem.length-1].speedY=-Math.random()*9
+                                droppedItem[droppedItem.length-1].speedX=(Math.random()*3)-1.5+(enemy[nearTarget].size/400)
+                                droppedItem[droppedItem.length-1].speedY=-Math.random()*9-(enemy[nearTarget].size/200)
                             }
                         }
                         lootRoll=Math.random()*100
                         if(enemy[nearTarget].drops.itemID1Chance!==0){
                             if(lootRoll<enemy[nearTarget].drops.itemID1Chance){
                                 console.log("dropped item 1")
-                                droppedItem[droppedItem.length] = new component(15, 15, items[enemy[nearTarget].drops.itemID1].colour, enemy[nearTarget].x, enemy[nearTarget].y);
+                                droppedItem[droppedItem.length] = new component(15, 15, items[enemy[nearTarget].drops.itemID1].colour, enemy[nearTarget].x+(enemy[nearTarget].size/2), enemy[nearTarget].y+(enemy[nearTarget].size/2));
                                 droppedItem[droppedItem.length-1].data={
-                                    type:"item",
-                                    value:enemy[nearTarget].drops.itemID1
+                                    value:enemy[nearTarget].drops.itemID1,
+                                    cooldown:150
                                 }
+                                droppedItem[droppedItem.length-1].type="item"
                                 droppedItem[droppedItem.length-1].gravity = 0.5;
-                                droppedItem[droppedItem.length-1].speedX=(Math.random()*6)-3
-                                droppedItem[droppedItem.length-1].speedY=-Math.random()*9
+                                droppedItem[droppedItem.length-1].speedX=(Math.random()*6)-3+(enemy[nearTarget].size/200)
+                                droppedItem[droppedItem.length-1].speedY=-Math.random()*9-(enemy[nearTarget].size/100)
                             }
                         }
                         lootRoll=Math.random()*100
                         if(enemy[nearTarget].drops.itemID2Chance!==0){
                             if(lootRoll<enemy[nearTarget].drops.itemID2Chance){
                                 console.log("dropped item 2")
-                                droppedItem[droppedItem.length] = new component(15, 15, items[enemy[nearTarget].drops.itemID2].colour, enemy[nearTarget].x, enemy[nearTarget].y);
+                                droppedItem[droppedItem.length] = new component(15, 15, items[enemy[nearTarget].drops.itemID2].colour, enemy[nearTarget].x+(enemy[nearTarget].size/2), enemy[nearTarget].y+(enemy[nearTarget].size/2));
                                 droppedItem[droppedItem.length-1].data={
-                                    type:"item",
-                                    value:enemy[nearTarget].drops.itemID2
+                                    value:enemy[nearTarget].drops.itemID2,
+                                    cooldown:150
                                 }
+                                droppedItem[droppedItem.length-1].type="item"
                                 droppedItem[droppedItem.length-1].gravity = 0.5;
-                                droppedItem[droppedItem.length-1].speedX=(Math.random()*6)-3
-                                droppedItem[droppedItem.length-1].speedY=-Math.random()*9
+                                droppedItem[droppedItem.length-1].speedX=(Math.random()*6)-3+(enemy[nearTarget].size/200)
+                                droppedItem[droppedItem.length-1].speedY=-Math.random()*9-(enemy[nearTarget].size/100)
                             }
                         }
                         lootRoll=Math.random()*100
                         if(enemy[nearTarget].drops.itemID3Chance!==0){
                             if(lootRoll<enemy[nearTarget].drops.itemID3Chance){
                                 console.log("dropped item 3")
-                                droppedItem[droppedItem.length] = new component(15, 15, items[enemy[nearTarget].drops.itemID3].colour, enemy[nearTarget].x, enemy[nearTarget].y);
+                                droppedItem[droppedItem.length] = new component(15, 15, items[enemy[nearTarget].drops.itemID3].colour, enemy[nearTarget].x+(enemy[nearTarget].size/2), enemy[nearTarget].y+(enemy[nearTarget].size/2));
                                 droppedItem[droppedItem.length-1].data={
-                                    type:"item",
-                                    value:enemy[nearTarget].drops.itemID3
+                                    value:enemy[nearTarget].drops.itemID3,
+                                    cooldown:150
                                 }
+                                droppedItem[droppedItem.length-1].type="item"
                                 droppedItem[droppedItem.length-1].gravity = 0.5;
-                                droppedItem[droppedItem.length-1].speedX=(Math.random()*6)-3
-                                droppedItem[droppedItem.length-1].speedY=-Math.random()*9
+                                droppedItem[droppedItem.length-1].speedX=(Math.random()*6)-3+(enemy[nearTarget].size/200)
+                                droppedItem[droppedItem.length-1].speedY=-Math.random()*9-(enemy[nearTarget].size/100)
                             }
                         }
                         lootRoll=Math.random()*100
                         if(enemy[nearTarget].drops.itemID4Chance!==0){
                             if(lootRoll<enemy[nearTarget].drops.itemID4Chance){
                                 console.log("dropped item 4")
-                                droppedItem[droppedItem.length] = new component(15, 15, items[enemy[nearTarget].drops.itemID4].colour, enemy[nearTarget].x, enemy[nearTarget].y);
+                                droppedItem[droppedItem.length] = new component(15, 15, items[enemy[nearTarget].drops.itemID4].colour, enemy[nearTarget].x+(enemy[nearTarget].size/2), enemy[nearTarget].y+(enemy[nearTarget].size/2));
                                 droppedItem[droppedItem.length-1].data={
-                                    type:"item",
-                                    value:enemy[nearTarget].drops.itemID4
+                                    value:enemy[nearTarget].drops.itemID4,
+                                    cooldown:150
                                 }
+                                droppedItem[droppedItem.length-1].type="item"
                                 droppedItem[droppedItem.length-1].gravity = 0.5;
-                                droppedItem[droppedItem.length-1].speedX=(Math.random()*6)-3
-                                droppedItem[droppedItem.length-1].speedY=-Math.random()*9
+                                droppedItem[droppedItem.length-1].speedX=(Math.random()*6)-3+(enemy[nearTarget].size/200)
+                                droppedItem[droppedItem.length-1].speedY=-Math.random()*9-(enemy[nearTarget].size/100)
                             }
                         }
 
@@ -381,9 +417,11 @@ function component(width, height, color, x, y) {//draw new boxes
                 }
             }else{
             if(enemy.length!==0){//if not in range move towards
-                if (Math.abs(enemy[nearTarget].x - this.x) < this.item.range+350&&
-                   (Math.abs(enemy[nearTarget].y - this.y) < this.item.range+350)){
-                if(enemy[nearTarget].x<this.x){
+                if ((Math.abs(enemy[nearTarget].x+(enemy[nearTarget].size/2) - this.x) < this.item.range+350+(enemy[nearTarget].size/2)||
+                    (Math.abs(enemy[nearTarget].x - this.x)) < this.item.range+350)&&
+                    ((Math.abs(enemy[nearTarget].y+(enemy[nearTarget].size/2) - this.y) < this.item.range+350+(enemy[nearTarget].size/2))||
+                    (Math.abs(enemy[nearTarget].y - this.y)) < this.item.range+350)){
+                if(enemy[nearTarget].x+(enemy[nearTarget].size/2)<this.x){
                     this.speedX=this.speedX-Math.random()
                     this.speedY=this.speedY-Math.random()*2
                 }else{
@@ -395,8 +433,9 @@ function component(width, height, color, x, y) {//draw new boxes
         }
     }
 }
-            }
-    }
+}
+}
+
     this.hitLeft = function() {//bounce off left wall
         var rockleft = 0;
         if (this.x < rockleft) {
@@ -439,26 +478,6 @@ var move = 0//updating all entities each frame
 function updateGameArea() {
     myGameArea.clear();
     myGameArea.frameNo += 1;
-    myGamePiece.newPos();
-    myGamePiece.update();
-    myGamePiece2.newPos();
-    myGamePiece2.update();
-    myGamePiece3.newPos();
-    myGamePiece3.update();
-    myGamePiece4.newPos();
-    myGamePiece4.update();
-    for(r=0;r<droppedItem.length;r++){
-    droppedItem[r].newPos()
-    droppedItem[r].update()
-    }
-    // for(j=0;j<dmgNum.length;j++){
-    // dmgNum[j].lifetime=dmgNum[j].lifetime-1
-    // dmgNum[j].update()
-    // dmgNum[j].newPos()
-    // if(dmgNum[j].lifetime<=0){
-    //     dmgNum.splice(0,1)
-    // }
-    // }
 
     for(j=0;j<enemy.length;j++){
         move = Math.floor(Math.random() * 100);
@@ -472,6 +491,34 @@ function updateGameArea() {
         enemy[j].update()
         enemy[j].newPos()
     }
+
+    myGamePiece.newPos();
+    myGamePiece.update();
+    myGamePiece2.newPos();
+    myGamePiece2.update();
+    myGamePiece3.newPos();
+    myGamePiece3.update();
+    myGamePiece4.newPos();
+    myGamePiece4.update();
+    
+    moneyBox.innerHTML = `Money: ${money}`;
+    for(r=0;r<droppedItem.length;r++){
+        if(droppedItem[r].data.cooldown>0){
+            droppedItem[r].data.cooldown=droppedItem[r].data.cooldown-1
+        }
+    droppedItem[r].newPos()
+    droppedItem[r].update()
+    }
+    // for(j=0;j<dmgNum.length;j++){
+    // dmgNum[j].lifetime=dmgNum[j].lifetime-1
+    // dmgNum[j].update()
+    // dmgNum[j].newPos()
+    // if(dmgNum[j].lifetime<=0){
+    //     dmgNum.splice(0,1)
+    // }
+    // }
+
+    
 
 }
 
@@ -596,6 +643,7 @@ let enemy=[]
 function logKey(e) {
   if(e.code==="KeyA"){
     enemy[i] = new component(20, 20, "purple", 480, 270);
+    enemy[i].size=20
     enemy[i].gravity = 0.5;
     enemy[i].hp=10
     enemy[i].maxhp=enemy[i].hp
@@ -618,7 +666,8 @@ function logKey(e) {
     i++
   }
   if(e.code==="KeyS"){
-    enemy[i] = new component(20, 20, "purple", 680, 270);
+    enemy[i] = new component(200, 200, "purple", 680, 270);
+    enemy[i].size=200
     enemy[i].gravity = 0.5;
     enemy[i].hp=100
     enemy[i].maxhp=enemy[i].hp
@@ -642,6 +691,7 @@ function logKey(e) {
   }
 }
 
+document.getElementById(inv.length-1).style.background='#5c5c5c'
 // document.addEventListener("click", wipeInvActives);
 // function wipeInvActives(){
 //     test = inv.findIndex(element => element.storedItem=2)
