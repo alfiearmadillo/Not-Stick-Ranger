@@ -139,6 +139,12 @@ divcontainer.appendChild(itemStatsBox, divcontainer.firstChild)
 itemStatsPic=document.createElement("div");
 itemStatsPic.setAttribute("id", `itemStatsPic`)
 divcontainer.appendChild(itemStatsPic, divcontainer.firstChild)
+dirt=document.createElement("div");
+dirt.setAttribute("id", `dirt`)
+divcontainer.appendChild(dirt, divcontainer.firstChild)
+grass=document.createElement("div");
+grass.setAttribute("id", `grass`)
+divcontainer.appendChild(grass, divcontainer.firstChild)
 
 for(n=0;n<buttonsToMake;n++){
     inv[n]={
@@ -383,7 +389,7 @@ function component(width, height, color, x, y) {//draw new boxes
 //let h=0;
 
     this.hitBottom = function() {//floor bounce
-        var rockbottom = myGameArea.canvas.height - this.height;
+        var rockbottom = myGameArea.canvas.height - this.height-30;
         if (this.y > rockbottom) {
             this.y = rockbottom;
             this.gravitySpeed=0

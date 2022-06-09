@@ -77,9 +77,9 @@ body {
     position: relative;
     background-color: #b4b4b4;
     border: 5px solid #8a8a8a;
-    padding: 5px 20px;
-    min-width: 104px;
-  max-width: 104px;
+    padding: 5px 5px;
+    min-width: 124px;
+  max-width: 124px;
     left: -473px;
     bottom: 309px;
     -webkit-touch-callout: none; /* iOS Safari */
@@ -199,3 +199,43 @@ body {
    
   }
   
+  #dirt {
+    position: relative;
+    z-index:1;
+    pointer-events: none;
+    min-width: 960px;
+    max-width: 960px;
+    min-height: 20px;
+    max-height: 20px;
+    background-color: #7b531b;
+  
+    left: -480px;
+    bottom: 336px;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently*/
+   
+  }
+  #grass {
+    position: relative;
+    z-index:1;
+    pointer-events: none;
+    min-width: 960px;
+    max-width: 960px;
+    min-height: 10px;
+    max-height: 10px;
+    background-color: #17740b;
+  
+    left: -480px;
+    bottom: 366px;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently*/
+   
+  }
