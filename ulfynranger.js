@@ -1,17 +1,8 @@
-//enemy attacks
-//players dying
 //stages
-//heal and revive area
 //shop
 //world map
 
-// xp
-// levels
 // skill points
-
-// enemy attacks
-// player dying
-// player revives
 // defence
 // paladin mechanic
 // save / load
@@ -39,6 +30,12 @@ let lastmoney = -1
 let playerNumberStatsShown=0
 let playerNumberStatsChanged=-1
 let itemNumberStatsChanged=-1
+let level = 0
+let totalEXP=0
+let lastEXP = -1
+let expToLevelUp=50
+let lastLevelExp=0
+let gameover = 100
 
 function startGame() {
     myGamePiece = new component(30, 30, "#ff0000", 160, 270);
@@ -96,11 +93,13 @@ function startGame() {
     myGameArea.start();
 }
 
-items[0]={name:"None",damageMin:1,damageMax:1,range:11,atkRate:100,lifeSteal:0,defence:0,type:"None", colour:'#b4b4b4', worth:0}
-items[1]={name:"Test Sword",damageMin:2,damageMax:4,range:25,atkRate:50,lifeSteal:0,defence:0,type:"Sword", colour:'#a83232', worth:10}
-items[2]={name:"Test Shield",damageMin:1,damageMax:1,range:15,atkRate:100,lifeSteal:0,defence:1,type:"Shield", colour:'#75a832', worth:10}
-items[3]={name:"Test Bow",damageMin:1,damageMax:3,range:160,atkRate:66,lifeSteal:0,defence:0,type:"Bow", colour:'#634f1c', worth:10}
-items[4]={name:"Test Staff",damageMin:0,damageMax:1,range:20000,atkRate:200,lifeSteal:0,defence:0,type:"Staff", colour:'#660033', worth:10}
+items[0]={name:"None",damageMin:1,damageMax:1,range:11,atkRate:100,lifeSteal:0,defence:0,type:"None", colour:'#b4b4b4', worth:0, multi:0}
+items[1]={name:"Test Sword",damageMin:2,damageMax:4,range:25,atkRate:50,lifeSteal:0,defence:0,type:"Sword", colour:'#a83232', worth:10, multi:0}
+items[2]={name:"Test Shield",damageMin:1,damageMax:1,range:15,atkRate:100,lifeSteal:0,defence:1,type:"Shield", colour:'#75a832', worth:10, multi:0}
+items[3]={name:"Test Bow",damageMin:1,damageMax:3,range:160,atkRate:66,lifeSteal:0,defence:0,type:"Bow", colour:'#634f1c', worth:10, multi:0}
+items[4]={name:"Test Staff",damageMin:0,damageMax:1,range:300,atkRate:200,lifeSteal:0,defence:0,type:"Staff", colour:'#660033', worth:10, multi:0}
+items[5]={name:"CR_Room1Basic",damageMin:1,damageMax:2,range:45,atkRate:200,lifeSteal:0,defence:0,type:"CR_Melee", colour:'#191919', worth:-1, multi:0}
+items[6]={name:"CR_Room1Boss",damageMin:5,damageMax:18,range:300,atkRate:200,lifeSteal:0,defence:0,type:"CR_Special1", colour:'#191919', worth:-1, multi:1}
 
 function addItem(player, itemID){
     switch(player){
@@ -168,6 +167,15 @@ divcontainer.appendChild(dirt, divcontainer.firstChild)
 grass=document.createElement("div");
 grass.setAttribute("id", `grass`)
 divcontainer.appendChild(grass, divcontainer.firstChild)
+expBarUnder=document.createElement("div");
+expBarUnder.setAttribute("id", `expBarUnder`)
+divcontainer.appendChild(expBarUnder, divcontainer.firstChild)
+expBarOver=document.createElement("div");
+expBarOver.setAttribute("id", `expBarOver`)
+divcontainer.appendChild(expBarOver, divcontainer.firstChild)
+reviveButton=document.createElement("div");
+reviveButton.setAttribute("id", `reviveButton`)
+divcontainer.appendChild(reviveButton, divcontainer.firstChild)
 
 for(n=0;n<buttonsToMake;n++){
     inv[n]={
@@ -197,6 +205,34 @@ function makeButtonDark(){
     this.style.background='#b4b4b4'
     }
     
+}
+}
+
+reviveButton.innerHTML="Player Alive"
+document.getElementById("reviveButton").style.background="#517a59"
+document.getElementById("reviveButton").addEventListener("mouseup", revivePlayer);
+document.getElementById("reviveButton").addEventListener("mouseout", revivePlayerInactiveColour);
+document.getElementById("reviveButton").addEventListener("mouseover", revivePlayerActiveColour);
+function revivePlayer(){
+    if(playerNumberStatsShown.hp===0){
+    if(money>((money/2)+5+(level*2))){
+    playerNumberStatsShown.hp=playerNumberStatsShown.maxhp/2
+    money=money-((money/2)+5+(level*2))
+    }
+    }
+}
+function revivePlayerInactiveColour(){
+    if(playerNumberStatsShown.hp===0){
+    this.style.background="#a2a2a2"
+    }
+}
+function revivePlayerActiveColour(){
+    if(playerNumberStatsShown.hp===0){
+    if(money>((money/2)+5+(level*2))){
+        this.style.background="#517a59"
+    }else{
+        this.style.background="#9c4c4c" 
+    }
 }
 }
 
@@ -277,7 +313,7 @@ function randomDmg(min, max) { // min and max included
 }
 
 function refreshPlayerStatsBox(){
-    if(playerNumberStatsChanged!==playerNumberStatsShown){
+    //if(playerNumberStatsChanged!==playerNumberStatsShown||totalEXP!==lastEXP){
     switch(playerNumberStatsShown){
         case 0:
             playerNumberStatsShown=myGamePiece4
@@ -302,11 +338,15 @@ function refreshPlayerStatsBox(){
     Range: ${playerNumberStatsShown.item.range*playerNumberStatsShown.rangeMult}<br/>
     Attack Delay: ${playerNumberStatsShown.item.atkRate*playerNumberStatsShown.atkRateMult}<br/>
     Defence: ${playerNumberStatsShown.item.defence}<br/>
-    Lifesteal: ${playerNumberStatsShown.item.lifeSteal}
+    Lifesteal: ${playerNumberStatsShown.item.lifeSteal}<br/>
+    <br/>
+    <br/>
+    Level: ${level}<br/>
+    EXP: ${totalEXP}
     `
     playerStatsPic.style.background=playerNumberStatsShown.colour
     playerNumberStatsChanged=playerNumberStatsShown
-}
+//}
 }
 
 function refreshItemStatsBox(){
@@ -349,14 +389,22 @@ function component(width, height, color, x, y) {//draw new boxes
             }
         }else{
             ctx = myGameArea.context;
-            ctx.fillStyle = color;
-            ctx.fillRect(this.x, this.y, this.width, this.height);
+            
+            if(this.hp<=0){
+                ctx.fillStyle = "#666666"
+                ctx.fillRect(this.x+1, this.y+2, this.width-2, this.height-2);
+            }else{
+                ctx.fillStyle = color;
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+            }
+            
         }
         
-        if(this.type==="enemy"||this.type==="player"){
+        if(this.type==="enemy"||this.type==="player" && this.hp>0){
             ctx.fillStyle = "#ff0000";
             ctx.fillRect(this.x, this.y-15, this.size, 2);
             ctx.fillStyle = "#007f00";
+            
             ctx.fillRect(this.x-1, this.y-16, ((this.hp/this.maxhp)*this.size)+2, 4);
         }
         
@@ -366,7 +414,7 @@ function component(width, height, color, x, y) {//draw new boxes
         this.x += this.speedX;
         this.y += this.speedY + this.gravitySpeed;
 
-        if(this.type==="player"){
+        if(this.type==="player" && this.hp>0){
             for(b=0;b<droppedItem.length;b++){
                 if(Math.abs(droppedItem[b].x - this.x) < 50 &&
                 (Math.abs(droppedItem[b].y - this.y) < 50)){
@@ -377,11 +425,13 @@ function component(width, height, color, x, y) {//draw new boxes
                         money=money+droppedItem[b].data.value
                         droppedItem.splice(b, 1)
                     }else if(droppedItem[b].type==="health"&&droppedItem[b].data.cooldown===0){
+                        if(this.hp!==this.maxhp){
                         this.hp=this.hp+droppedItem[b].data.value
                         if(this.hp>this.maxhp){
                             this.hp=this.maxhp
                         }
                         droppedItem.splice(b, 1)
+                    }
                     }else if(droppedItem[b].type==="item"&&droppedItem[b].data.cooldown===0){
                         if(emptySlot!==-1&&emptySlot!==inv.length-1){
                             inv[emptySlot].storedItem=droppedItem[b].data.value
@@ -411,8 +461,12 @@ function component(width, height, color, x, y) {//draw new boxes
             this.y = rockbottom;
             this.gravitySpeed=0
             this.speedX=this.speedX-this.speedX*0.3
+            if(this.hp>0||this.type!=="player"){
             this.speedY=this.speedY-this.speedY*0.3
-            if(this.type==="player"){
+            }else{
+                this.speedY=0
+            }
+            if(this.type==="player" && this.hp>0){
             nearTarget = closestEnemy(enemy, this.x)//logic to do only while on floor
             if(enemy.length!==0){
                 if (Math.abs(enemy[nearTarget].x+(enemy[nearTarget].size/2-15) - this.x) < this.item.range+(enemy[nearTarget].size/2)+15&&
@@ -427,7 +481,7 @@ function component(width, height, color, x, y) {//draw new boxes
                     //         }
                     //     }
                     // } else {
-                    enemy[nearTarget].hp=enemy[nearTarget].hp-randomDmg(this.item.damageMin, this.item.damageMax)
+                    enemy[nearTarget].hp=enemy[nearTarget].hp-randomDmg(this.item.damageMin, this.item.damageMax)//damage enemy, will need to be changed for ranged
                     // }
                     // dmgNum[h]=new component(5, 20, "blue", this.x, this.y);
                     // dmgNum[h].gravity = -0.5;
@@ -532,7 +586,7 @@ function component(width, height, color, x, y) {//draw new boxes
                                 droppedItem[droppedItem.length-1].speedY=-Math.random()*9-(enemy[nearTarget].size/100)
                             }
                         }
-
+                    totalEXP=totalEXP+enemy[nearTarget].exp
                     enemy.splice(nearTarget,1)
                     i=enemy.length 
                     }
@@ -562,14 +616,22 @@ function component(width, height, color, x, y) {//draw new boxes
         var rockleft = 0;
         if (this.x < rockleft) {
             this.x = rockleft;
+            if(this.hp>0){
             this.speedX=this.speedX-this.speedX*1.5
+            }else{
+                this.speedX=this.speedX-this.speedX*1.03
+            }
             }
     }
     this.hitRight = function() {//bounce off right wall
         var rockRight = 930;
         if (this.x > rockRight) {
             this.x = rockRight;
+            if(this.hp>0){
             this.speedX=this.speedX-this.speedX*1.5
+            }else{
+                this.speedX=this.speedX-this.speedX*1.03
+            }
             }
     }
 }
@@ -603,17 +665,78 @@ function updateGameArea() {
 
     for(j=0;j<enemy.length;j++){
         if(enemy[j].movementType="SlowWalk"){
-        move = Math.floor(Math.random() * 100);
-        if(move===4 ){
-            enemy[j].x=enemy[j].x+1
+            move = Math.floor(Math.random() * 1000);
+            if(move>10&&move<20 ){
+                enemy[j].x=enemy[j].x+1
+            }
+            if(move>20&&move<32){
+                enemy[j].x=enemy[j].x-1
+            }
         }
-        if(move===5 || move === 17){
-            enemy[j].x=enemy[j].x-1
-        }
-    }
-        
         enemy[j].update()
         enemy[j].newPos()
+        
+        redPDist=Math.abs(myGamePiece.x-(enemy[j].x-15+(enemy[j].size/2)))
+        bluPDist=Math.abs(myGamePiece2.x-(enemy[j].x-15+(enemy[j].size/2)))
+        grnPDist=Math.abs(myGamePiece3.x-(enemy[j].x-15+(enemy[j].size/2)))
+        ylwPDist=Math.abs(myGamePiece4.x-(enemy[j].x-15+(enemy[j].size/2)))
+
+        if(enemy[j].atkCD<=0){
+            if(enemy[j].weapon.multi===1){
+                if(redPDist<enemy[j].weapon.range&&myGamePiece.hp>0){
+                    myGamePiece.hp=myGamePiece.hp-randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)
+                    if(myGamePiece.hp<0){
+                        myGamePiece.hp=0
+                    }
+                }
+                if(bluPDist<enemy[j].weapon.range&&myGamePiece2.hp>0){
+                    myGamePiece2.hp=myGamePiece2.hp-randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)
+                    if(myGamePiece2.hp<0){
+                        myGamePiece2.hp=0
+                    }
+                }
+                if(grnPDist<enemy[j].weapon.range&&myGamePiece3.hp>0){
+                    myGamePiece3.hp=myGamePiece3.hp-randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)
+                    if(myGamePiece3.hp<0){
+                        myGamePiece3.hp=0
+                    }
+                }
+                if(ylwPDist<enemy[j].weapon.range&&myGamePiece4.hp>0){
+                    myGamePiece4.hp=myGamePiece4.hp-randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)
+                    if(myGamePiece4.hp<0){
+                        myGamePiece4.hp=0
+                    }
+                }
+                enemy[j].atkCD=enemy[j].weapon.atkRate
+            }else{
+                if(redPDist<enemy[j].weapon.range &&redPDist<bluPDist&&redPDist<grnPDist&&redPDist<ylwPDist&&myGamePiece.hp>0){
+                    myGamePiece.hp=myGamePiece.hp-randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)
+                    if(myGamePiece.hp<0){
+                        myGamePiece.hp=0
+                    }
+                }else if(bluPDist<enemy[j].weapon.range&&bluPDist<grnPDist&&bluPDist<ylwPDist&&myGamePiece2.hp>0){
+                    myGamePiece2.hp=myGamePiece2.hp-randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)
+                    if(myGamePiece2.hp<0){
+                        myGamePiece2.hp=0
+                    }
+                }else if(grnPDist<enemy[j].weapon.range&&grnPDist<ylwPDist&&myGamePiece3.hp>0){
+                    myGamePiece3.hp=myGamePiece3.hp-randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)
+                    if(myGamePiece3.hp<0){
+                        myGamePiece3.hp=0
+                    }
+                }else if(ylwPDist<enemy[j].weapon.range&&myGamePiece4.hp>0){
+                    myGamePiece4.hp=myGamePiece4.hp-randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)
+                    if(myGamePiece4.hp<0){
+                        myGamePiece4.hp=0
+                    }
+                }
+            enemy[j].atkCD=enemy[j].weapon.atkRate
+            }
+
+        }else{
+            enemy[j].atkCD=enemy[j].atkCD-1
+        }
+
     }
 
     myGamePiece.newPos();
@@ -625,8 +748,21 @@ function updateGameArea() {
     myGamePiece4.newPos();
     myGamePiece4.update();
     inv[14].storedItem=0
-    refreshPlayerStatsBox()
+    
+    if(myGamePiece.hp===0&&myGamePiece2.hp===0&&myGamePiece3.hp===0&&myGamePiece4.hp===0&&gameover>-1){
+        gameover=gameover-1
+        if(gameover===0){
+            alert("Game Over")
+        }
+    }
+
     refreshItemStatsBox()
+
+    if(playerNumberStatsShown.hp===0){
+        document.getElementById("reviveButton").style.background="#a2a2a2"
+        reviveButton.innerHTML=`Revive: £${(money/2)+5+(level*2)}`
+    }
+
     if(lastmoney!==money){
         moneyBox.innerHTML = `Money: £${money}`;
         lastmoney=money
@@ -647,6 +783,21 @@ function updateGameArea() {
     droppedItem[r].newPos()
     droppedItem[r].update()
     }
+
+    if(totalEXP!==lastEXP){
+        if(totalEXP>=expToLevelUp){
+            level++
+            lastLevelExp=expToLevelUp
+            expToLevelUp=expToLevelUp+Math.floor(expToLevelUp*1.3)
+        }
+        expBarOver.style.maxWidth = `${((totalEXP-lastLevelExp)/expToLevelUp)*131}px`
+        expBarOver.style.minWidth = `${((totalEXP-lastLevelExp)/expToLevelUp)*131}px`
+        refreshPlayerStatsBox()
+        lastEXP=totalEXP
+    }
+    refreshPlayerStatsBox()
+
+
     // for(j=0;j<dmgNum.length;j++){
     // dmgNum[j].lifetime=dmgNum[j].lifetime-1
     // dmgNum[j].update()
@@ -804,19 +955,22 @@ function logKey(e) {
     enemy[i].type="enemy"
     enemy[i].movementType="SlowWalk"
     enemy[i].item=items[0]
+    enemy[i].exp=1
+    enemy[i].weapon=items[5]
+    enemy[i].atkCD=0
     enemy[i].drops={
         coin:1,
-        coinChance:20,
+        coinChance:50,
         healPotion:10,
         healChance:10,
         itemID1:1,
-        itemID1Chance:10,
+        itemID1Chance:1,
         itemID2:2,
-        itemID2Chance:10,
+        itemID2Chance:1,
         itemID3:3,
-        itemID3Chance:10,
+        itemID3Chance:1,
         itemID4:4,
-        itemID4Chance:10
+        itemID4Chance:1
     }
     i++
   }
@@ -829,11 +983,14 @@ function logKey(e) {
     enemy[i].type="enemy"
     enemy[i].movementType="SlowWalk"
     enemy[i].item=items[0]
+    enemy[i].exp=15
+    enemy[i].weapon=items[6]
+    enemy[i].atkCD=0
     enemy[i].drops={
-        coin:1,
+        coin:100,
         coinChance:20,
-        healPotion:10,
-        healChance:10,
+        healPotion:100,
+        healChance:100,
         itemID1:1,
         itemID1Chance:10,
         itemID2:2,

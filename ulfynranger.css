@@ -239,3 +239,67 @@ body {
             user-select: none; /* Non-prefixed version, currently*/
    
   }
+
+  #expBarUnder {
+    position: relative;
+    z-index:1;
+    pointer-events: none;
+    min-width: 131px;
+    max-width: 131px;
+    min-height: 10px;
+    max-height: 10px;
+    background-color: #666666;
+  
+    left: -470px;
+    bottom: 120px;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently*/
+   
+  }
+
+  #expBarOver {
+    position: relative;
+    z-index:1;
+    pointer-events: none;
+    min-width: 131px;
+    max-width: 131px;
+    min-height: 10px;
+    max-height: 10px;
+    background-color: #236b32;
+  
+    left: -470px;
+    bottom: 130px;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently*/
+   
+  }
+
+  #reviveButton {
+    position: relative;
+    z-index:1;
+    min-width: 111px;
+    max-width: 111px;
+    min-height: 18px;
+    max-height: 18px;
+    padding: 1px 5px;
+    background-color: #a2a2a2;
+    border: 5px solid #8a8a8a;
+  
+    left: -470px;
+    bottom: 221px;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently*/
+   
+  }
