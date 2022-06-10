@@ -27,7 +27,7 @@ let divcontainer = document.getElementById("container")
 let emptySlot = -1
 let money = 0
 let lastmoney = -1
-let playerNumberStatsShown=0
+let playerNumberStatsShown
 let playerNumberStatsChanged=-1
 let itemNumberStatsChanged=-1
 let level = 0
@@ -42,7 +42,7 @@ function startGame() {
     myGamePiece.gravity = 0.5;
     myGamePiece.type="player"
     myGamePiece.colour="#ff0000"
-    myGamePiece.name="Raphael"
+    myGamePiece.id="0"
     myGamePiece.maxhp=100
     myGamePiece.hp=100
     myGamePiece.atkCD=0
@@ -55,7 +55,7 @@ function startGame() {
     myGamePiece2.gravity = 0.5;
     myGamePiece2.type="player"
     myGamePiece2.colour="#0000ff"
-    myGamePiece2.name="Donatello"
+    myGamePiece2.id="1"
     myGamePiece2.hp=100
     myGamePiece2.maxhp=100
     myGamePiece2.atkCD=0
@@ -68,7 +68,7 @@ function startGame() {
     myGamePiece3.gravity = 0.5;
     myGamePiece3.type="player"
     myGamePiece3.colour="#00ff00"
-    myGamePiece3.name="Michaelangelo"
+    myGamePiece3.id="2"
     myGamePiece3.hp=100
     myGamePiece3.maxhp=100
     myGamePiece3.atkCD=0
@@ -81,7 +81,7 @@ function startGame() {
     myGamePiece4.gravity = 0.5;
     myGamePiece4.type="player"
     myGamePiece4.colour="#ffff00"
-    myGamePiece4.name="Master Splinter"
+    myGamePiece4.id="3"
     myGamePiece4.hp=100
     myGamePiece4.maxhp=100
     myGamePiece4.atkCD=0
@@ -90,10 +90,13 @@ function startGame() {
     myGamePiece4.rangeMult=1
     myGamePiece4.size=30
     myGamePiece4.item=items[0]
+    playerNumberStatsShown=myGamePiece
     myGameArea.start();
 }
 
-items[0]={name:"None",damageMin:1,damageMax:1,range:11,atkRate:100,lifeSteal:0,defence:0,type:"None", colour:'#b4b4b4', worth:0, multi:0}
+
+
+items[0]={name:"None",damageMin:100,damageMax:100,range:11,atkRate:100,lifeSteal:0,defence:0,type:"None", colour:'#b4b4b4', worth:0, multi:0}
 items[1]={name:"Test Sword",damageMin:2,damageMax:4,range:25,atkRate:50,lifeSteal:0,defence:0,type:"Sword", colour:'#a83232', worth:10, multi:0}
 items[2]={name:"Test Shield",damageMin:1,damageMax:1,range:15,atkRate:100,lifeSteal:0,defence:1,type:"Shield", colour:'#75a832', worth:10, multi:0}
 items[3]={name:"Test Bow",damageMin:1,damageMax:3,range:160,atkRate:66,lifeSteal:0,defence:0,type:"Bow", colour:'#634f1c', worth:10, multi:0}
@@ -204,36 +207,37 @@ function makeButtonDark(){
     if(this.style.background==="rgb(210, 210, 210)"||this.style.background===""){
     this.style.background='#b4b4b4'
     }
-    
 }
 }
 
 reviveButton.innerHTML="Player Alive"
 document.getElementById("reviveButton").style.background="#517a59"
 document.getElementById("reviveButton").addEventListener("mouseup", revivePlayer);
-document.getElementById("reviveButton").addEventListener("mouseout", revivePlayerInactiveColour);
 document.getElementById("reviveButton").addEventListener("mouseover", revivePlayerActiveColour);
 function revivePlayer(){
+    if(myGamePiece.hp===0&&myGamePiece2.hp===0&&myGamePiece3.hp===0&&myGamePiece4.hp===0){}else{
     if(playerNumberStatsShown.hp===0){
-    if(money>((money/2)+5+(level*2))){
+    if(money>=Math.floor((money/2)+5+(level*2))){
     playerNumberStatsShown.hp=playerNumberStatsShown.maxhp/2
-    money=money-((money/2)+5+(level*2))
+    money=money-Math.floor((money/2)+5+(level*2))
+    document.getElementById("reviveButton").style.background="#517a59"
+    reviveButton.innerHTML="Player Alive"
     }
     }
 }
-function revivePlayerInactiveColour(){
-    if(playerNumberStatsShown.hp===0){
-    this.style.background="#a2a2a2"
-    }
 }
 function revivePlayerActiveColour(){
-    if(playerNumberStatsShown.hp===0){
-    if(money>((money/2)+5+(level*2))){
-        this.style.background="#517a59"
-    }else{
+    if(myGamePiece.hp===0&&myGamePiece2.hp===0&&myGamePiece3.hp===0&&myGamePiece4.hp===0){
         this.style.background="#9c4c4c" 
+    }else{
+        if(playerNumberStatsShown.hp===0){
+            if(money>=Math.floor((money/2)+5+(level*2))){
+                this.style.background="#517a59"
+            }else{
+                this.style.background="#9c4c4c" 
+            }
+        }
     }
-}
 }
 
 //inventory stuff area
@@ -253,7 +257,26 @@ for(e=0;e<inv.length;e++){
 function clickButton(num){
 
     if(num<4){
-        playerNumberStatsShown=num;
+        switch(num){
+            case 0:
+                playerNumberStatsShown=myGamePiece4
+                break;
+            case 1:
+                playerNumberStatsShown=myGamePiece3
+                break;
+            case 2:
+                playerNumberStatsShown=myGamePiece2
+                break;
+            case 3:
+                playerNumberStatsShown=myGamePiece
+                break;
+            default:
+                break;
+        }
+        if(playerNumberStatsShown.hp>0){
+            reviveButton.innerHTML="Player Alive"
+            document.getElementById("reviveButton").style.background="#517a59"
+        }
     }
     
     if(lastslot>-1){
@@ -330,7 +353,10 @@ function refreshPlayerStatsBox(){
         default:
             break;
     }
-
+    if(playerNumberStatsShown.hp>0){
+    reviveButton.innerHTML="Player Alive"
+            document.getElementById("reviveButton").style.background="#517a59"
+        }
     playerStatsBox.innerHTML=`
     <br />
     Health: ${playerNumberStatsShown.hp}/${playerNumberStatsShown.maxhp}<br/>
@@ -759,13 +785,23 @@ function updateGameArea() {
     refreshItemStatsBox()
 
     if(playerNumberStatsShown.hp===0){
-        document.getElementById("reviveButton").style.background="#a2a2a2"
-        reviveButton.innerHTML=`Revive: £${(money/2)+5+(level*2)}`
+        document.getElementById("reviveButton").innerHTML=`Revive: £${Math.floor((money/2)+5+(level*2))}`
+            if(money>=Math.floor((money/2)+5+(level*2))){
+                document.getElementById("reviveButton").style.background="#517a59"
+            }else{
+                document.getElementById("reviveButton").style.background="#9c4c4c" 
+            }
     }
 
     if(lastmoney!==money){
         moneyBox.innerHTML = `Money: £${money}`;
         lastmoney=money
+        document.getElementById("reviveButton").innerHTML=`Revive: £${Math.floor((money/2)+5+(level*2))}`
+            if(money>=Math.floor((money/2)+5+(level*2))){
+                document.getElementById("reviveButton").style.background="#517a59"
+            }else{
+                document.getElementById("reviveButton").style.background="#9c4c4c" 
+            }
     }
 
     if(lastslot!==-1){
@@ -833,8 +869,8 @@ function drag(){
         if(blockToMouseX<30 && blockToMouseY<30){
         document.onmousemove = function(event) {
             myGamePiece.atkCD=myGamePiece.item.atkRate
-            if(playerNumberStatsShown!==3){
-            playerNumberStatsShown=3
+            if(playerNumberStatsShown.id!==0){
+            playerNumberStatsShown=myGamePiece
             }
             pointerX = event.pageX-15-(window.innerWidth-960)/2;
         pointerY = event.pageY-15-(window.innerHeight-540)/2;
@@ -858,8 +894,8 @@ function drag(){
         }//dragging p1
         if(block2ToMouseX<30 && block2ToMouseY<30){
             document.onmousemove = function(event) {
-                if(playerNumberStatsShown!==2){
-                playerNumberStatsShown=2
+                if(playerNumberStatsShown.id!==1){
+                playerNumberStatsShown=myGamePiece2
                 }
                 myGamePiece2.atkCD=myGamePiece2.item.atkRate
                 pointerX = event.pageX-15-(window.innerWidth-960)/2;
@@ -884,8 +920,8 @@ function drag(){
         }//dragging p2
         if(block3ToMouseX<30 && block3ToMouseY<30){
             document.onmousemove = function(event) {
-                if(playerNumberStatsShown!==1){
-                playerNumberStatsShown=1
+                if(playerNumberStatsShown.id!==2){
+                playerNumberStatsShown=myGamePiece3
                 }
                 myGamePiece3.atkCD=myGamePiece3.item.atkRate
                 pointerX = event.pageX-15-(window.innerWidth-960)/2;
@@ -910,8 +946,8 @@ function drag(){
         }//dragging p3
         if(block4ToMouseX<30 && block4ToMouseY<30){
             document.onmousemove = function(event) {
-                if(playerNumberStatsShown!==0){
-                playerNumberStatsShown=0
+                if(playerNumberStatsShown.id!==3){
+                playerNumberStatsShown=myGamePiece4
                 }
                 myGamePiece4.atkCD=myGamePiece4.item.atkRate
                 pointerX = event.pageX-15-(window.innerWidth-960)/2;
