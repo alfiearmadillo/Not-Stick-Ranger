@@ -136,15 +136,15 @@ body {
     position: relative;
     z-index:1;
     pointer-events: none;
-    min-width: 128px;
-    max-width: 128px;
+    min-width: 148px;
+    max-width: 148px;
     min-height: 10px;
     max-height: 10px;
     background-color: #b4b4b4;
     border: 5px solid #8a8a8a;
   
-    left: -314px;
-    bottom: 206px;
+    left: -324px;
+    bottom: 216px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -181,15 +181,15 @@ body {
     position: relative;
     z-index:1;
     pointer-events: none;
-    min-width: 123px;
-    max-width: 123px;
+    min-width: 143px;
+    max-width: 143px;
     min-height: 10px;
     max-height: 10px;
     background-color: #b4b4b4;
     border: 5px solid #8a8a8a;
   
-    left: -471px;
-    bottom: 91px;
+    left: -481px;
+    bottom: 101px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -289,17 +289,68 @@ body {
     max-width: 111px;
     min-height: 18px;
     max-height: 18px;
-    padding: 1px 5px;
     background-color: #a2a2a2;
     border: 5px solid #8a8a8a;
   
     left: -470px;
     bottom: 221px;
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently*/
-   
+  
+  }
+
+  #dmgSPButton {
+    position: relative;
+    z-index:1;
+    min-width: 5px;
+    max-width: 5px;
+    min-height: 5px;
+    max-height: 5px;
+    background-color: #a2a2a2;
+    border: 5px solid #8a8a8a;
+  
+    left: -353px;
+    bottom: 341px;
+ 
+  }
+
+  #hpSPButton {
+    position: relative;
+    z-index:1;
+    min-width: 5px;
+    max-width: 5px;
+    min-height: 5px;
+    max-height: 5px;
+    background-color: #a2a2a2;
+    border: 5px solid #8a8a8a;
+  
+    left: -353px;
+    bottom: 374px;
+ 
+  }
+
+  #rangeSPButton {
+    position: relative;
+    z-index:1;
+    min-width: 5px;
+    max-width: 5px;
+    min-height: 5px;
+    max-height: 5px;
+    background-color: #a2a2a2;
+    border: 5px solid #8a8a8a;
+  
+    left: -353px;
+    bottom: 353px;
+  }
+
+  #delaySPButton {
+    position: relative;
+    z-index:1;
+    min-width: 5px;
+    max-width: 5px;
+    min-height: 5px;
+    max-height: 5px;
+    background-color: #a2a2a2;
+    border: 5px solid #8a8a8a;
+  
+    left: -353px;
+    bottom: 350px;
   }
