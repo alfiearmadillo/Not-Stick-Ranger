@@ -567,7 +567,7 @@ function component(width, height, color, x, y) {//draw new boxes
             this.gravitySpeed=0
             this.speedX=this.speedX-this.speedX*0.3
             if(this.hp>0||this.type!=="player"){
-            this.speedY=this.speedY-this.speedY*0.3
+            this.speedY=-Math.abs(this.speedY-this.speedY*0.3)
             }else{
                 this.speedY=0
             }
@@ -1129,12 +1129,3 @@ function logKey(e) {
 }
 
 document.getElementById(inv.length-1).style.background='#5c5c5c'
-// document.addEventListener("click", wipeInvActives);
-// function wipeInvActives(){
-//     test = inv.findIndex(element => element.storedItem=2)
-//     document.getElementById(test).style.background='#660033'
-
-// for(x=0;x<inv.length;x++){
-//     inv[x].active=0
-// }
-// }
