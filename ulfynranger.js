@@ -366,6 +366,7 @@ function clickButton(num){
     }
     document.getElementById(inv.length-1).style.background='#5c5c5c'
     lastEXP=-1
+    lastRevCostShown=-1
 }
 
 var myGameArea = {
@@ -944,7 +945,7 @@ drag()
 function drag(){
     document.onmousedown = function(event){
         pointerX = event.pageX-(window.innerWidth-960)/2;
-        pointerY = event.pageY-(window.innerHeight-540)/2;
+        pointerY = event.pageY-(window.innerHeight-540-250)/2;
         blockToMouseX = Math.abs(myGamePiece.x+(myGamePiece.size/2)-pointerX)
         blockToMouseY = Math.abs(myGamePiece.y+(myGamePiece.size/2)-pointerY)
         block2ToMouseX = Math.abs(myGamePiece2.x+(myGamePiece2.size/2)-pointerX)
@@ -960,7 +961,7 @@ function drag(){
             playerNumberStatsShown=myGamePiece
             }
             pointerX = event.pageX-(myGamePiece.size/2)-(window.innerWidth-960)/2;
-        pointerY = event.pageY-(myGamePiece.size/2)-(window.innerHeight-540)/2;
+        pointerY = event.pageY-(myGamePiece.size/2)-(window.innerHeight-540-250)/2;
             blockToMouseX = Math.abs(myGamePiece.x-pointerX)
             blockToMouseY = Math.abs(myGamePiece.y-pointerY)
             if(myGamePiece.x<pointerX){
@@ -986,7 +987,7 @@ function drag(){
                 }
                 myGamePiece2.atkCD=Math.floor(myGamePiece2.item.atkRate/((100+myGamePiece2.cdPoints*2.5)/100))
                 pointerX = event.pageX-(myGamePiece2.size/2)-(window.innerWidth-960)/2;
-        pointerY = event.pageY-(myGamePiece2.size/2)-(window.innerHeight-540)/2;
+        pointerY = event.pageY-(myGamePiece2.size/2)-(window.innerHeight-540-250)/2;
                 block2ToMouseX = Math.abs(myGamePiece2.x-pointerX)
                 block2ToMouseY = Math.abs(myGamePiece2.y-pointerY)
                 if(myGamePiece2.x<pointerX){
@@ -1012,7 +1013,7 @@ function drag(){
                 }
                 myGamePiece3.atkCD=Math.floor(myGamePiece3.item.atkRate/((100+myGamePiece3.cdPoints*2.5)/100))
                 pointerX = event.pageX-(myGamePiece3.size/2)-(window.innerWidth-960)/2;
-        pointerY = event.pageY-(myGamePiece3.size/2)-(window.innerHeight-540)/2;
+        pointerY = event.pageY-(myGamePiece3.size/2)-(window.innerHeight-540-250)/2;
                 block3ToMouseX = Math.abs(myGamePiece3.x-pointerX)
                 block3ToMouseY = Math.abs(myGamePiece3.y-pointerY)
                 if(myGamePiece3.x<pointerX){
@@ -1038,7 +1039,7 @@ function drag(){
                 }
                 myGamePiece4.atkCD=Math.floor(myGamePiece4.item.atkRate/((100+myGamePiece4.cdPoints*2.5)/100))
                 pointerX = event.pageX-(myGamePiece4.size/2)-(window.innerWidth-960)/2;
-        pointerY = event.pageY-(myGamePiece4.size/2)-(window.innerHeight-540)/2;
+        pointerY = event.pageY-(myGamePiece4.size/2)-(window.innerHeight-540-250)/2;
                 block4ToMouseX = Math.abs(myGamePiece4.x-pointerX)
                 block4ToMouseY = Math.abs(myGamePiece4.y-pointerY)
                 if(myGamePiece4.x<pointerX){
@@ -1073,19 +1074,19 @@ function logKey(e) {
     enemy[i] = new component(20, 20, "purple", 480, 270);
     enemy[i].size=20
     enemy[i].gravity = 0.5;
-    enemy[i].hp=10
+    enemy[i].hp=1
     enemy[i].maxhp=enemy[i].hp
     enemy[i].type="enemy"
     enemy[i].movementType="SlowWalk"
     enemy[i].item=items[0]
-    enemy[i].exp=1
+    enemy[i].exp=10000
     enemy[i].weapon=items[5]
     enemy[i].atkCD=0
     enemy[i].drops={
         coin:1,
         coinChance:50,
         healPotion:0.1,
-        healChance:100,
+        healChance:10,
         itemID1:1,
         itemID1Chance:1,
         itemID2:2,

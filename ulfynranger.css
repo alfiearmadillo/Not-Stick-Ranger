@@ -7,7 +7,7 @@ body {
     position:fixed;
     margin: auto;
     top: 0;
-    bottom: 0;
+    bottom: 250px;
     left:0;
     right:0;
     border:1px solid #d3d3d3;
@@ -30,7 +30,7 @@ body {
     margin: 2px;
     position: relative;
     left: -502px;
-    bottom:-209px;
+    bottom:-84px;
   }
   
   #icon0 {
@@ -40,7 +40,7 @@ body {
     position: relative;
     margin: 2px;
     left: -453px;
-    bottom: -179px;
+    bottom: -54px;
   }
 
   #icon1 {
@@ -50,7 +50,7 @@ body {
     position: relative;
     margin: 2px;
     left: -355px;
-    bottom: -179px;
+    bottom: -54px;
   }
   
   #icon2 {
@@ -60,7 +60,7 @@ body {
     position:relative;
     margin: 2px;
     left: -257px;
-    bottom: -179px;
+    bottom: -54px;
   }
   
   #icon3 {
@@ -70,7 +70,7 @@ body {
     position: relative;
     margin: 2px;
     left: -159px;
-    bottom: -179px;
+    bottom: -54px;
   }
 
   #moneybox {
@@ -81,7 +81,7 @@ body {
     min-width: 124px;
   max-width: 124px;
     left: -473px;
-    bottom: 309px;
+    bottom: 434px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -99,7 +99,7 @@ body {
     min-width: 104px;
   max-width: 104px;
     left: 420px;
-    bottom: -297px;
+    bottom: -172px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -122,7 +122,7 @@ body {
     border: 5px solid #8a8a8a;
   
     left: -324px;
-    bottom:49px;
+    bottom:174px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -144,7 +144,7 @@ body {
     border: 5px solid #8a8a8a;
   
     left: -324px;
-    bottom: 216px;
+    bottom: 341px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -167,7 +167,7 @@ body {
     border: 5px solid #8a8a8a;
   
     left: -481px;
-    bottom: -139px;
+    bottom: -14px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -189,7 +189,7 @@ body {
     border: 5px solid #8a8a8a;
   
     left: -481px;
-    bottom: 101px;
+    bottom: 226px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -210,7 +210,7 @@ body {
     background-color: #7b531b;
   
     left: -480px;
-    bottom: 336px;
+    bottom: 461px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -230,7 +230,7 @@ body {
     background-color: #17740b;
   
     left: -480px;
-    bottom: 366px;
+    bottom: 491px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -251,7 +251,7 @@ body {
     background-color: #666666;
   
     left: -470px;
-    bottom: 120px;
+    bottom: 248px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -272,7 +272,7 @@ body {
     background-color: #236b32;
   
     left: -470px;
-    bottom: 130px;
+    bottom: 258px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -293,7 +293,7 @@ body {
     border: 5px solid #8a8a8a;
   
     left: -470px;
-    bottom: 221px;
+    bottom: 346px;
   
   }
 
@@ -308,7 +308,7 @@ body {
     border: 5px solid #8a8a8a;
   
     left: -353px;
-    bottom: 341px;
+    bottom: 466px;
  
   }
 
@@ -323,7 +323,7 @@ body {
     border: 5px solid #8a8a8a;
   
     left: -353px;
-    bottom: 374px;
+    bottom: 499px;
  
   }
 
@@ -338,7 +338,7 @@ body {
     border: 5px solid #8a8a8a;
   
     left: -353px;
-    bottom: 353px;
+    bottom: 478px;
   }
 
   #delaySPButton {
@@ -352,5 +352,5 @@ body {
     border: 5px solid #8a8a8a;
   
     left: -353px;
-    bottom: 350px;
+    bottom: 475px;
   }
