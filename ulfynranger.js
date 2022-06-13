@@ -2,7 +2,6 @@
 //shop
 //world map
 
-// skill points
 // save / load
 // ranged projectile?
 // sprites?
@@ -960,6 +959,7 @@ function drag(){
             if(playerNumberStatsShown.id!==0){
             playerNumberStatsShown=myGamePiece
             }
+            lastmoney=-1
             pointerX = event.pageX-(myGamePiece.size/2)-(window.innerWidth-960)/2;
         pointerY = event.pageY-(myGamePiece.size/2)-(window.innerHeight-540-250)/2;
             blockToMouseX = Math.abs(myGamePiece.x-pointerX)
@@ -985,6 +985,7 @@ function drag(){
                 if(playerNumberStatsShown.id!==1){
                 playerNumberStatsShown=myGamePiece2
                 }
+                lastmoney=-1
                 myGamePiece2.atkCD=Math.floor(myGamePiece2.item.atkRate/((100+myGamePiece2.cdPoints*2.5)/100))
                 pointerX = event.pageX-(myGamePiece2.size/2)-(window.innerWidth-960)/2;
         pointerY = event.pageY-(myGamePiece2.size/2)-(window.innerHeight-540-250)/2;
@@ -1011,6 +1012,7 @@ function drag(){
                 if(playerNumberStatsShown.id!==2){
                 playerNumberStatsShown=myGamePiece3
                 }
+                lastmoney=-1
                 myGamePiece3.atkCD=Math.floor(myGamePiece3.item.atkRate/((100+myGamePiece3.cdPoints*2.5)/100))
                 pointerX = event.pageX-(myGamePiece3.size/2)-(window.innerWidth-960)/2;
         pointerY = event.pageY-(myGamePiece3.size/2)-(window.innerHeight-540-250)/2;
@@ -1037,6 +1039,7 @@ function drag(){
                 if(playerNumberStatsShown.id!==3){
                 playerNumberStatsShown=myGamePiece4
                 }
+                lastmoney=-1
                 myGamePiece4.atkCD=Math.floor(myGamePiece4.item.atkRate/((100+myGamePiece4.cdPoints*2.5)/100))
                 pointerX = event.pageX-(myGamePiece4.size/2)-(window.innerWidth-960)/2;
         pointerY = event.pageY-(myGamePiece4.size/2)-(window.innerHeight-540-250)/2;
@@ -1074,12 +1077,12 @@ function logKey(e) {
     enemy[i] = new component(20, 20, "purple", 480, 270);
     enemy[i].size=20
     enemy[i].gravity = 0.5;
-    enemy[i].hp=1
+    enemy[i].hp=10
     enemy[i].maxhp=enemy[i].hp
     enemy[i].type="enemy"
     enemy[i].movementType="SlowWalk"
     enemy[i].item=items[0]
-    enemy[i].exp=10000
+    enemy[i].exp=1
     enemy[i].weapon=items[5]
     enemy[i].atkCD=0
     enemy[i].drops={
