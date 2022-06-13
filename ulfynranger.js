@@ -7,6 +7,10 @@
 // sprites?
 // levels?
 
+//createLand function, sets up coordinates of block which act as bouncers similar to walls and floor, generates it with grass on top
+
+//move next level sign to highest bouncer
+
 // Idle game? Random enemy stats, weapon stats, scale off level
 // auto sell from floor upgrade, item despawn timer, shop for upgrades
 // enemy attacks, revival, auto revive
