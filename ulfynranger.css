@@ -198,47 +198,6 @@ body {
             user-select: none; /* Non-prefixed version, currently*/
    
   }
-  
-  #dirt {
-    position: relative;
-    z-index:1;
-    pointer-events: none;
-    min-width: 960px;
-    max-width: 960px;
-    min-height: 20px;
-    max-height: 20px;
-    background-color: #7b531b;
-  
-    left: -480px;
-    bottom: 461px;
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently*/
-   
-  }
-  #grass {
-    position: relative;
-    z-index:1;
-    pointer-events: none;
-    min-width: 960px;
-    max-width: 960px;
-    min-height: 10px;
-    max-height: 10px;
-    background-color: #17740b;
-  
-    left: -480px;
-    bottom: 491px;
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently*/
-   
-  }
 
   #expBarUnder {
     position: relative;
@@ -251,7 +210,7 @@ body {
     background-color: #666666;
   
     left: -470px;
-    bottom: 248px;
+    bottom: 218px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -272,7 +231,7 @@ body {
     background-color: #236b32;
   
     left: -470px;
-    bottom: 258px;
+    bottom: 228px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -285,6 +244,7 @@ body {
   #reviveButton {
     position: relative;
     z-index:1;
+    padding: 1px 5px;
     min-width: 111px;
     max-width: 111px;
     min-height: 18px;
@@ -293,7 +253,7 @@ body {
     border: 5px solid #8a8a8a;
   
     left: -470px;
-    bottom: 346px;
+    bottom: 316px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -315,7 +275,7 @@ body {
     border: 5px solid #8a8a8a;
   
     left: -353px;
-    bottom: 466px;
+    bottom: 438px;
  
   }
 
@@ -330,7 +290,7 @@ body {
     border: 5px solid #8a8a8a;
   
     left: -353px;
-    bottom: 499px;
+    bottom: 471px;
  
   }
 
@@ -345,7 +305,7 @@ body {
     border: 5px solid #8a8a8a;
   
     left: -353px;
-    bottom: 478px;
+    bottom: 450px;
   }
 
   #delaySPButton {
@@ -359,5 +319,5 @@ body {
     border: 5px solid #8a8a8a;
   
     left: -353px;
-    bottom: 475px;
+    bottom: 447px;
   }
