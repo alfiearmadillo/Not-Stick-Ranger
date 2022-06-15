@@ -1233,6 +1233,18 @@ function drag(){
         }else
         if(blockToMouseX<15 && blockToMouseY<15){
             p1Held=1
+        }else
+        if(block4ToMouseX<40 && block4ToMouseY<40){
+            p4Held=1
+        }else
+        if(block3ToMouseX<40 && block3ToMouseY<40){
+            p3Held=1
+        }else
+        if(block2ToMouseX<40 && block2ToMouseY<40){
+            p2Held=1
+        }else
+        if(blockToMouseX<40 && blockToMouseY<40){
+            p1Held=1
         }
         
         
