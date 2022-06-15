@@ -1,20 +1,21 @@
-//stages
-//shop
+//Areas & Sub
 //world map
+//SP Respec in starting area w/ shop, hp regen, free revivals
 
-// save / load
+// save / load // Item stored in all inv slots, money, HP, assigned SP, spare SP, XP, LV, Area, SubArea?, save if all die instantly, on load if all dead, 1 random one to 1hp
 // ranged projectile?
 // sprites?
-// levels?
 
-//terrain side collision
+//shop contains items, enemy info, bonus SP (10,100,1000 etc.)
 
-//move next level sign to highest bouncer
+//terrain side collision?
 
-// Idle game? Random enemy stats, weapon stats, scale off level
-// auto sell from floor upgrade, item despawn timer, shop for upgrades
-// enemy attacks, revival, auto revive
+//move next level sign to highest floor not off top of screen
 
+let p1Held=0
+let p3Held=0
+let p2Held=0
+let p4Held=0
 
 var nearTarget=0
 var myGamePiece;
@@ -368,9 +369,13 @@ function clickButton(num){
     lastRevCostShown=-1
 }
 
-newLand(0,510,1000,5400)
+newLand(-1,510,1000,5400)
 newLand(400,480,1000,5400)
-newLand(0,280,300,310)
+newLand(-1,280,200,340)
+newLand(-1,280,100,355)
+newLand(-1,280,300,310)
+newLand(-1,260,270,325)
+newLand(-1,245,140,325)
 //create more terrain
 //createland create land
 function newLand(x1,y1,x2,y2){
@@ -997,25 +1002,41 @@ function updateGameArea() {
         if(enemy[j].atkCD<=0){
             if(enemy[j].weapon.multi===1){
                 if(redPDist<enemy[j].weapon.range&&myGamePiece.hp>0){
+                    if(enemy[j].weapon.damageMin-myGamePiece.item.defence<1){
+                    myGamePiece.hp=myGamePiece.hp-1
+                    }else{
                     myGamePiece.hp=myGamePiece.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-myGamePiece.item.defence)
+                    }
                     if(myGamePiece.hp<0){
                         myGamePiece.hp=0
                     }
                 }
                 if(bluPDist<enemy[j].weapon.range&&myGamePiece2.hp>0){
+                    if(enemy[j].weapon.damageMin-myGamePiece2.item.defence<1){
+                        myGamePiece2.hp=myGamePiece2.hp-1
+                        }else{
                     myGamePiece2.hp=myGamePiece2.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-myGamePiece2.item.defence)
+                        }
                     if(myGamePiece2.hp<0){
                         myGamePiece2.hp=0
                     }
                 }
                 if(grnPDist<enemy[j].weapon.range&&myGamePiece3.hp>0){
+                    if(enemy[j].weapon.damageMin-myGamePiece3.item.defence<1){
+                        myGamePiece3.hp=myGamePiece3.hp-1
+                        }else{
                     myGamePiece3.hp=myGamePiece3.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-myGamePiece3.item.defence)
+                        }
                     if(myGamePiece3.hp<0){
                         myGamePiece3.hp=0
                     }
                 }
                 if(ylwPDist<enemy[j].weapon.range&&myGamePiece4.hp>0){
+                    if(enemy[j].weapon.damageMin-myGamePiece4.item.defence<1){
+                        myGamePiece4.hp=myGamePiece4.hp-1
+                        }else{
                     myGamePiece4.hp=myGamePiece4.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-myGamePiece4.item.defence)
+                        }
                     if(myGamePiece4.hp<0){
                         myGamePiece4.hp=0
                     }
@@ -1023,22 +1044,38 @@ function updateGameArea() {
                 enemy[j].atkCD=enemy[j].weapon.atkRate
             }else{
                 if(redPDist<enemy[j].weapon.range &&redPDist<bluPDist&&redPDist<grnPDist&&redPDist<ylwPDist&&myGamePiece.hp>0){
+                    if(enemy[j].weapon.damageMin-myGamePiece.item.defence<1){
+                        myGamePiece.hp=myGamePiece.hp-1
+                        }else{
                     myGamePiece.hp=myGamePiece.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-myGamePiece.item.defence)
+                        }
                     if(myGamePiece.hp<0){
                         myGamePiece.hp=0
                     }
                 }else if(bluPDist<enemy[j].weapon.range&&bluPDist<grnPDist&&bluPDist<ylwPDist&&myGamePiece2.hp>0){
+                    if(enemy[j].weapon.damageMin-myGamePiece2.item.defence<1){
+                        myGamePiece2.hp=myGamePiece2.hp-1
+                        }else{
                     myGamePiece2.hp=myGamePiece2.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-myGamePiece2.item.defence)
+                        }
                     if(myGamePiece2.hp<0){
                         myGamePiece2.hp=0
                     }
                 }else if(grnPDist<enemy[j].weapon.range&&grnPDist<ylwPDist&&myGamePiece3.hp>0){
+                    if(enemy[j].weapon.damageMin-myGamePiece3.item.defence<1){
+                        myGamePiece3.hp=myGamePiece3.hp-1
+                        }else{
                     myGamePiece3.hp=myGamePiece3.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-myGamePiece3.item.defence)
+                        }
                     if(myGamePiece3.hp<0){
                         myGamePiece3.hp=0
                     }
                 }else if(ylwPDist<enemy[j].weapon.range&&myGamePiece4.hp>0){
+                    if(enemy[j].weapon.damageMin-myGamePiece4.item.defence<1){
+                        myGamePiece4.hp=myGamePiece4.hp-1
+                        }else{
                     myGamePiece4.hp=myGamePiece4.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-myGamePiece4.item.defence)
+                        }
                     if(myGamePiece4.hp<0){
                         myGamePiece4.hp=0
                     }
@@ -1062,6 +1099,19 @@ function updateGameArea() {
     myGamePiece4.update();
     inv[14].storedItem=0
     
+    if(p1Held===1){
+        playerMoveToMouse(myGamePiece)
+    }
+    if(p2Held===1){
+        playerMoveToMouse(myGamePiece2)
+    }
+    if(p3Held===1){
+        playerMoveToMouse(myGamePiece3)
+    }
+    if(p4Held===1){
+        playerMoveToMouse(myGamePiece4)
+    }
+
     if(myGamePiece.hp===0&&myGamePiece2.hp===0&&myGamePiece3.hp===0&&myGamePiece4.hp===0&&gameover>-1){
         gameover=gameover-1
         if(gameover===0){
@@ -1172,120 +1222,110 @@ function drag(){
         block3ToMouseY = Math.abs(myGamePiece3.y+(myGamePiece3.size/2)-pointerY)
         block4ToMouseX = Math.abs(myGamePiece4.x+(myGamePiece4.size/2)-pointerX)
         block4ToMouseY = Math.abs(myGamePiece4.y+(myGamePiece4.size/2)-pointerY)
-        if(blockToMouseX<30 && blockToMouseY<30){
-        document.onmousemove = function(event) {
-            myGamePiece.atkCD=Math.floor(myGamePiece.item.atkRate/((100+myGamePiece.cdPoints*2.5)/100))
-            if(playerNumberStatsShown.id!==0){
-            playerNumberStatsShown=myGamePiece
-            }
-            lastmoney=-1
-            pointerX = event.pageX-(myGamePiece.size/2)-(window.innerWidth-960)/2;
-        pointerY = event.pageY-(myGamePiece.size/2)-(window.innerHeight-540-250)/2;
-            blockToMouseX = Math.abs(myGamePiece.x-pointerX)
-            blockToMouseY = Math.abs(myGamePiece.y-pointerY)
-            if(myGamePiece.x<pointerX){
-                myGamePiece.speedX = blockToMouseX/8
-            };
-            if(myGamePiece.x>pointerX){
-                myGamePiece.speedX = -blockToMouseX/8
-            };
-            if(myGamePiece.y<pointerY){
-                myGamePiece.speedY = blockToMouseY/8
-            };
-            if(myGamePiece.y>pointerY){
-                myGamePiece.speedY = -blockToMouseY/8
-            };
-            
-            myGamePiece.gravitySpeed = 0
-            }
-        }//dragging p1
-        if(block2ToMouseX<30 && block2ToMouseY<30){
-            document.onmousemove = function(event) {
-                if(playerNumberStatsShown.id!==1){
-                playerNumberStatsShown=myGamePiece2
-                }
-                lastmoney=-1
-                myGamePiece2.atkCD=Math.floor(myGamePiece2.item.atkRate/((100+myGamePiece2.cdPoints*2.5)/100))
-                pointerX = event.pageX-(myGamePiece2.size/2)-(window.innerWidth-960)/2;
-        pointerY = event.pageY-(myGamePiece2.size/2)-(window.innerHeight-540-250)/2;
-                block2ToMouseX = Math.abs(myGamePiece2.x-pointerX)
-                block2ToMouseY = Math.abs(myGamePiece2.y-pointerY)
-                if(myGamePiece2.x<pointerX){
-                    myGamePiece2.speedX = block2ToMouseX/8
-                };
-                if(myGamePiece2.x>pointerX){
-                    myGamePiece2.speedX = -block2ToMouseX/8
-                };
-                if(myGamePiece2.y<pointerY){
-                    myGamePiece2.speedY = block2ToMouseY/8
-                };
-                if(myGamePiece2.y>pointerY){
-                    myGamePiece2.speedY = -block2ToMouseY/8
-                };
-                
-                myGamePiece2.gravitySpeed = 0
-                }
-        }//dragging p2
-        if(block3ToMouseX<30 && block3ToMouseY<30){
-            document.onmousemove = function(event) {
-                if(playerNumberStatsShown.id!==2){
-                playerNumberStatsShown=myGamePiece3
-                }
-                lastmoney=-1
-                myGamePiece3.atkCD=Math.floor(myGamePiece3.item.atkRate/((100+myGamePiece3.cdPoints*2.5)/100))
-                pointerX = event.pageX-(myGamePiece3.size/2)-(window.innerWidth-960)/2;
-        pointerY = event.pageY-(myGamePiece3.size/2)-(window.innerHeight-540-250)/2;
-                block3ToMouseX = Math.abs(myGamePiece3.x-pointerX)
-                block3ToMouseY = Math.abs(myGamePiece3.y-pointerY)
-                if(myGamePiece3.x<pointerX){
-                    myGamePiece3.speedX = block3ToMouseX/8
-                };
-                if(myGamePiece3.x>pointerX){
-                    myGamePiece3.speedX = -block3ToMouseX/8
-                };
-                if(myGamePiece3.y<pointerY){
-                    myGamePiece3.speedY = block3ToMouseY/8
-                };
-                if(myGamePiece3.y>pointerY){
-                    myGamePiece3.speedY = -block3ToMouseY/8
-                };
-                
-                myGamePiece3.gravitySpeed = 0
-                }
-        }//dragging p3
-        if(block4ToMouseX<30 && block4ToMouseY<30){
-            document.onmousemove = function(event) {
-                if(playerNumberStatsShown.id!==3){
-                playerNumberStatsShown=myGamePiece4
-                }
-                lastmoney=-1
-                myGamePiece4.atkCD=Math.floor(myGamePiece4.item.atkRate/((100+myGamePiece4.cdPoints*2.5)/100))
-                pointerX = event.pageX-(myGamePiece4.size/2)-(window.innerWidth-960)/2;
-        pointerY = event.pageY-(myGamePiece4.size/2)-(window.innerHeight-540-250)/2;
-                block4ToMouseX = Math.abs(myGamePiece4.x-pointerX)
-                block4ToMouseY = Math.abs(myGamePiece4.y-pointerY)
-                if(myGamePiece4.x<pointerX){
-                    myGamePiece4.speedX = block4ToMouseX/8
-                };
-                if(myGamePiece4.x>pointerX){
-                    myGamePiece4.speedX = -block4ToMouseX/8
-                };
-                if(myGamePiece4.y<pointerY){
-                    myGamePiece4.speedY = block4ToMouseY/8
-                };
-                if(myGamePiece4.y>pointerY){
-                    myGamePiece4.speedY = -block4ToMouseY/8
-                };
-                
-                myGamePiece4.gravitySpeed = 0
-                }
-        }//dragging p4
-    }
-    document.onmouseup = async function(){
-        document.onmousemove = function() {
+        if(block4ToMouseX<15 && block4ToMouseY<15){
+            p4Held=1
+        }else
+        if(block3ToMouseX<15 && block3ToMouseY<15){
+            p3Held=1
+        }else
+        if(block2ToMouseX<15 && block2ToMouseY<15){
+            p2Held=1
+        }else
+        if(blockToMouseX<15 && blockToMouseY<15){
+            p1Held=1
         }
+        
+        
+        
     }
 }
+
+
+
+
+
+document.addEventListener("mouseup",releasePlayers)
+function releasePlayers(){
+    p1Held=0
+    p2Held=0
+    p3Held=0
+    p4Held=0
+}
+
+document.addEventListener("mousemove",updateMouseCoords)
+function updateMouseCoords(event){
+    pointerX = event.pageX-(myGamePiece.size/2)-(window.innerWidth-960)/2;
+    pointerY = event.pageY-(myGamePiece.size/2)-(window.innerHeight-540-250)/2;
+}
+
+
+
+
+
+
+
+
+
+
+function playerMoveToMouse(playerHeld, event){
+    playerHeld.atkCD=Math.floor(playerHeld.item.atkRate/((100+playerHeld.cdPoints*2.5)/100))
+            if(playerNumberStatsShown.id!==0){
+            playerNumberStatsShown=playerHeld
+            }
+            lastmoney=-1
+            blockToMouseX = Math.abs(playerHeld.x-pointerX)
+            blockToMouseY = Math.abs(playerHeld.y-pointerY)
+            if(playerHeld.x<pointerX){
+                playerHeld.speedX = blockToMouseX/8
+            };
+            if(playerHeld.x>pointerX){
+                playerHeld.speedX = -blockToMouseX/8
+            };
+            if(playerHeld.y<pointerY){
+                playerHeld.speedY = blockToMouseY/8
+            };
+            if(playerHeld.y>pointerY){
+                playerHeld.speedY = -blockToMouseY/8
+            };
+            playerHeld.gravitySpeed = 0
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 document.addEventListener('keydown', logKey);//enemy spawning
