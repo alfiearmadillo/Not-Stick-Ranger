@@ -1,10 +1,15 @@
+//Start on menu, load and new button
+//new starts in town, next goes to map with 1st lv unlocked
+
 //Areas & Sub
 //world map
 //SP Respec in starting area w/ shop, hp regen, free revivals
 
-// save / load // Item stored in all inv slots, money, HP, assigned SP, spare SP, XP, LV, Area, SubArea?, save if all die instantly, on load if all dead, 1 random one to 1hp
+// save / load // Item stored in all inv slots, money, HP, assigned SP, spare SP, XP, LV, Area, SubArea?, save if all die instantly
 // ranged projectile?
 // sprites?
+
+//game over screen reload // on load if all dead, 1 random one to 1hp
 
 //shop contains items, enemy info, bonus SP (10,100,1000 etc.)
 
@@ -16,7 +21,10 @@ let p1Held=0
 let p3Held=0
 let p2Held=0
 let p4Held=0
-
+var pointerX = -1;
+var pointerY = -1;
+var blockToMouseX
+var blockToMouseY
 var nearTarget=0
 var myGamePiece;
 //let dmgNum=[]
@@ -373,7 +381,7 @@ newLand(-1,510,1000,5400)
 newLand(400,480,1000,5400)
 newLand(-1,280,200,340)
 newLand(-1,280,100,355)
-newLand(-1,280,300,310)
+newLand(-1,280,300,311)
 newLand(-1,260,270,325)
 newLand(-1,245,140,325)
 //create more terrain
@@ -560,8 +568,8 @@ function component(width, height, color, x, y) {//draw new boxes
         if(this.speedY>30){
             this.speedY=30
         }
-        if(this.speedY-this.gravity<-30){
-            this.speedY=-30+this.gravitySpeed
+        if(this.speedY<-30){
+            this.speedY=-30
         }
         this.x += this.speedX;
         this.y += this.speedY + this.gravitySpeed;
@@ -1099,7 +1107,7 @@ function updateGameArea() {
     myGamePiece4.update();
     inv[14].storedItem=0
     
-    if(p1Held===1){
+    if(p1Held===1){ //Check if any player is held, if they are, start dragging them
         playerMoveToMouse(myGamePiece)
     }
     if(p2Held===1){
@@ -1112,7 +1120,7 @@ function updateGameArea() {
         playerMoveToMouse(myGamePiece4)
     }
 
-    if(myGamePiece.hp===0&&myGamePiece2.hp===0&&myGamePiece3.hp===0&&myGamePiece4.hp===0&&gameover>-1){
+    if(myGamePiece.hp===0&&myGamePiece2.hp===0&&myGamePiece3.hp===0&&myGamePiece4.hp===0&&gameover>-1){ //Check for TPK, game over
         gameover=gameover-1
         if(gameover===0){
             alert("Game Over")
@@ -1121,7 +1129,7 @@ function updateGameArea() {
 
     refreshItemStatsBox()
 
-    if(playerNumberStatsShown.hp===0 && lastRevCostShown!==playerNumberStatsShown){
+    if(playerNumberStatsShown.hp===0 && lastRevCostShown!==playerNumberStatsShown){ //Revive button updating when changing selected player & player is dead
         document.getElementById("reviveButton").innerHTML=`Revive: £${Math.floor((money/2)+5+(level*2))}`
             if(money>=Math.floor((money/2)+5+(level*2))){
                 document.getElementById("reviveButton").style.background="#517a59"
@@ -1133,7 +1141,7 @@ function updateGameArea() {
 
     
 
-    if(lastslot!==-1){
+    if(lastslot!==-1){ //Updating the sell button
         if(items[inv[lastslot].storedItem].worth!==(undefined^0^null)){
     sellItemBox.innerHTML = `Sell<br />£${items[inv[lastslot].storedItem].worth}`;
         }
@@ -1141,7 +1149,7 @@ function updateGameArea() {
         sellItemBox.innerHTML = `Sell<br />Item`;
     }
 
-    for(r=0;r<droppedItem.length;r++){
+    for(r=0;r<droppedItem.length;r++){ //Dropped items bouncing, redrawing
         if(droppedItem[r].data.cooldown>0){
             droppedItem[r].data.cooldown=droppedItem[r].data.cooldown-1
         }
@@ -1149,7 +1157,7 @@ function updateGameArea() {
     droppedItem[r].update()
     }
 
-    if(totalEXP!==lastEXP){
+    if(totalEXP!==lastEXP){ //If amount of xp changes, refresh xp bar, check for level up
         if(totalEXP>=expToLevelUp){
             level++
             lastLevelExp=expToLevelUp
@@ -1175,7 +1183,7 @@ function updateGameArea() {
     }
     refreshPlayerStatsBox()
 
-    if(lastmoney!==money){
+    if(lastmoney!==money){ //if amount of money changes, refresh money & revive button
         moneyBox.innerHTML = `Money: £${money}`;
         lastmoney=money
         
@@ -1189,28 +1197,10 @@ function updateGameArea() {
             }
         }
     }
-
-    // for(j=0;j<dmgNum.length;j++){
-    // dmgNum[j].lifetime=dmgNum[j].lifetime-1
-    // dmgNum[j].update()
-    // dmgNum[j].newPos()
-    // if(dmgNum[j].lifetime<=0){
-    //     dmgNum.splice(0,1)
-    // }
-    // }
-
-    
-
 }
 
-var pointerX = -1;
-    var pointerY = -1;
-    var blockToMouseX
-    var blockToMouseY
-    
-
 drag()
-function drag(){
+function drag(){ //Find which player clicked on / near, set to held
     document.onmousedown = function(event){
         pointerX = event.pageX-(window.innerWidth-960)/2;
         pointerY = event.pageY-(window.innerHeight-540-250)/2;
@@ -1246,18 +1236,11 @@ function drag(){
         if(blockToMouseX<40 && blockToMouseY<40){
             p1Held=1
         }
-        
-        
-        
     }
 }
 
-
-
-
-
 document.addEventListener("mouseup",releasePlayers)
-function releasePlayers(){
+function releasePlayers(){ //Stop holding any held players, on mouse up
     p1Held=0
     p2Held=0
     p3Held=0
@@ -1265,21 +1248,12 @@ function releasePlayers(){
 }
 
 document.addEventListener("mousemove",updateMouseCoords)
-function updateMouseCoords(event){
+function updateMouseCoords(event){ //Mouse position tracking
     pointerX = event.pageX-(myGamePiece.size/2)-(window.innerWidth-960)/2;
     pointerY = event.pageY-(myGamePiece.size/2)-(window.innerHeight-540-250)/2;
 }
 
-
-
-
-
-
-
-
-
-
-function playerMoveToMouse(playerHeld, event){
+function playerMoveToMouse(playerHeld, event){ //Move player currently held towards mouse
     playerHeld.atkCD=Math.floor(playerHeld.item.atkRate/((100+playerHeld.cdPoints*2.5)/100))
             if(playerNumberStatsShown.id!==0){
             playerNumberStatsShown=playerHeld
@@ -1301,44 +1275,6 @@ function playerMoveToMouse(playerHeld, event){
             };
             playerHeld.gravitySpeed = 0
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 document.addEventListener('keydown', logKey);//enemy spawning
 let i = 0
@@ -1402,4 +1338,4 @@ function logKey(e) {
   }
 }
 
-document.getElementById(inv.length-1).style.background='#5c5c5c'
+document.getElementById(inv.length-1).style.background='#5c5c5c' //Page background
