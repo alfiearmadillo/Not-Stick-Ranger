@@ -5,7 +5,7 @@
 //world map
 //SP Respec in starting area w/ shop, hp regen, free revivals
 
-// save / load // Item stored in all inv slots, money, HP, assigned SP, spare SP, XP, LV, Area, SubArea?, save if all die instantly
+// save / load // Item stored in all inv slots, money, HP, assigned SP, spare SP, XP, LV, Area, subArea?, save if all die instantly
 // ranged projectile?
 // sprites?
 
@@ -17,6 +17,11 @@
 
 //move next level sign to highest floor not off top of screen
 
+let signY=0
+let saveCode=0
+let area = []
+let loadedAreaID=0
+let subArea = 1
 let p1Held=0
 let p3Held=0
 let p2Held=0
@@ -27,7 +32,6 @@ var blockToMouseX
 var blockToMouseY
 var nearTarget=0
 var myGamePiece;
-//let dmgNum=[]
 let items=[]
 let droppedItem = []
 let div = document.createElement("div");
@@ -111,6 +115,7 @@ function startGame() {
     myGamePiece4.cdPoints=0
     myGamePiece4.item=items[0]
     playerNumberStatsShown=myGamePiece
+    renderStage(loadedAreaID)
     myGameArea.start();
 }
 
@@ -377,13 +382,74 @@ function clickButton(num){
     lastRevCostShown=-1
 }
 
-newLand(-1,510,1000,5400)
-newLand(400,480,1000,5400)
-newLand(-1,280,200,340)
-newLand(-1,280,100,355)
-newLand(-1,280,300,311)
-newLand(-1,260,270,325)
-newLand(-1,245,140,325)
+function loadSaveFromCode(){//todo
+
+}
+
+area[0]={name:"Menu",subAreaCount:1,unlocked:1} //Stage list
+area[1]={name:"Town",subAreaCount:1,unlocked:1}
+area[2]={name:"Map",subAreaCount:1,unlocked:1}
+area[3]={name:"Intro Avenue",subAreaCount:9,unlocked:1}
+area[4]={name:"Grassy Fields",subAreaCount:7,unlocked:0}
+
+
+
+
+function renderStage(){ //Loading terrain for different stages
+    land=[]
+    enemy=[]
+    droppedItem=[]
+    if(area[loadedAreaID].name==="Menu"){//Main menu
+        newLand(-1,510,1000,5400)
+        myGamePiece4.x=260;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
+        myGamePiece3.x=400;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
+        myGamePiece2.x=560;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
+        myGamePiece.x=700;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+        signY=-1
+    }
+    if(area[loadedAreaID].name==="Town"){//Main menu
+        newLand(-1,510,1000,5400);newLand(400,490,800,5400)
+        myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
+        myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
+        myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
+        myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+        signY=478
+    }
+    if(area[loadedAreaID].name==="Map"){//Main menu
+        p1Held=0
+        p2Held=0
+        p3Held=0
+        p4Held=0
+        myGamePiece4.x=10;myGamePiece4.y=1370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
+        myGamePiece3.x=50;myGamePiece3.y=1370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
+        myGamePiece2.x=90;myGamePiece2.y=1370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
+        myGamePiece.x=130;myGamePiece.y=1370;myGamePiece.speedX=0;myGamePiece.speedY=0
+        signY=-1
+    }
+    if(area[loadedAreaID].name==="Intro Avenue"&&subArea===1){//Main menu
+        newLand(-1,510,1000,5400)
+        myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
+        myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
+        myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
+        myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+        signY=478
+    }
+    if(area[loadedAreaID].name==="Grassy Fields"&&subArea===1){//Main menu
+        newLand(-1,510,1000,5400)
+        myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
+        myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
+        myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
+        myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+        signY=478
+    }
+}
+
+function updateStageData(){
+    //if on map load stage clicked
+    //if hit sign, increase subarea by 1, load map if finished all subareas for area
+}
+
+
 //create more terrain
 //createland create land
 function newLand(x1,y1,x2,y2){
@@ -522,6 +588,41 @@ function component(width, height, color, x, y) {//draw new boxes
                 ctx.fillRect(land[w].x1, land[w].y1, land[w].x2-land[w].x1, 10);
             }
         }
+
+        if(area[loadedAreaID].name==="Menu"){
+            ctx = myGameArea.context;
+            ctx.font = '80px serif';
+            ctx.fillStyle = "#4832a8"
+            ctx.fillText("Ulfyn Ranger", 280, 150)
+            ctx.font = '50px serif';
+            ctx.fillStyle = "#1d6f82"
+            ctx.fillRect(372, 260, 240, 48);
+            ctx.fillStyle = "#4832a8"
+            ctx.fillText("New Game", 380, 300)
+            ctx.fillStyle = "#1d6f82"
+            ctx.fillRect(381, 330, 224, 48);
+            ctx.fillStyle = "#4832a8"
+            ctx.fillText("Load Save", 387, 370)
+        }
+
+        if(signY>0){
+            ctx = myGameArea.context;
+            ctx.fillStyle = "#61330b"
+            ctx.fillRect(895, signY+7, 53, -26);
+            ctx.fillRect(917, signY+7, 10, 25);
+            ctx.font = '16px serif';
+            ctx.fillStyle = "#140b02"
+            ctx.fillText("NEXT", 900, signY)
+        }
+
+        ctx = myGameArea.context;
+        ctx.fillStyle = "#8a8a8a"
+        ctx.fillRect(7, 50, 144,35);
+        ctx.fillStyle = "#b4b4b4"
+        ctx.fillRect(12, 55, 134, 25);
+        ctx.font = '16px serif';
+        ctx.fillStyle = "#000000"
+        ctx.fillText(area[loadedAreaID].name, 15,72)
 
 
         if(this.type==="item"||this.type==="health"||this.type==="coin"){//draw hp item coin
@@ -1197,6 +1298,25 @@ function updateGameArea() {
             }
         }
     }
+
+    //check if hit sign
+    if( (myGamePiece.x>920&&myGamePiece.y>signY-40&&myGamePiece.y<signY+20&&signY>0)||
+        (myGamePiece2.x>920&&myGamePiece2.y>signY-40&&myGamePiece2.y<signY+20&&signY>0)||
+        (myGamePiece3.x>920&&myGamePiece3.y>signY-40&&myGamePiece3.y<signY+20&&signY>0)||
+        (myGamePiece4.x>920&&myGamePiece4.y>signY-40&&myGamePiece4.y<signY+20&&signY>0)){
+        if(area[loadedAreaID].subAreaCount===subArea){
+            loadedAreaID=2
+            renderStage()
+        }else{
+            subArea=subArea+1
+            renderStage()
+        }
+    }
+
+
+
+
+
 }
 
 drag()
@@ -1235,6 +1355,16 @@ function drag(){ //Find which player clicked on / near, set to held
         }else
         if(blockToMouseX<40 && blockToMouseY<40){
             p1Held=1
+        }
+        if(area[loadedAreaID].name==="Menu"&&pointerX>372&&pointerX<372+240&&pointerY>260&&pointerY<260+48){
+            console.log("new gane button lcicked")
+            loadedAreaID=1
+            renderStage()
+        }
+        if(area[loadedAreaID].name==="Menu"&&pointerX>381&&pointerX<381+224&&pointerY>330&&pointerY<330+48){
+            console.log("load game button lcicked")
+            saveCode = prompt("Paste your save code here:")
+            loadSaveFromCode()
         }
     }
 }
