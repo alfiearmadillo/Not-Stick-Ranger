@@ -17,6 +17,7 @@
 
 //move next level sign to highest floor not off top of screen
 
+//menu bottn css finish todo
 //click inv slot player not updating todo
 
 let signY=0
