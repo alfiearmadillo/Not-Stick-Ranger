@@ -1,11 +1,13 @@
+
 //SP Respec in starting area w/ shop, hp regen, free revivals
 //shop contains items, enemy info, bonus SP (10,100,1000 etc.)
-// save / load // Item stored in all inv slots, money, HP, assigned SP, spare SP, XP, LV
+// save / load, Item stored in all inv slots, money, HP, assigned SP, spare SP, XP, LV
 //game over tp to town after wait
 //Projectiles for players & enemies
 //enemy types (flying random movent every x time), player like walker
 //terrain side collision?
 //textures?
+//lines between unlocked stages?
 //more levels, enemies, weapons, content
 
 let signY=0
@@ -22,7 +24,7 @@ var pointerY = -1;
 var blockToMouseX
 var blockToMouseY
 var nearTarget=0
-var myGamePiece;
+var playerNumber;
 let items=[]
 let droppedItem = []
 let div = document.createElement("div");
@@ -45,67 +47,67 @@ let lastRevCostShown=-1
 let land=[]
 
 function startGame() {
-    myGamePiece = new component(30, 30, "#ff0000", 130, 370);
-    myGamePiece.gravity = 0.5;
-    myGamePiece.type="player"
-    myGamePiece.colour="#ff0000"
-    myGamePiece.id="0"
-    myGamePiece.maxhp=100
-    myGamePiece.hp=100
-    myGamePiece.atkCD=0
-    myGamePiece.size=30
-    myGamePiece.skillPoints=0
-    myGamePiece.hpPoints=0
-    myGamePiece.dmgPoints=0
-    myGamePiece.rangePoints=0
-    myGamePiece.cdPoints=0
-    myGamePiece.item=items[0]
-    myGamePiece2 = new component(30, 30, "#0000ff", 90, 370);
-    myGamePiece2.gravity = 0.5;
-    myGamePiece2.type="player"
-    myGamePiece2.colour="#0000ff"
-    myGamePiece2.id="1"
-    myGamePiece2.hp=100
-    myGamePiece2.maxhp=100
-    myGamePiece2.atkCD=0
-    myGamePiece2.size=30
-    myGamePiece2.skillPoints=0
-    myGamePiece2.hpPoints=0
-    myGamePiece2.dmgPoints=0
-    myGamePiece2.rangePoints=0
-    myGamePiece2.cdPoints=0
-    myGamePiece2.item=items[0]
-    myGamePiece3 = new component(30, 30, "#00ff00", 50, 370);
-    myGamePiece3.gravity = 0.5;
-    myGamePiece3.type="player"
-    myGamePiece3.colour="#00ff00"
-    myGamePiece3.id="2"
-    myGamePiece3.hp=100
-    myGamePiece3.maxhp=100
-    myGamePiece3.atkCD=0
-    myGamePiece3.size=30
-    myGamePiece3.skillPoints=0
-    myGamePiece3.hpPoints=0
-    myGamePiece3.dmgPoints=0
-    myGamePiece3.rangePoints=0
-    myGamePiece3.cdPoints=0
-    myGamePiece3.item=items[0]
-    myGamePiece4 = new component(30, 30, "#ffff00", 10, 370);
-    myGamePiece4.gravity = 0.5;
-    myGamePiece4.type="player"
-    myGamePiece4.colour="#ffff00"
-    myGamePiece4.id="3"
-    myGamePiece4.hp=100
-    myGamePiece4.maxhp=100
-    myGamePiece4.atkCD=0
-    myGamePiece4.size=30
-    myGamePiece4.skillPoints=0
-    myGamePiece4.hpPoints=0
-    myGamePiece4.dmgPoints=0
-    myGamePiece4.rangePoints=0
-    myGamePiece4.cdPoints=0
-    myGamePiece4.item=items[0]
-    playerNumberStatsShown=myGamePiece
+    playerNumber = new component(30, 30, "#ff0000", 130, 370);
+    playerNumber.gravity = 0.5;
+    playerNumber.type="player"
+    playerNumber.colour="#ff0000"
+    playerNumber.id="0"
+    playerNumber.maxhp=100
+    playerNumber.hp=100
+    playerNumber.atkCD=0
+    playerNumber.size=30
+    playerNumber.skillPoints=0
+    playerNumber.hpPoints=0
+    playerNumber.dmgPoints=0
+    playerNumber.rangePoints=0
+    playerNumber.cdPoints=0
+    playerNumber.item=items[0]
+    playerNumber2 = new component(30, 30, "#0000ff", 90, 370);
+    playerNumber2.gravity = 0.5;
+    playerNumber2.type="player"
+    playerNumber2.colour="#0000ff"
+    playerNumber2.id="1"
+    playerNumber2.hp=100
+    playerNumber2.maxhp=100
+    playerNumber2.atkCD=0
+    playerNumber2.size=30
+    playerNumber2.skillPoints=0
+    playerNumber2.hpPoints=0
+    playerNumber2.dmgPoints=0
+    playerNumber2.rangePoints=0
+    playerNumber2.cdPoints=0
+    playerNumber2.item=items[0]
+    playerNumber3 = new component(30, 30, "#00ff00", 50, 370);
+    playerNumber3.gravity = 0.5;
+    playerNumber3.type="player"
+    playerNumber3.colour="#00ff00"
+    playerNumber3.id="2"
+    playerNumber3.hp=100
+    playerNumber3.maxhp=100
+    playerNumber3.atkCD=0
+    playerNumber3.size=30
+    playerNumber3.skillPoints=0
+    playerNumber3.hpPoints=0
+    playerNumber3.dmgPoints=0
+    playerNumber3.rangePoints=0
+    playerNumber3.cdPoints=0
+    playerNumber3.item=items[0]
+    playerNumber4 = new component(30, 30, "#ffff00", 10, 370);
+    playerNumber4.gravity = 0.5;
+    playerNumber4.type="player"
+    playerNumber4.colour="#ffff00"
+    playerNumber4.id="3"
+    playerNumber4.hp=100
+    playerNumber4.maxhp=100
+    playerNumber4.atkCD=0
+    playerNumber4.size=30
+    playerNumber4.skillPoints=0
+    playerNumber4.hpPoints=0
+    playerNumber4.dmgPoints=0
+    playerNumber4.rangePoints=0
+    playerNumber4.cdPoints=0
+    playerNumber4.item=items[0]
+    playerNumberStatsShown=playerNumber
     renderStage(loadedAreaID)
     myGameArea.start();
 }
@@ -126,16 +128,16 @@ items[9]={name:"CR_IntroAveWeak",damageMin:0,damageMax:1,range:45,atkRate:400,li
 function addItem(player, itemID){
     switch(player){
         case 0:
-            player=myGamePiece4
+            player=playerNumber4
             break;
         case 1:
-            player=myGamePiece3
+            player=playerNumber3
             break;
         case 2:
-            player=myGamePiece2
+            player=playerNumber2
             break;
         case 3:
-            player=myGamePiece
+            player=playerNumber
             break;
         default:
             break;
@@ -286,7 +288,7 @@ document.getElementById("reviveButton").style.background="#517a59"
 document.getElementById("reviveButton").addEventListener("mouseup", revivePlayer);
 document.getElementById("reviveButton").addEventListener("mouseover", revivePlayerActiveColour);
 function revivePlayer(){
-    if(myGamePiece.hp===0&&myGamePiece2.hp===0&&myGamePiece3.hp===0&&myGamePiece4.hp===0){}else{
+    if(playerNumber.hp===0&&playerNumber2.hp===0&&playerNumber3.hp===0&&playerNumber4.hp===0){}else{
     if(playerNumberStatsShown.hp===0){
     if(money>=Math.floor((money/2)+5+(level*2))){
     playerNumberStatsShown.hp=(playerNumberStatsShown.maxhp+playerNumberStatsShown.hpPoints*5)/2
@@ -322,16 +324,16 @@ function clickButton(num){
     if(num<4){
         switch(num){
             case 0:
-                playerNumberStatsShown=myGamePiece4
+                playerNumberStatsShown=playerNumber4
                 break;
             case 1:
-                playerNumberStatsShown=myGamePiece3
+                playerNumberStatsShown=playerNumber3
                 break;
             case 2:
-                playerNumberStatsShown=myGamePiece2
+                playerNumberStatsShown=playerNumber2
                 break;
             case 3:
-                playerNumberStatsShown=myGamePiece
+                playerNumberStatsShown=playerNumber
                 break;
             default:
                 break;
@@ -355,7 +357,6 @@ function clickButton(num){
     }
     inv[lastslot].storedItem=tmpObj
     tmpObj=null
-    console.log(inv[num])
     if(lastslot<4){
         addItem(lastslot, inv[lastslot].storedItem)
     }
@@ -403,18 +404,18 @@ function renderStage(){ //Stage loading
         newLand(-1,510,1000,5400)
         newLand(-1,495,200,5400)
         newLand(760,495,1000,5400)
-        myGamePiece4.x=260;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
-        myGamePiece3.x=400;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
-        myGamePiece2.x=560;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
-        myGamePiece.x=700;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+        playerNumber4.x=260;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+        playerNumber3.x=400;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+        playerNumber2.x=560;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+        playerNumber.x=700;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
         signY=-1
     }
     if(area[loadedAreaID].name==="Town"){//Main menu
         newLand(-1,510,1000,5400)
-        myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
-        myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
-        myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
-        myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+        playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+        playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+        playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+        playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
         signY=478
     }
     if(area[loadedAreaID].name==="Map"){//Main menu
@@ -422,32 +423,33 @@ function renderStage(){ //Stage loading
         p2Held=0
         p3Held=0
         p4Held=0
-        myGamePiece4.x=10;myGamePiece4.y=1370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
-        myGamePiece3.x=50;myGamePiece3.y=1370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
-        myGamePiece2.x=90;myGamePiece2.y=1370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
-        myGamePiece.x=130;myGamePiece.y=1370;myGamePiece.speedX=0;myGamePiece.speedY=0
+        playerNumber4.x=10;playerNumber4.y=1370;playerNumber4.speedX=0;playerNumber4.speedY=0
+        playerNumber3.x=50;playerNumber3.y=1370;playerNumber3.speedX=0;playerNumber3.speedY=0
+        playerNumber2.x=90;playerNumber2.y=1370;playerNumber2.speedX=0;playerNumber2.speedY=0
+        playerNumber.x=130;playerNumber.y=1370;playerNumber.speedX=0;playerNumber.speedY=0
         signY=-1
     }
     if(area[loadedAreaID].name==="Intro Avenue"){
         if(subArea===1){
         newLand(-1,510,1000,5400)
-        spawnEnemy(20,"#8e17b3",550,400,0.5,5,"SlowWalk",1,1,1,55,0.1,10,1,1,2,1,3,1,4,1)
-            myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
-            myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
-            myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
-            myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+        spawnEnemy(20,"#8e17b3",550,400,0.5,5,"SlowWalk",1,1,1,55,0.2,10,1,1,2,1,3,1,4,1)
+        spawnEnemy(20,"#8e17b3",350,400,0.5,5,"SlowWalk",1,1,1,55,0.2,10,1,1,2,1,3,1,4,1)
+            playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+            playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+            playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+            playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
             signY=478
         }
         if(subArea===2){//Main menu
             newLand(-1,510,1000,5400)
             newLand(320,490,710,5400)
-            spawnEnemy(20,"#7b139c",350,400,0.5,8,"SlowWalk",1,1,1,55,0.1,10,1,1,2,1,3,1,4,1)
-            spawnEnemy(20,"#7b139c",600,400,0.5,8,"SlowWalk",1,1,1,55,0.1,10,1,1,2,1,3,1,4,1)
-            spawnEnemy(20,"#7b139c",870,400,0.5,8,"SlowWalk",1,1,1,55,0.1,10,1,1,2,1,3,1,4,1)
-            myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
-            myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
-            myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
-            myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+            spawnEnemy(20,"#7b139c",350,400,0.5,8,"SlowWalk",1,1,1,55,0.2,10,1,1,2,1,3,1,4,1)
+            spawnEnemy(20,"#7b139c",600,400,0.5,8,"SlowWalk",1,1,1,55,0.2,10,1,1,2,1,3,1,4,1)
+            spawnEnemy(20,"#7b139c",870,400,0.5,8,"SlowWalk",1,1,1,55,0.2,10,1,1,2,1,3,1,4,1)
+            playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+            playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+            playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+            playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
             signY=478
         }
         if(subArea===3){//Main menu
@@ -455,13 +457,13 @@ function renderStage(){ //Stage loading
             newLand(520,495,1000,5400)
             newLand(650,470,1000,5400)
             newLand(880,450,1000,5400)
-            spawnEnemy(20,"#6a0f87",470,400,0.5,10,"SlowWalk",2,1,2,55,0.1,10,1,2,2,2,3,2,4,2)
-            spawnEnemy(20,"#6a0f87",490,400,0.5,10,"SlowWalk",2,1,2,55,0.1,10,1,2,2,2,3,2,4,2)
-            spawnEnemy(15,"#1b1280",550,400,0.5,5,"SlowWalk",3,7,10,25,0.1,10,1,5,2,5,3,5,4,5)
-            myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
-            myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
-            myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
-            myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+            spawnEnemy(20,"#6a0f87",470,400,0.5,10,"SlowWalk",2,1,2,55,0.2,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(20,"#6a0f87",490,400,0.5,10,"SlowWalk",2,1,2,55,0.2,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(15,"#1b1280",550,400,0.5,5,"SlowWalk",3,7,10,25,0.2,10,1,5,2,5,3,5,4,5)
+            playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+            playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+            playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+            playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
             signY=418
         }
         if(subArea===4){//Main menu
@@ -469,79 +471,79 @@ function renderStage(){ //Stage loading
             newLand(-1,490,243,5400)
             newLand(875,480,1000,5400)
             newLand(900,460,1000,5400)
-            spawnEnemy(12,"#067806",337,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
-            spawnEnemy(12,"#067806",353,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
-            spawnEnemy(12,"#067806",362,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
-            spawnEnemy(12,"#067806",391,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
-            spawnEnemy(12,"#067806",440,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
-            spawnEnemy(12,"#067806",457,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
-            spawnEnemy(12,"#067806",470,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
-            spawnEnemy(12,"#067806",485,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
-            spawnEnemy(12,"#067806",500,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
-            spawnEnemy(12,"#067806",550,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
-            spawnEnemy(12,"#067806",637,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
-            spawnEnemy(12,"#067806",653,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
-            spawnEnemy(12,"#067806",662,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
-            spawnEnemy(12,"#067806",691,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
-            spawnEnemy(12,"#067806",740,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
-            spawnEnemy(12,"#067806",757,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
-            spawnEnemy(12,"#067806",770,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
-            spawnEnemy(12,"#067806",785,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
-            spawnEnemy(12,"#067806",800,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
-            spawnEnemy(12,"#067806",850,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
-            myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
-            myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
-            myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
-            myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+            spawnEnemy(12,"#067806",337,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",353,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",362,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",391,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",440,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",457,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",470,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",485,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",500,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",550,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",637,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",653,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",662,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",691,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",740,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",757,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",770,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",785,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",800,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",850,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+            playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+            playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+            playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
             signY=428
         }
         if(subArea===5){//Main menu
             newLand(-1,510,1000,5400)
-            myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
-            myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
-            myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
-            myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+            playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+            playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+            playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+            playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
             signY=478
         }
         if(subArea===6){//Main menu
             newLand(-1,510,1000,5400)
-            myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
-            myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
-            myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
-            myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+            playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+            playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+            playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+            playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
             signY=478
         }
         if(subArea===7){//Main menu
             newLand(-1,510,1000,5400)
-            myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
-            myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
-            myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
-            myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+            playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+            playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+            playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+            playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
             signY=478
         }
         if(subArea===8){//Main menu
             newLand(-1,510,1000,5400)
-            myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
-            myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
-            myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
-            myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+            playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+            playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+            playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+            playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
             signY=478
         }
         if(subArea===9){//Main menu
             newLand(-1,510,1000,5400)
-            myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
-            myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
-            myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
-            myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+            playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+            playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+            playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+            playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
             signY=478
         }
     }
     if(area[loadedAreaID].name==="Grassy Fields"&&subArea===1){//Main menu
         newLand(-1,510,1000,5400)
-        myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
-        myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
-        myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
-        myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+        playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+        playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+        playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+        playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
         signY=478
     }
 }
@@ -585,16 +587,16 @@ function refreshPlayerStatsBox(){
     if(playerNumberStatsChanged!==playerNumberStatsShown.hp||totalEXP!==lastEXP||lastmoney!==money){
     switch(playerNumberStatsShown){
         case 0:
-            playerNumberStatsShown=myGamePiece4
+            playerNumberStatsShown=playerNumber4
             break;
         case 1:
-            playerNumberStatsShown=myGamePiece3
+            playerNumberStatsShown=playerNumber3
             break;
         case 2:
-            playerNumberStatsShown=myGamePiece2
+            playerNumberStatsShown=playerNumber2
             break;
         case 3:
-            playerNumberStatsShown=myGamePiece
+            playerNumberStatsShown=playerNumber
             break;
         default:
             break;
@@ -671,114 +673,7 @@ function component(width, height, color, x, y) {//draw new boxes
     this.x = x;
     this.y = y;
     this.gravity = 0;
-    this.gravitySpeed = 0;
     this.update = function() {
-        
-        if(land.length>0){//draw new land
-            for(w=0;w<land.length;w++){
-                ctx = myGameArea.context;
-                ctx.fillStyle = "#7b531b"
-                ctx.fillRect(land[w].x1+1, land[w].y1+1, land[w].x2-land[w].x1-2, land[w].y2-land[w].y1-2);
-                ctx = myGameArea.context;
-                ctx.fillStyle = "#17740b"
-                ctx.fillRect(land[w].x1, land[w].y1, land[w].x2-land[w].x1, 10);
-            }
-        }
-
-        if(area[loadedAreaID].name==="Menu"){
-            ctx = myGameArea.context;
-            ctx.font = '80px serif';
-            ctx.fillStyle = "#4832a8"
-            ctx.fillText("Ulfyn Ranger", 280, 150)
-            ctx.font = '50px serif';
-            ctx.fillStyle = "#1d6f82"
-            ctx.fillRect(372, 260, 240, 48);
-            ctx.fillStyle = "#4832a8"
-            ctx.fillText("New Game", 380, 300)
-            ctx.fillStyle = "#1d6f82"
-            ctx.fillRect(381, 330, 224, 48);
-            ctx.fillStyle = "#4832a8"
-            ctx.fillText("Load Save", 387, 370)
-        }
-
-        if(area[loadedAreaID].name==="Map"){
-            for(r=0;r<area.length;r++){
-                if(area[r].unlocked===1){
-                    ctx = myGameArea.context;
-                    switch(area[r].unlocked){
-                        case 0:
-                            break;
-                        case 1:
-                            if(area[r].cleared===0){//draw stages on map
-                                ctx.fillStyle = "#e0dd1d"
-                                ctx.fillRect(area[r].x, area[r].y, 20, 20);
-                                if(pointerX>area[r].x-16&&pointerX<area[r].x+5&&pointerY>area[r].y-15&&pointerY<area[r].y+5){
-                                    ctx.fillStyle = "#800b15"
-                                    ctx.globalCompositeOperation='destination-over';
-                                    ctx.fillRect(area[r].x-7, area[r].y-7, 34, 34);
-                                    ctx.globalCompositeOperation="source-over";
-                                    ctx.font = '16px serif';
-                                    ctx.fillStyle = "#000000"
-                                    ctx.fillText(`${area[r].name}`, area[r].x-10, area[r].y-20)
-                                }
-                            }else if(area[r].cleared===1){
-                                ctx.fillStyle = "#2bc4a1"
-                                ctx.fillRect(area[r].x, area[r].y, 20, 20);
-                                if(pointerX>area[r].x-16&&pointerX<area[r].x+5&&pointerY>area[r].y-15&&pointerY<area[r].y+5){
-                                    ctx.fillStyle = "#800b15"
-                                    ctx.globalCompositeOperation='destination-over';
-                                    ctx.fillRect(area[r].x-7, area[r].y-7, 34, 34);
-                                    ctx.globalCompositeOperation="source-over";
-                                    ctx.font = '16px serif';
-                                    ctx.fillStyle = "#000000"
-                                    ctx.fillText(`${area[r].name}`, area[r].x-10, area[r].y-20)
-                                }
-                            }else if(area[r].cleared===2){
-                                ctx.fillStyle = "#FFFFFF"
-                                ctx.fillRect(area[r].x, area[r].y, 20, 20);
-                                if(pointerX>area[r].x-16&&pointerX<area[r].x+5&&pointerY>area[r].y-15&&pointerY<area[r].y+5){
-                                    ctx.fillStyle = "#800b15"
-                                    ctx.globalCompositeOperation='destination-over';
-                                    ctx.fillRect(area[r].x-7, area[r].y-7, 34, 34);
-                                    ctx.globalCompositeOperation="source-over";
-                                    ctx.font = '16px serif';
-                                    ctx.fillStyle = "#000000"
-                                    ctx.fillText(`${area[r].name}`, area[r].x-10, area[r].y-20)
-                                }
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                    
-                    
-                }
-            }
-        }
-
-        if(signY>0 && (enemy.length===0||area[loadedAreaID].subAreaCount!==subArea)){
-            ctx = myGameArea.context;
-            ctx.fillStyle = "#61330b"
-            ctx.fillRect(895, signY+7, 53, -26);
-            ctx.fillRect(917, signY+7, 10, 25);
-            ctx.font = '16px serif';
-            ctx.fillStyle = "#140b02"
-            ctx.fillText("NEXT", 900, signY)
-        }
-
-        ctx = myGameArea.context;
-        ctx.fillStyle = "#8a8a8a"
-        ctx.fillRect(7, 50, 144,35);
-        ctx.fillStyle = "#b4b4b4"
-        ctx.fillRect(12, 55, 134, 25);
-        ctx.font = '16px serif';
-        ctx.fillStyle = "#000000"
-        if(area[loadedAreaID].subAreaCount>1){
-            ctx.fillText(`${area[loadedAreaID].name}:${subArea}`, 18,72)
-        }else{
-            ctx.fillText(`${area[loadedAreaID].name}`, 18,72)
-        }
-
 
         if(this.type==="item"||this.type==="health"||this.type==="coin"){//draw hp item coin
             if((Math.floor(this.data.cooldown/5))%2===1){
@@ -828,7 +723,7 @@ function component(width, height, color, x, y) {//draw new boxes
             this.speedY=-30
         }
         this.x += this.speedX;
-        this.y += this.speedY + this.gravitySpeed;
+        this.y += this.speedY;
 
         if(this.type==="player" && this.hp>0){
             for(b=0;b<droppedItem.length;b++){
@@ -906,7 +801,7 @@ function component(width, height, color, x, y) {//draw new boxes
                             nearTarget = closestEnemy(enemy, this.x)
                             if(enemy.length!==0){
                                 if (Math.abs(enemy[nearTarget].x+(enemy[nearTarget].size/2-(this.size/2)) - this.x) < this.item.range+(this.rangePoints*this.item.rangeMult)+(enemy[nearTarget].size/2)+(this.size/2)&&
-                                   ((Math.abs(enemy[nearTarget].y+(enemy[nearTarget].size/2) - this.y) < this.item.range+(this.rangePoints*this.item.rangeMult)+(enemy[nearTarget].size/2)) || (enemy[nearTarget].gravity>0&&enemy[nearTarget].gravitySpeed===0))) {
+                                   ((Math.abs(enemy[nearTarget].y+(enemy[nearTarget].size/2) - this.y) < this.item.range+(this.rangePoints*this.item.rangeMult)+(enemy[nearTarget].size/2)) || (enemy[nearTarget].gravity>0))) {
                                     
                                 if(this.atkCD<=0){
                 
@@ -924,7 +819,6 @@ function component(width, height, color, x, y) {//draw new boxes
                                         lootRoll=Math.random()*100
                                         if(enemy[nearTarget].drops.coinChance!==0){
                                             if(lootRoll<enemy[nearTarget].drops.coinChance){
-                                                console.log("dropped coin")
                                                 droppedItem[droppedItem.length] = new component(15, 15, "gold", enemy[nearTarget].x, enemy[nearTarget].y);
                                                 droppedItem[droppedItem.length-1].data={
                                                     value:enemy[nearTarget].drops.coin,
@@ -940,7 +834,6 @@ function component(width, height, color, x, y) {//draw new boxes
                                         lootRoll=Math.random()*100
                                         if(enemy[nearTarget].drops.healChance!==0){
                                             if(lootRoll<enemy[nearTarget].drops.healChance){
-                                                console.log("dropped hp")
                                                 droppedItem[droppedItem.length] = new component(15, 15, "#ff756b", enemy[nearTarget].x+(enemy[nearTarget].size/2), enemy[nearTarget].y+(enemy[nearTarget].size/2));
                                                 droppedItem[droppedItem.length-1].data={
                                                     value:enemy[nearTarget].drops.healPotion,
@@ -956,7 +849,6 @@ function component(width, height, color, x, y) {//draw new boxes
                                         lootRoll=Math.random()*100
                                         if(enemy[nearTarget].drops.itemID1Chance!==0){
                                             if(lootRoll<enemy[nearTarget].drops.itemID1Chance){
-                                                console.log("dropped item 1")
                                                 droppedItem[droppedItem.length] = new component(15, 15, items[enemy[nearTarget].drops.itemID1].colour, enemy[nearTarget].x+(enemy[nearTarget].size/2), enemy[nearTarget].y+(enemy[nearTarget].size/2));
                                                 droppedItem[droppedItem.length-1].data={
                                                     value:enemy[nearTarget].drops.itemID1,
@@ -972,7 +864,6 @@ function component(width, height, color, x, y) {//draw new boxes
                                         lootRoll=Math.random()*100
                                         if(enemy[nearTarget].drops.itemID2Chance!==0){
                                             if(lootRoll<enemy[nearTarget].drops.itemID2Chance){
-                                                console.log("dropped item 2")
                                                 droppedItem[droppedItem.length] = new component(15, 15, items[enemy[nearTarget].drops.itemID2].colour, enemy[nearTarget].x+(enemy[nearTarget].size/2), enemy[nearTarget].y+(enemy[nearTarget].size/2));
                                                 droppedItem[droppedItem.length-1].data={
                                                     value:enemy[nearTarget].drops.itemID2,
@@ -988,7 +879,6 @@ function component(width, height, color, x, y) {//draw new boxes
                                         lootRoll=Math.random()*100
                                         if(enemy[nearTarget].drops.itemID3Chance!==0){
                                             if(lootRoll<enemy[nearTarget].drops.itemID3Chance){
-                                                console.log("dropped item 3")
                                                 droppedItem[droppedItem.length] = new component(15, 15, items[enemy[nearTarget].drops.itemID3].colour, enemy[nearTarget].x+(enemy[nearTarget].size/2), enemy[nearTarget].y+(enemy[nearTarget].size/2));
                                                 droppedItem[droppedItem.length-1].data={
                                                     value:enemy[nearTarget].drops.itemID3,
@@ -1004,7 +894,6 @@ function component(width, height, color, x, y) {//draw new boxes
                                         lootRoll=Math.random()*100
                                         if(enemy[nearTarget].drops.itemID4Chance!==0){
                                             if(lootRoll<enemy[nearTarget].drops.itemID4Chance){
-                                                console.log("dropped item 4")
                                                 droppedItem[droppedItem.length] = new component(15, 15, items[enemy[nearTarget].drops.itemID4].colour, enemy[nearTarget].x+(enemy[nearTarget].size/2), enemy[nearTarget].y+(enemy[nearTarget].size/2));
                                                 droppedItem[droppedItem.length-1].data={
                                                     value:enemy[nearTarget].drops.itemID4,
@@ -1027,7 +916,7 @@ function component(width, height, color, x, y) {//draw new boxes
                             if(enemy.length!==0){//if not in range move towards
                                 if ((Math.abs(enemy[nearTarget].x+(enemy[nearTarget].size/2) - this.x) < this.item.range+(this.rangePoints*this.item.rangeMult)+350+(enemy[nearTarget].size/2)||
                                     (Math.abs(enemy[nearTarget].x - this.x)) < this.item.range+(this.rangePoints*this.item.rangeMult)+350)&&
-                                    ((Math.abs(enemy[nearTarget].y+(enemy[nearTarget].size/2) - this.y) < this.item.range+(this.rangePoints*this.item.rangeMult)+350+(enemy[nearTarget].size/2))||
+                                    ((Math.abs(enemy[nearTarget].y+(enemy[nearTarget].size) - (this.y+this.size)) < this.item.range+(this.rangePoints*this.item.rangeMult)+350+(enemy[nearTarget].size))||
                                     (Math.abs(enemy[nearTarget].y - this.y)) < this.item.range+(this.rangePoints*this.item.rangeMult)+350)){
                                 if(enemy[nearTarget].x+(enemy[nearTarget].size/2)<this.x){
                                     this.speedX=this.speedX-Math.random()
@@ -1107,90 +996,90 @@ function updateGameArea() {
         enemy[j].update()
         enemy[j].newPos()
         
-        redPDist=Math.abs(myGamePiece.x-(enemy[j].x-(myGamePiece.size/2)+(enemy[j].size/2)))
-        bluPDist=Math.abs(myGamePiece2.x-(enemy[j].x-(myGamePiece2.size/2)+(enemy[j].size/2)))
-        grnPDist=Math.abs(myGamePiece3.x-(enemy[j].x-(myGamePiece3.size/2)+(enemy[j].size/2)))
-        ylwPDist=Math.abs(myGamePiece4.x-(enemy[j].x-(myGamePiece4.size/2)+(enemy[j].size/2)))
+        redPDist=Math.abs(playerNumber.x-(enemy[j].x-(playerNumber.size/2)+(enemy[j].size/2)))
+        bluPDist=Math.abs(playerNumber2.x-(enemy[j].x-(playerNumber2.size/2)+(enemy[j].size/2)))
+        grnPDist=Math.abs(playerNumber3.x-(enemy[j].x-(playerNumber3.size/2)+(enemy[j].size/2)))
+        ylwPDist=Math.abs(playerNumber4.x-(enemy[j].x-(playerNumber4.size/2)+(enemy[j].size/2)))
 
         if(enemy[j].atkCD<=0){
             if(enemy[j].weapon.multi===1){
-                if(redPDist<enemy[j].weapon.range&&myGamePiece.hp>0){
-                    if(enemy[j].weapon.damageMin-myGamePiece.item.defence<1){
-                    myGamePiece.hp=myGamePiece.hp-1
+                if(redPDist<enemy[j].weapon.range&&playerNumber.hp>0){
+                    if(enemy[j].weapon.damageMin-playerNumber.item.defence<1){
+                    playerNumber.hp=playerNumber.hp-1
                     }else{
-                    myGamePiece.hp=myGamePiece.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-myGamePiece.item.defence)
+                    playerNumber.hp=playerNumber.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-playerNumber.item.defence)
                     }
-                    if(myGamePiece.hp<0){
-                        myGamePiece.hp=0
-                    }
-                }
-                if(bluPDist<enemy[j].weapon.range&&myGamePiece2.hp>0){
-                    if(enemy[j].weapon.damageMin-myGamePiece2.item.defence<1){
-                        myGamePiece2.hp=myGamePiece2.hp-1
-                        }else{
-                    myGamePiece2.hp=myGamePiece2.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-myGamePiece2.item.defence)
-                        }
-                    if(myGamePiece2.hp<0){
-                        myGamePiece2.hp=0
+                    if(playerNumber.hp<0){
+                        playerNumber.hp=0
                     }
                 }
-                if(grnPDist<enemy[j].weapon.range&&myGamePiece3.hp>0){
-                    if(enemy[j].weapon.damageMin-myGamePiece3.item.defence<1){
-                        myGamePiece3.hp=myGamePiece3.hp-1
+                if(bluPDist<enemy[j].weapon.range&&playerNumber2.hp>0){
+                    if(enemy[j].weapon.damageMin-playerNumber2.item.defence<1){
+                        playerNumber2.hp=playerNumber2.hp-1
                         }else{
-                    myGamePiece3.hp=myGamePiece3.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-myGamePiece3.item.defence)
+                    playerNumber2.hp=playerNumber2.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-playerNumber2.item.defence)
                         }
-                    if(myGamePiece3.hp<0){
-                        myGamePiece3.hp=0
+                    if(playerNumber2.hp<0){
+                        playerNumber2.hp=0
                     }
                 }
-                if(ylwPDist<enemy[j].weapon.range&&myGamePiece4.hp>0){
-                    if(enemy[j].weapon.damageMin-myGamePiece4.item.defence<1){
-                        myGamePiece4.hp=myGamePiece4.hp-1
+                if(grnPDist<enemy[j].weapon.range&&playerNumber3.hp>0){
+                    if(enemy[j].weapon.damageMin-playerNumber3.item.defence<1){
+                        playerNumber3.hp=playerNumber3.hp-1
                         }else{
-                    myGamePiece4.hp=myGamePiece4.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-myGamePiece4.item.defence)
+                    playerNumber3.hp=playerNumber3.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-playerNumber3.item.defence)
                         }
-                    if(myGamePiece4.hp<0){
-                        myGamePiece4.hp=0
+                    if(playerNumber3.hp<0){
+                        playerNumber3.hp=0
+                    }
+                }
+                if(ylwPDist<enemy[j].weapon.range&&playerNumber4.hp>0){
+                    if(enemy[j].weapon.damageMin-playerNumber4.item.defence<1){
+                        playerNumber4.hp=playerNumber4.hp-1
+                        }else{
+                    playerNumber4.hp=playerNumber4.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-playerNumber4.item.defence)
+                        }
+                    if(playerNumber4.hp<0){
+                        playerNumber4.hp=0
                     }
                 }
                 enemy[j].atkCD=enemy[j].weapon.atkRate
             }else{
-                if(redPDist<enemy[j].weapon.range &&redPDist<bluPDist&&redPDist<grnPDist&&redPDist<ylwPDist&&myGamePiece.hp>0){
-                    if(enemy[j].weapon.damageMin-myGamePiece.item.defence<1){
-                        myGamePiece.hp=myGamePiece.hp-1
+                if(redPDist<enemy[j].weapon.range &&redPDist<bluPDist&&redPDist<grnPDist&&redPDist<ylwPDist&&playerNumber.hp>0){
+                    if(enemy[j].weapon.damageMin-playerNumber.item.defence<1){
+                        playerNumber.hp=playerNumber.hp-1
                         }else{
-                    myGamePiece.hp=myGamePiece.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-myGamePiece.item.defence)
+                    playerNumber.hp=playerNumber.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-playerNumber.item.defence)
                         }
-                    if(myGamePiece.hp<0){
-                        myGamePiece.hp=0
+                    if(playerNumber.hp<0){
+                        playerNumber.hp=0
                     }
-                }else if(bluPDist<enemy[j].weapon.range&&bluPDist<grnPDist&&bluPDist<ylwPDist&&myGamePiece2.hp>0){
-                    if(enemy[j].weapon.damageMin-myGamePiece2.item.defence<1){
-                        myGamePiece2.hp=myGamePiece2.hp-1
+                }else if(bluPDist<enemy[j].weapon.range&&bluPDist<grnPDist&&bluPDist<ylwPDist&&playerNumber2.hp>0){
+                    if(enemy[j].weapon.damageMin-playerNumber2.item.defence<1){
+                        playerNumber2.hp=playerNumber2.hp-1
                         }else{
-                    myGamePiece2.hp=myGamePiece2.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-myGamePiece2.item.defence)
+                    playerNumber2.hp=playerNumber2.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-playerNumber2.item.defence)
                         }
-                    if(myGamePiece2.hp<0){
-                        myGamePiece2.hp=0
+                    if(playerNumber2.hp<0){
+                        playerNumber2.hp=0
                     }
-                }else if(grnPDist<enemy[j].weapon.range&&grnPDist<ylwPDist&&myGamePiece3.hp>0){
-                    if(enemy[j].weapon.damageMin-myGamePiece3.item.defence<1){
-                        myGamePiece3.hp=myGamePiece3.hp-1
+                }else if(grnPDist<enemy[j].weapon.range&&grnPDist<ylwPDist&&playerNumber3.hp>0){
+                    if(enemy[j].weapon.damageMin-playerNumber3.item.defence<1){
+                        playerNumber3.hp=playerNumber3.hp-1
                         }else{
-                    myGamePiece3.hp=myGamePiece3.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-myGamePiece3.item.defence)
+                    playerNumber3.hp=playerNumber3.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-playerNumber3.item.defence)
                         }
-                    if(myGamePiece3.hp<0){
-                        myGamePiece3.hp=0
+                    if(playerNumber3.hp<0){
+                        playerNumber3.hp=0
                     }
-                }else if(ylwPDist<enemy[j].weapon.range&&myGamePiece4.hp>0){
-                    if(enemy[j].weapon.damageMin-myGamePiece4.item.defence<1){
-                        myGamePiece4.hp=myGamePiece4.hp-1
+                }else if(ylwPDist<enemy[j].weapon.range&&playerNumber4.hp>0){
+                    if(enemy[j].weapon.damageMin-playerNumber4.item.defence<1){
+                        playerNumber4.hp=playerNumber4.hp-1
                         }else{
-                    myGamePiece4.hp=myGamePiece4.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-myGamePiece4.item.defence)
+                    playerNumber4.hp=playerNumber4.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-playerNumber4.item.defence)
                         }
-                    if(myGamePiece4.hp<0){
-                        myGamePiece4.hp=0
+                    if(playerNumber4.hp<0){
+                        playerNumber4.hp=0
                     }
                 }
             enemy[j].atkCD=enemy[j].weapon.atkRate
@@ -1202,33 +1091,33 @@ function updateGameArea() {
 
     }
 
-    myGamePiece.newPos();
-    myGamePiece.update();
-    myGamePiece2.newPos();
-    myGamePiece2.update();
-    myGamePiece3.newPos();
-    myGamePiece3.update();
-    myGamePiece4.newPos();
-    myGamePiece4.update();
+    playerNumber.newPos();
+    playerNumber.update();
+    playerNumber2.newPos();
+    playerNumber2.update();
+    playerNumber3.newPos();
+    playerNumber3.update();
+    playerNumber4.newPos();
+    playerNumber4.update();
     inv[14].storedItem=0
     
     if(p1Held===1){ //Check if any player is held, if they are, start dragging them
-        playerMoveToMouse(myGamePiece)
+        playerMoveToMouse(playerNumber)
     }
     if(p2Held===1){
-        playerMoveToMouse(myGamePiece2)
+        playerMoveToMouse(playerNumber2)
     }
     if(p3Held===1){
-        playerMoveToMouse(myGamePiece3)
+        playerMoveToMouse(playerNumber3)
     }
     if(p4Held===1){
-        playerMoveToMouse(myGamePiece4)
+        playerMoveToMouse(playerNumber4)
     }
 
-    if(myGamePiece.hp===0&&myGamePiece2.hp===0&&myGamePiece3.hp===0&&myGamePiece4.hp===0&&gameover>-1){ //Check for TPK, game over
+    if(playerNumber.hp===0&&playerNumber2.hp===0&&playerNumber3.hp===0&&playerNumber4.hp===0&&gameover>-1){ //Check for TPK, game over
         gameover=gameover-1
         if(gameover===0){
-            alert("Game Over")
+            alert("Game Over")//todo
         }
     }
 
@@ -1245,6 +1134,112 @@ function updateGameArea() {
     }
 
     
+    if(land.length>0){//draw new land
+        for(w=0;w<land.length;w++){
+            ctx = myGameArea.context;
+            ctx.fillStyle = "#7b531b"
+            ctx.fillRect(land[w].x1+1, land[w].y1+1, land[w].x2-land[w].x1-2, land[w].y2-land[w].y1-2);
+            ctx = myGameArea.context;
+            ctx.fillStyle = "#17740b"
+            ctx.fillRect(land[w].x1, land[w].y1, land[w].x2-land[w].x1, 10);
+        }
+    }
+
+    if(area[loadedAreaID].name==="Menu"){
+        ctx = myGameArea.context;
+        ctx.font = '80px serif';
+        ctx.fillStyle = "#4832a8"
+        ctx.fillText("Ulfyn Ranger", 280, 150)
+        ctx.font = '50px serif';
+        ctx.fillStyle = "#1d6f82"
+        ctx.fillRect(372, 260, 240, 48);
+        ctx.fillStyle = "#4832a8"
+        ctx.fillText("New Game", 380, 300)
+        ctx.fillStyle = "#1d6f82"
+        ctx.fillRect(381, 330, 224, 48);
+        ctx.fillStyle = "#4832a8"
+        ctx.fillText("Load Save", 387, 370)
+    }
+
+    if(area[loadedAreaID].name==="Map"){
+        for(r=0;r<area.length;r++){
+            if(area[r].unlocked===1){
+                ctx = myGameArea.context;
+                switch(area[r].unlocked){
+                    case 0:
+                        break;
+                    case 1:
+                        if(area[r].cleared===0){//draw stages on map
+                            ctx.fillStyle = "#e0dd1d"
+                            ctx.fillRect(area[r].x, area[r].y, 20, 20);
+                            if(pointerX>area[r].x-16&&pointerX<area[r].x+5&&pointerY>area[r].y-15&&pointerY<area[r].y+5){
+                                ctx.fillStyle = "#800b15"
+                                ctx.globalCompositeOperation='destination-over';
+                                ctx.fillRect(area[r].x-7, area[r].y-7, 34, 34);
+                                ctx.globalCompositeOperation="source-over";
+                                ctx.font = '16px serif';
+                                ctx.fillStyle = "#000000"
+                                ctx.fillText(`${area[r].name}`, area[r].x-10, area[r].y-20)
+                            }
+                        }else if(area[r].cleared===1){
+                            ctx.fillStyle = "#2bc4a1"
+                            ctx.fillRect(area[r].x, area[r].y, 20, 20);
+                            if(pointerX>area[r].x-16&&pointerX<area[r].x+5&&pointerY>area[r].y-15&&pointerY<area[r].y+5){
+                                ctx.fillStyle = "#800b15"
+                                ctx.globalCompositeOperation='destination-over';
+                                ctx.fillRect(area[r].x-7, area[r].y-7, 34, 34);
+                                ctx.globalCompositeOperation="source-over";
+                                ctx.font = '16px serif';
+                                ctx.fillStyle = "#000000"
+                                ctx.fillText(`${area[r].name}`, area[r].x-10, area[r].y-20)
+                            }
+                        }else if(area[r].cleared===2){
+                            ctx.fillStyle = "#FFFFFF"
+                            ctx.fillRect(area[r].x, area[r].y, 20, 20);
+                            if(pointerX>area[r].x-16&&pointerX<area[r].x+5&&pointerY>area[r].y-15&&pointerY<area[r].y+5){
+                                ctx.fillStyle = "#800b15"
+                                ctx.globalCompositeOperation='destination-over';
+                                ctx.fillRect(area[r].x-7, area[r].y-7, 34, 34);
+                                ctx.globalCompositeOperation="source-over";
+                                ctx.font = '16px serif';
+                                ctx.fillStyle = "#000000"
+                                ctx.fillText(`${area[r].name}`, area[r].x-10, area[r].y-20)
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                
+                
+            }
+        }
+    }
+
+    if(signY>0 && (enemy.length===0||area[loadedAreaID].subAreaCount!==subArea)){
+        ctx = myGameArea.context;
+        ctx.fillStyle = "#61330b"
+        ctx.fillRect(895, signY+7, 53, -26);
+        ctx.fillRect(917, signY+7, 10, 25);
+        ctx.font = '16px serif';
+        ctx.fillStyle = "#140b02"
+        ctx.fillText("NEXT", 900, signY)
+    }
+
+    ctx = myGameArea.context;
+    ctx.fillStyle = "#8a8a8a"
+    ctx.fillRect(7, 50, 144,35);
+    ctx.fillStyle = "#b4b4b4"
+    ctx.fillRect(12, 55, 134, 25);
+    ctx.font = '16px serif';
+    ctx.fillStyle = "#000000"
+    if(area[loadedAreaID].subAreaCount>1){
+        ctx.fillText(`${area[loadedAreaID].name}:${subArea}`, 18,72)
+    }else{
+        ctx.fillText(`${area[loadedAreaID].name}`, 18,72)
+    }
+
+
 
     if(lastslot!==-1){ //Updating the sell button
         if(items[inv[lastslot].storedItem].worth!==(undefined^0^null)){
@@ -1267,10 +1262,10 @@ function updateGameArea() {
             level++
             lastLevelExp=expToLevelUp
             expToLevelUp=Math.floor(expToLevelUp*1.2)
-            myGamePiece.skillPoints+=2
-            myGamePiece2.skillPoints+=2
-            myGamePiece3.skillPoints+=2
-            myGamePiece4.skillPoints+=2
+            playerNumber.skillPoints+=2
+            playerNumber2.skillPoints+=2
+            playerNumber3.skillPoints+=2
+            playerNumber4.skillPoints+=2
             if(playerNumberStatsShown.skillPoints>0){
                 document.getElementById("dmgSPButton").style.borderColor="#5e130e"
                 document.getElementById("dmgSPButton").style.background="#911616"
@@ -1304,10 +1299,10 @@ function updateGameArea() {
     }
 
     //check if hit sign
-    if( (myGamePiece.x>920&&myGamePiece.y>signY-40&&myGamePiece.y<signY+20&&signY>0&&myGamePiece.hp>0)||
-        (myGamePiece2.x>920&&myGamePiece2.y>signY-40&&myGamePiece2.y<signY+20&&signY>0&&myGamePiece2.hp>0)||
-        (myGamePiece3.x>920&&myGamePiece3.y>signY-40&&myGamePiece3.y<signY+20&&signY>0&&myGamePiece3.hp>0)||
-        (myGamePiece4.x>920&&myGamePiece4.y>signY-40&&myGamePiece4.y<signY+20&&signY>0&&myGamePiece4.hp>0)){
+    if( (playerNumber.x>920&&playerNumber.y>signY-40&&playerNumber.y<signY+20&&signY>0&&playerNumber.hp>0)||
+        (playerNumber2.x>920&&playerNumber2.y>signY-40&&playerNumber2.y<signY+20&&signY>0&&playerNumber2.hp>0)||
+        (playerNumber3.x>920&&playerNumber3.y>signY-40&&playerNumber3.y<signY+20&&signY>0&&playerNumber3.hp>0)||
+        (playerNumber4.x>920&&playerNumber4.y>signY-40&&playerNumber4.y<signY+20&&signY>0&&playerNumber4.hp>0)){
         if(area[loadedAreaID].subAreaCount===subArea){
             clearStage() 
             loadedAreaID=2
@@ -1337,14 +1332,14 @@ function drag(){ //Find which player clicked on / near, set to held
     document.onmousedown = function(event){
         pointerX = event.pageX-(window.innerWidth-960)/2;
         pointerY = event.pageY-(window.innerHeight-540-250)/2;
-        blockToMouseX = Math.abs(myGamePiece.x+(myGamePiece.size/2)-pointerX)
-        blockToMouseY = Math.abs(myGamePiece.y+(myGamePiece.size/2)-pointerY)
-        block2ToMouseX = Math.abs(myGamePiece2.x+(myGamePiece2.size/2)-pointerX)
-        block2ToMouseY = Math.abs(myGamePiece2.y+(myGamePiece2.size/2)-pointerY)
-        block3ToMouseX = Math.abs(myGamePiece3.x+(myGamePiece3.size/2)-pointerX)
-        block3ToMouseY = Math.abs(myGamePiece3.y+(myGamePiece3.size/2)-pointerY)
-        block4ToMouseX = Math.abs(myGamePiece4.x+(myGamePiece4.size/2)-pointerX)
-        block4ToMouseY = Math.abs(myGamePiece4.y+(myGamePiece4.size/2)-pointerY)
+        blockToMouseX = Math.abs(playerNumber.x+(playerNumber.size/2)-pointerX)
+        blockToMouseY = Math.abs(playerNumber.y+(playerNumber.size/2)-pointerY)
+        block2ToMouseX = Math.abs(playerNumber2.x+(playerNumber2.size/2)-pointerX)
+        block2ToMouseY = Math.abs(playerNumber2.y+(playerNumber2.size/2)-pointerY)
+        block3ToMouseX = Math.abs(playerNumber3.x+(playerNumber3.size/2)-pointerX)
+        block3ToMouseY = Math.abs(playerNumber3.y+(playerNumber3.size/2)-pointerY)
+        block4ToMouseX = Math.abs(playerNumber4.x+(playerNumber4.size/2)-pointerX)
+        block4ToMouseY = Math.abs(playerNumber4.y+(playerNumber4.size/2)-pointerY)
         if(block4ToMouseX<15 && block4ToMouseY<15){
             p4Held=1
         }else
@@ -1392,7 +1387,7 @@ function drag(){ //Find which player clicked on / near, set to held
             document.getElementById("mapButton").addEventListener("mouseup", goToMap);
             document.getElementById("mapButton").innerHTML="Return to Map"
 
-            saveCode = prompt("Paste your save code here:")
+            saveCode = prompt("Paste your save code here:", "lol nah its not done yet")//todo
             loadSaveFromCode()
         }
     checkClickOnLevelOnMap()
@@ -1420,8 +1415,8 @@ function releasePlayers(){ //Stop holding any held players, on mouse up
 
 document.addEventListener("mousemove",updateMouseCoords)
 function updateMouseCoords(event){ //Mouse position tracking
-    pointerX = event.pageX-(myGamePiece.size/2)-(window.innerWidth-960)/2;
-    pointerY = event.pageY-(myGamePiece.size/2)-(window.innerHeight-540-250)/2;
+    pointerX = event.pageX-(playerNumber.size/2)-(window.innerWidth-960)/2;
+    pointerY = event.pageY-(playerNumber.size/2)-(window.innerHeight-540-250)/2;
 }
 
 function playerMoveToMouse(playerHeld, event){ //Move player currently held towards mouse
@@ -1444,7 +1439,6 @@ function playerMoveToMouse(playerHeld, event){ //Move player currently held towa
             if(playerHeld.y>pointerY){
                 playerHeld.speedY = -blockToMouseY/8
             };
-            playerHeld.gravitySpeed = 0
 }
 
 let i = 0
