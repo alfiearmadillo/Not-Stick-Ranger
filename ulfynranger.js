@@ -17,6 +17,8 @@
 
 //move next level sign to highest floor not off top of screen
 
+//click inv slot player not updating todo
+
 let signY=0
 let saveCode=0
 let area = []
@@ -212,7 +214,17 @@ divcontainer.appendChild(rangeSPButton, divcontainer.firstChild)
 delaySPButton=document.createElement("div");
 delaySPButton.setAttribute("id", `delaySPButton`)
 divcontainer.appendChild(delaySPButton, divcontainer.firstChild)
+mapButton=document.createElement("div");
+mapButton.setAttribute("id", `mapButton`)
+divcontainer.appendChild(mapButton, divcontainer.firstChild)
 
+document.getElementById("mapButton").addEventListener("mouseover", makeButtonLight);
+document.getElementById("mapButton").addEventListener("mouseout", makeButtonDark);
+document.getElementById("mapButton").addEventListener("mouseup", goToMap);
+function goToMap(){
+    loadedAreaID=2
+    renderStage()
+}
 
 
 document.getElementById("dmgSPButton").addEventListener("mouseup", addSP);
@@ -386,11 +398,11 @@ function loadSaveFromCode(){//todo
 
 }
 
-area[0]={name:"Menu",subAreaCount:1,unlocked:1} //Stage list
-area[1]={name:"Town",subAreaCount:1,unlocked:1}
-area[2]={name:"Map",subAreaCount:1,unlocked:1}
-area[3]={name:"Intro Avenue",subAreaCount:9,unlocked:1}
-area[4]={name:"Grassy Fields",subAreaCount:7,unlocked:0}
+area[0]={name:"Menu",subAreaCount:1,unlocked:0,cleared:0} //Stage list
+area[1]={name:"Town",subAreaCount:1,unlocked:1,x:100,y:300,cleared:2}
+area[2]={name:"Map",subAreaCount:1,unlocked:0,cleared:0}
+area[3]={name:"Intro Avenue",subAreaCount:9,unlocked:1,x:150,y:300,cleared:0}
+area[4]={name:"Grassy Fields",subAreaCount:7,unlocked:0,x:140,y:250,cleared:0}
 
 
 
@@ -426,13 +438,79 @@ function renderStage(){ //Loading terrain for different stages
         myGamePiece.x=130;myGamePiece.y=1370;myGamePiece.speedX=0;myGamePiece.speedY=0
         signY=-1
     }
-    if(area[loadedAreaID].name==="Intro Avenue"&&subArea===1){//Main menu
+    if(area[loadedAreaID].name==="Intro Avenue"){
+        if(subArea===1){
         newLand(-1,510,1000,5400)
-        myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
-        myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
-        myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
-        myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
-        signY=478
+            myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
+            myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
+            myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
+            myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+            signY=478
+        }
+        if(subArea===2){//Main menu
+            newLand(-1,510,1000,5400)
+            myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
+            myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
+            myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
+            myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+            signY=478
+        }
+        if(subArea===3){//Main menu
+            newLand(-1,510,1000,5400)
+            myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
+            myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
+            myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
+            myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+            signY=478
+        }
+        if(subArea===4){//Main menu
+            newLand(-1,510,1000,5400)
+            myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
+            myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
+            myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
+            myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+            signY=478
+        }
+        if(subArea===5){//Main menu
+            newLand(-1,510,1000,5400)
+            myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
+            myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
+            myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
+            myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+            signY=478
+        }
+        if(subArea===6){//Main menu
+            newLand(-1,510,1000,5400)
+            myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
+            myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
+            myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
+            myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+            signY=478
+        }
+        if(subArea===7){//Main menu
+            newLand(-1,510,1000,5400)
+            myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
+            myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
+            myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
+            myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+            signY=478
+        }
+        if(subArea===8){//Main menu
+            newLand(-1,510,1000,5400)
+            myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
+            myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
+            myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
+            myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+            signY=478
+        }
+        if(subArea===9){//Main menu
+            newLand(-1,510,1000,5400)
+            myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
+            myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
+            myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
+            myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
+            signY=478
+        }
     }
     if(area[loadedAreaID].name==="Grassy Fields"&&subArea===1){//Main menu
         newLand(-1,510,1000,5400)
@@ -605,7 +683,35 @@ function component(width, height, color, x, y) {//draw new boxes
             ctx.fillText("Load Save", 387, 370)
         }
 
-        if(signY>0){
+        if(area[loadedAreaID].name==="Map"){
+            for(r=0;r<area.length;r++){
+                if(area[r].unlocked===1){
+                    ctx = myGameArea.context;
+                    switch(area[r].unlocked){
+                        case 0:
+                            break;
+                        case 1:
+                            if(area[r].cleared===0){
+                                ctx.fillStyle = "#e0dd1d"
+                                ctx.fillRect(area[r].x, area[r].y, 20, 20);
+                            }else if(area[r].cleared===1){
+                                ctx.fillStyle = "#2bc4a1"
+                                ctx.fillRect(area[r].x, area[r].y, 20, 20);
+                            }else if(area[r].cleared===2){
+                                ctx.fillStyle = "#FFFFFF"
+                                ctx.fillRect(area[r].x, area[r].y, 20, 20);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    
+                    
+                }
+            }
+        }
+
+        if(signY>0 && enemy.length===0){
             ctx = myGameArea.context;
             ctx.fillStyle = "#61330b"
             ctx.fillRect(895, signY+7, 53, -26);
@@ -622,7 +728,11 @@ function component(width, height, color, x, y) {//draw new boxes
         ctx.fillRect(12, 55, 134, 25);
         ctx.font = '16px serif';
         ctx.fillStyle = "#000000"
-        ctx.fillText(area[loadedAreaID].name, 15,72)
+        if(area[loadedAreaID].subAreaCount>1){
+            ctx.fillText(`${area[loadedAreaID].name}:${subArea}`, 15,72)
+        }else{
+            ctx.fillText(`${area[loadedAreaID].name}`, 15,72)
+        }
 
 
         if(this.type==="item"||this.type==="health"||this.type==="coin"){//draw hp item coin
@@ -1357,14 +1467,24 @@ function drag(){ //Find which player clicked on / near, set to held
             p1Held=1
         }
         if(area[loadedAreaID].name==="Menu"&&pointerX>372&&pointerX<372+240&&pointerY>260&&pointerY<260+48){
-            console.log("new gane button lcicked")
             loadedAreaID=1
             renderStage()
         }
         if(area[loadedAreaID].name==="Menu"&&pointerX>381&&pointerX<381+224&&pointerY>330&&pointerY<330+48){
-            console.log("load game button lcicked")
             saveCode = prompt("Paste your save code here:")
             loadSaveFromCode()
+        }
+        if(area[loadedAreaID].name==="Map"&&pointerX>area[1].x&&pointerX<area[1].x+20&&pointerY>area[1].y&&pointerY<area[1].y+20){
+            loadedAreaID=1
+            renderStage()
+        }
+        if(area[loadedAreaID].name==="Map"&&pointerX>area[3].x&&pointerX<area[3].x+20&&pointerY>area[3].y&&pointerY<area[3].y+20){
+            loadedAreaID=3
+            renderStage()
+        }
+        if(area[loadedAreaID].name==="Map"&&pointerX>area[4].x&&pointerX<area[4].x+20&&pointerY>area[4].y&&pointerY<area[4].y+20){
+            loadedAreaID=4
+            renderStage()
         }
     }
 }
