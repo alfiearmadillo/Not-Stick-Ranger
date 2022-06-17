@@ -1,24 +1,12 @@
-//Start on menu, load and new button
-//new starts in town, next goes to map with 1st lv unlocked
-
-//Areas & Sub
-//world map
 //SP Respec in starting area w/ shop, hp regen, free revivals
-
-// save / load // Item stored in all inv slots, money, HP, assigned SP, spare SP, XP, LV, Area, subArea?, save if all die instantly
-// ranged projectile?
-// sprites?
-
-//game over screen reload // on load if all dead, 1 random one to 1hp
-
 //shop contains items, enemy info, bonus SP (10,100,1000 etc.)
-
+// save / load // Item stored in all inv slots, money, HP, assigned SP, spare SP, XP, LV
+//game over tp to town after wait
+//Projectiles for players & enemies
+//enemy types (flying random movent every x time), player like walker
 //terrain side collision?
-
-//move next level sign to highest floor not off top of screen
-
-//menu bottn css finish todo
-//click inv slot player not updating todo
+//textures?
+//more levels, enemies, weapons, content
 
 let signY=0
 let saveCode=0
@@ -129,8 +117,11 @@ items[1]={name:"Test Sword",damageMin:2,damageMax:4,range:25,atkRate:50,lifeStea
 items[2]={name:"Test Shield",damageMin:1,damageMax:1,range:15,atkRate:100,lifeSteal:0,defence:1,type:"Shield", colour:'#75a832', worth:10, multi:0, rangeMult:0.1}
 items[3]={name:"Test Bow",damageMin:1,damageMax:3,range:160,atkRate:66,lifeSteal:0,defence:0,type:"Bow", colour:'#634f1c', worth:10, multi:0, rangeMult:3}
 items[4]={name:"Test Staff",damageMin:0,damageMax:1,range:300,atkRate:200,lifeSteal:0,defence:0,type:"Staff", colour:'#660033', worth:10, multi:0, rangeMult:3}
-items[5]={name:"CR_Room1Basic",damageMin:1,damageMax:2,range:45,atkRate:200,lifeSteal:0,defence:0,type:"CR_Melee", colour:'#191919', worth:-1, multi:0, rangeMult:0.1}
-items[6]={name:"CR_Room1Boss",damageMin:5,damageMax:18,range:300,atkRate:200,lifeSteal:0,defence:0,type:"CR_Special1", colour:'#191919', worth:-1, multi:1, rangeMult:3}
+items[5]={name:"CR_IntoAveBasic",damageMin:1,damageMax:2,range:45,atkRate:200,lifeSteal:0,defence:0,type:"CR_Melee", colour:'#191919', worth:-1, multi:0, rangeMult:0.1}
+items[6]={name:"CR_IntroAveBoss",damageMin:5,damageMax:18,range:300,atkRate:200,lifeSteal:0,defence:0,type:"CR_Special1", colour:'#191919', worth:-1, multi:1, rangeMult:3}
+items[7]={name:"CR_IntroAveRanged",damageMin:1,damageMax:2,range:130,atkRate:200,lifeSteal:0,defence:0,type:"CR_Ranged", colour:'#191919', worth:-1, multi:0, rangeMult:3}
+items[8]={name:"CR_IntroAveStrong",damageMin:5,damageMax:10,range:45,atkRate:200,lifeSteal:0,defence:0,type:"CR_Ranged", colour:'#191919', worth:-1, multi:0, rangeMult:0.1}
+items[9]={name:"CR_IntroAveWeak",damageMin:0,damageMax:1,range:45,atkRate:400,lifeSteal:0,defence:0,type:"CR_Ranged", colour:'#191919', worth:-1, multi:0, rangeMult:0.1}
 
 function addItem(player, itemID){
     switch(player){
@@ -215,15 +206,10 @@ divcontainer.appendChild(rangeSPButton, divcontainer.firstChild)
 delaySPButton=document.createElement("div");
 delaySPButton.setAttribute("id", `delaySPButton`)
 divcontainer.appendChild(delaySPButton, divcontainer.firstChild)
-mapButton=document.createElement("div");
-mapButton.setAttribute("id", `mapButton`)
-divcontainer.appendChild(mapButton, divcontainer.firstChild)
 
-document.getElementById("mapButton").addEventListener("mouseover", makeButtonLight);
-document.getElementById("mapButton").addEventListener("mouseout", makeButtonDark);
-document.getElementById("mapButton").addEventListener("mouseup", goToMap);
 function goToMap(){
     loadedAreaID=2
+    subArea=1
     renderStage()
 }
 
@@ -238,22 +224,26 @@ function addSP(){
         case "dmgSPButton":
             playerNumberStatsShown.skillPoints-=1
             playerNumberStatsShown.dmgPoints+=1
+            lastmoney=-1
             lastEXP=-1
             break;
         case "hpSPButton":
             playerNumberStatsShown.skillPoints-=1
             playerNumberStatsShown.hpPoints+=1
+            lastmoney=-1
             lastEXP=-1
             break;
         case "rangeSPButton":
             playerNumberStatsShown.skillPoints-=1
             playerNumberStatsShown.rangePoints+=1
+            lastmoney=-1
             lastEXP=-1
             break;
         case "delaySPButton":
             
             playerNumberStatsShown.skillPoints-=1
             playerNumberStatsShown.cdPoints+=1
+            lastmoney=-1
             lastEXP=-1
             break;
                                 
@@ -321,10 +311,6 @@ function revivePlayerActiveColour(){
 let lastslot= -1
 let tmpObj
 
-// if(inv.findIndex(thing => thing.storedItem===4)>-1){ //change this to for, add colour to item
-// document.getElementById(inv.findIndex(thing => thing.storedItem===4)).style.background='#660033'
-// }
-
 for(e=0;e<inv.length;e++){
     document.getElementById(e).style.background=items[inv[e].storedItem].colour
 }
@@ -384,6 +370,7 @@ function clickButton(num){
     document.getElementById(lastslot).style.borderColor='#7a7bb7'
     }
     if(num<4){
+        lastmoney=-1
         addItem(num, inv[num].storedItem)
     }
     
@@ -396,24 +383,26 @@ function clickButton(num){
 }
 
 function loadSaveFromCode(){//todo
-
+    loadedAreaID=1
+    renderStage()
 }
 
-area[0]={name:"Menu",subAreaCount:1,unlocked:0,cleared:0} //Stage list
-area[1]={name:"Town",subAreaCount:1,unlocked:1,x:100,y:300,cleared:2}
-area[2]={name:"Map",subAreaCount:1,unlocked:0,cleared:0}
-area[3]={name:"Intro Avenue",subAreaCount:9,unlocked:1,x:150,y:300,cleared:0}
-area[4]={name:"Grassy Fields",subAreaCount:7,unlocked:0,x:140,y:250,cleared:0}
+//update for each new level when make level making levels
+area[0]={name:"Menu",subAreaCount:1,unlocked:0,cleared:-1} //Stage list
+area[1]={name:"Town",subAreaCount:1,unlocked:1,x:100,y:300,cleared:2,stageToUnlock1:3,stageToUnlock2:3}
+area[2]={name:"Map",subAreaCount:1,unlocked:0,cleared:-1}
+area[3]={name:"Intro Avenue",subAreaCount:9,unlocked:1,x:150,y:300,cleared:0,stageToUnlock1:4,stageToUnlock2:3}
+area[4]={name:"Grassy Fields",subAreaCount:7,unlocked:0,x:140,y:230,cleared:0,stageToUnlock1:5,stageToUnlock2:3}
 
-
-
-
-function renderStage(){ //Loading terrain for different stages
+function renderStage(){ //Stage loading
     land=[]
     enemy=[]
-    droppedItem=[]
+    i=0
+    droppedItem=[]//update for each new level when make level making levels
     if(area[loadedAreaID].name==="Menu"){//Main menu
         newLand(-1,510,1000,5400)
+        newLand(-1,495,200,5400)
+        newLand(760,495,1000,5400)
         myGamePiece4.x=260;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
         myGamePiece3.x=400;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
         myGamePiece2.x=560;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
@@ -421,7 +410,7 @@ function renderStage(){ //Loading terrain for different stages
         signY=-1
     }
     if(area[loadedAreaID].name==="Town"){//Main menu
-        newLand(-1,510,1000,5400);newLand(400,490,800,5400)
+        newLand(-1,510,1000,5400)
         myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
         myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
         myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
@@ -442,6 +431,7 @@ function renderStage(){ //Loading terrain for different stages
     if(area[loadedAreaID].name==="Intro Avenue"){
         if(subArea===1){
         newLand(-1,510,1000,5400)
+        spawnEnemy(20,"#8e17b3",550,400,0.5,5,"SlowWalk",1,1,1,55,0.1,10,1,1,2,1,3,1,4,1)
             myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
             myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
             myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
@@ -450,6 +440,10 @@ function renderStage(){ //Loading terrain for different stages
         }
         if(subArea===2){//Main menu
             newLand(-1,510,1000,5400)
+            newLand(320,490,710,5400)
+            spawnEnemy(20,"#7b139c",350,400,0.5,8,"SlowWalk",1,1,1,55,0.1,10,1,1,2,1,3,1,4,1)
+            spawnEnemy(20,"#7b139c",600,400,0.5,8,"SlowWalk",1,1,1,55,0.1,10,1,1,2,1,3,1,4,1)
+            spawnEnemy(20,"#7b139c",870,400,0.5,8,"SlowWalk",1,1,1,55,0.1,10,1,1,2,1,3,1,4,1)
             myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
             myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
             myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
@@ -458,19 +452,48 @@ function renderStage(){ //Loading terrain for different stages
         }
         if(subArea===3){//Main menu
             newLand(-1,510,1000,5400)
+            newLand(520,495,1000,5400)
+            newLand(650,470,1000,5400)
+            newLand(880,450,1000,5400)
+            spawnEnemy(20,"#6a0f87",470,400,0.5,10,"SlowWalk",2,1,2,55,0.1,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(20,"#6a0f87",490,400,0.5,10,"SlowWalk",2,1,2,55,0.1,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(15,"#1b1280",550,400,0.5,5,"SlowWalk",3,7,10,25,0.1,10,1,5,2,5,3,5,4,5)
             myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
             myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
             myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
             myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
-            signY=478
+            signY=418
         }
         if(subArea===4){//Main menu
             newLand(-1,510,1000,5400)
+            newLand(-1,490,243,5400)
+            newLand(875,480,1000,5400)
+            newLand(900,460,1000,5400)
+            spawnEnemy(12,"#067806",337,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",353,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",362,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",391,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",440,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",457,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",470,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",485,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",500,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",550,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",637,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",653,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",662,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",691,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",740,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",757,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",770,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",785,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",800,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",850,400,0.5,3,"SlowWalk",1,9,1,30,0.1,35,1,1,2,1,3,1,4,1)
             myGamePiece4.x=10;myGamePiece4.y=370;myGamePiece4.speedX=0;myGamePiece4.speedY=0
             myGamePiece3.x=50;myGamePiece3.y=370;myGamePiece3.speedX=0;myGamePiece3.speedY=0
             myGamePiece2.x=90;myGamePiece2.y=370;myGamePiece2.speedX=0;myGamePiece2.speedY=0
             myGamePiece.x=130;myGamePiece.y=370;myGamePiece.speedX=0;myGamePiece.speedY=0
-            signY=478
+            signY=428
         }
         if(subArea===5){//Main menu
             newLand(-1,510,1000,5400)
@@ -522,12 +545,6 @@ function renderStage(){ //Loading terrain for different stages
         signY=478
     }
 }
-
-function updateStageData(){
-    //if on map load stage clicked
-    //if hit sign, increase subarea by 1, load map if finished all subareas for area
-}
-
 
 //create more terrain
 //createland create land
@@ -692,15 +709,42 @@ function component(width, height, color, x, y) {//draw new boxes
                         case 0:
                             break;
                         case 1:
-                            if(area[r].cleared===0){
+                            if(area[r].cleared===0){//draw stages on map
                                 ctx.fillStyle = "#e0dd1d"
                                 ctx.fillRect(area[r].x, area[r].y, 20, 20);
+                                if(pointerX>area[r].x-16&&pointerX<area[r].x+5&&pointerY>area[r].y-15&&pointerY<area[r].y+5){
+                                    ctx.fillStyle = "#800b15"
+                                    ctx.globalCompositeOperation='destination-over';
+                                    ctx.fillRect(area[r].x-7, area[r].y-7, 34, 34);
+                                    ctx.globalCompositeOperation="source-over";
+                                    ctx.font = '16px serif';
+                                    ctx.fillStyle = "#000000"
+                                    ctx.fillText(`${area[r].name}`, area[r].x-10, area[r].y-20)
+                                }
                             }else if(area[r].cleared===1){
                                 ctx.fillStyle = "#2bc4a1"
                                 ctx.fillRect(area[r].x, area[r].y, 20, 20);
+                                if(pointerX>area[r].x-16&&pointerX<area[r].x+5&&pointerY>area[r].y-15&&pointerY<area[r].y+5){
+                                    ctx.fillStyle = "#800b15"
+                                    ctx.globalCompositeOperation='destination-over';
+                                    ctx.fillRect(area[r].x-7, area[r].y-7, 34, 34);
+                                    ctx.globalCompositeOperation="source-over";
+                                    ctx.font = '16px serif';
+                                    ctx.fillStyle = "#000000"
+                                    ctx.fillText(`${area[r].name}`, area[r].x-10, area[r].y-20)
+                                }
                             }else if(area[r].cleared===2){
                                 ctx.fillStyle = "#FFFFFF"
                                 ctx.fillRect(area[r].x, area[r].y, 20, 20);
+                                if(pointerX>area[r].x-16&&pointerX<area[r].x+5&&pointerY>area[r].y-15&&pointerY<area[r].y+5){
+                                    ctx.fillStyle = "#800b15"
+                                    ctx.globalCompositeOperation='destination-over';
+                                    ctx.fillRect(area[r].x-7, area[r].y-7, 34, 34);
+                                    ctx.globalCompositeOperation="source-over";
+                                    ctx.font = '16px serif';
+                                    ctx.fillStyle = "#000000"
+                                    ctx.fillText(`${area[r].name}`, area[r].x-10, area[r].y-20)
+                                }
                             }
                             break;
                         default:
@@ -712,7 +756,7 @@ function component(width, height, color, x, y) {//draw new boxes
             }
         }
 
-        if(signY>0 && enemy.length===0){
+        if(signY>0 && (enemy.length===0||area[loadedAreaID].subAreaCount!==subArea)){
             ctx = myGameArea.context;
             ctx.fillStyle = "#61330b"
             ctx.fillRect(895, signY+7, 53, -26);
@@ -730,9 +774,9 @@ function component(width, height, color, x, y) {//draw new boxes
         ctx.font = '16px serif';
         ctx.fillStyle = "#000000"
         if(area[loadedAreaID].subAreaCount>1){
-            ctx.fillText(`${area[loadedAreaID].name}:${subArea}`, 15,72)
+            ctx.fillText(`${area[loadedAreaID].name}:${subArea}`, 18,72)
         }else{
-            ctx.fillText(`${area[loadedAreaID].name}`, 15,72)
+            ctx.fillText(`${area[loadedAreaID].name}`, 18,72)
         }
 
 
@@ -820,158 +864,10 @@ function component(width, height, color, x, y) {//draw new boxes
             }
             document.getElementById(inv.length-1).style.background='#5c5c5c'
         }
-
-        //this.hitBottom();
         this.hitLeft();
         this.hitRight();
         this.hitNewLand();
     }
-
-//     this.hitBottom = function() {//floor bounce
-//         var rockbottom = myGameArea.canvas.height - this.height-30;
-//         if (this.y > rockbottom) {
-//             this.y = rockbottom;
-//             this.gravitySpeed=0
-//             this.speedX=this.speedX-this.speedX*0.3
-//             if(this.hp>0||this.type!=="player"){
-//             this.speedY=-Math.abs(this.speedY-this.speedY*0.3)
-//             }else{
-//                 this.speedY=0
-//             }
-//             if(this.type==="player" && this.hp>0){
-//             nearTarget = closestEnemy(enemy, this.x)//logic to do only while on floor
-//             if(enemy.length!==0){
-//                 if (Math.abs(enemy[nearTarget].x+(enemy[nearTarget].size/2-(this.size/2)) - this.x) < this.item.range+(this.rangePoints*this.item.rangeMult)+(enemy[nearTarget].size/2)+(this.size/2)&&
-//                    ((Math.abs(enemy[nearTarget].y+(enemy[nearTarget].size/2) - this.y) < this.item.range+(this.rangePoints*this.item.rangeMult)+(enemy[nearTarget].size/2)) || (enemy[nearTarget].gravity>0&&enemy[nearTarget].gravitySpeed===0))) {
-                    
-//                 if(this.atkCD<=0){
-
-//                     enemy[nearTarget].hp=enemy[nearTarget].hp-randomDmg(Math.floor((this.item.damageMin+(this.dmgPoints*0.2))*((100+this.dmgPoints)/100)), Math.floor((this.item.damageMax+(this.dmgPoints*0.3))*((100+this.dmgPoints)/100)))//damage enemy, will need to be changed for ranged
-
-//                     this.atkCD=Math.floor(this.item.atkRate/((100+this.cdPoints*2.5)/100))
-//                 }else{
-//                     this.atkCD=this.atkCD-1
-//                 }
-
-//                 if(enemy[nearTarget].hp<=0){//enemy drops to 0 hp
-                    
-//                     if(Object.keys(enemy[nearTarget].drops).length>0){ //enemy dropping items
-
-//                         lootRoll=Math.random()*100
-//                         if(enemy[nearTarget].drops.coinChance!==0){
-//                             if(lootRoll<enemy[nearTarget].drops.coinChance){
-//                                 console.log("dropped coin")
-//                                 droppedItem[droppedItem.length] = new component(15, 15, "gold", enemy[nearTarget].x, enemy[nearTarget].y);
-//                                 droppedItem[droppedItem.length-1].data={
-//                                     value:enemy[nearTarget].drops.coin,
-//                                     cooldown:150
-//                                 }
-//                                 droppedItem[droppedItem.length-1].type="coin"
-//                                 droppedItem[droppedItem.length-1].gravity = 0.5;
-//                                 droppedItem[droppedItem.length-1].speedX=(Math.random()*6)-3+(enemy[nearTarget].size/200)
-//                                 droppedItem[droppedItem.length-1].speedY=-Math.random()*9-(enemy[nearTarget].size/100)
-//                             }
-//                         }
-//                         lootRoll=Math.random()*100
-//                         if(enemy[nearTarget].drops.healChance!==0){
-//                             if(lootRoll<enemy[nearTarget].drops.healChance){
-//                                 console.log("dropped hp")
-//                                 droppedItem[droppedItem.length] = new component(15, 15, "#ff756b", enemy[nearTarget].x+(enemy[nearTarget].size/2), enemy[nearTarget].y+(enemy[nearTarget].size/2));
-//                                 droppedItem[droppedItem.length-1].data={
-//                                     value:enemy[nearTarget].drops.healPotion,
-//                                     cooldown:150
-//                                 }
-//                                 droppedItem[droppedItem.length-1].type="health"
-//                                 droppedItem[droppedItem.length-1].gravity = 0.5;
-//                                 droppedItem[droppedItem.length-1].speedX=(Math.random()*3)-1.5+(enemy[nearTarget].size/400)
-//                                 droppedItem[droppedItem.length-1].speedY=-Math.random()*9-(enemy[nearTarget].size/200)
-//                             }
-//                         }
-//                         lootRoll=Math.random()*100
-//                         if(enemy[nearTarget].drops.itemID1Chance!==0){
-//                             if(lootRoll<enemy[nearTarget].drops.itemID1Chance){
-//                                 console.log("dropped item 1")
-//                                 droppedItem[droppedItem.length] = new component(15, 15, items[enemy[nearTarget].drops.itemID1].colour, enemy[nearTarget].x+(enemy[nearTarget].size/2), enemy[nearTarget].y+(enemy[nearTarget].size/2));
-//                                 droppedItem[droppedItem.length-1].data={
-//                                     value:enemy[nearTarget].drops.itemID1,
-//                                     cooldown:150
-//                                 }
-//                                 droppedItem[droppedItem.length-1].type="item"
-//                                 droppedItem[droppedItem.length-1].gravity = 0.5;
-//                                 droppedItem[droppedItem.length-1].speedX=(Math.random()*6)-3+(enemy[nearTarget].size/200)
-//                                 droppedItem[droppedItem.length-1].speedY=-Math.random()*9-(enemy[nearTarget].size/100)
-//                             }
-//                         }
-//                         lootRoll=Math.random()*100
-//                         if(enemy[nearTarget].drops.itemID2Chance!==0){
-//                             if(lootRoll<enemy[nearTarget].drops.itemID2Chance){
-//                                 console.log("dropped item 2")
-//                                 droppedItem[droppedItem.length] = new component(15, 15, items[enemy[nearTarget].drops.itemID2].colour, enemy[nearTarget].x+(enemy[nearTarget].size/2), enemy[nearTarget].y+(enemy[nearTarget].size/2));
-//                                 droppedItem[droppedItem.length-1].data={
-//                                     value:enemy[nearTarget].drops.itemID2,
-//                                     cooldown:150
-//                                 }
-//                                 droppedItem[droppedItem.length-1].type="item"
-//                                 droppedItem[droppedItem.length-1].gravity = 0.5;
-//                                 droppedItem[droppedItem.length-1].speedX=(Math.random()*6)-3+(enemy[nearTarget].size/200)
-//                                 droppedItem[droppedItem.length-1].speedY=-Math.random()*9-(enemy[nearTarget].size/100)
-//                             }
-//                         }
-//                         lootRoll=Math.random()*100
-//                         if(enemy[nearTarget].drops.itemID3Chance!==0){
-//                             if(lootRoll<enemy[nearTarget].drops.itemID3Chance){
-//                                 console.log("dropped item 3")
-//                                 droppedItem[droppedItem.length] = new component(15, 15, items[enemy[nearTarget].drops.itemID3].colour, enemy[nearTarget].x+(enemy[nearTarget].size/2), enemy[nearTarget].y+(enemy[nearTarget].size/2));
-//                                 droppedItem[droppedItem.length-1].data={
-//                                     value:enemy[nearTarget].drops.itemID3,
-//                                     cooldown:150
-//                                 }
-//                                 droppedItem[droppedItem.length-1].type="item"
-//                                 droppedItem[droppedItem.length-1].gravity = 0.5;
-//                                 droppedItem[droppedItem.length-1].speedX=(Math.random()*6)-3+(enemy[nearTarget].size/200)
-//                                 droppedItem[droppedItem.length-1].speedY=-Math.random()*9-(enemy[nearTarget].size/100)
-//                             }
-//                         }
-//                         lootRoll=Math.random()*100
-//                         if(enemy[nearTarget].drops.itemID4Chance!==0){
-//                             if(lootRoll<enemy[nearTarget].drops.itemID4Chance){
-//                                 console.log("dropped item 4")
-//                                 droppedItem[droppedItem.length] = new component(15, 15, items[enemy[nearTarget].drops.itemID4].colour, enemy[nearTarget].x+(enemy[nearTarget].size/2), enemy[nearTarget].y+(enemy[nearTarget].size/2));
-//                                 droppedItem[droppedItem.length-1].data={
-//                                     value:enemy[nearTarget].drops.itemID4,
-//                                     cooldown:150
-//                                 }
-//                                 droppedItem[droppedItem.length-1].type="item"
-//                                 droppedItem[droppedItem.length-1].gravity = 0.5;
-//                                 droppedItem[droppedItem.length-1].speedX=(Math.random()*6)-3+(enemy[nearTarget].size/200)
-//                                 droppedItem[droppedItem.length-1].speedY=-Math.random()*9-(enemy[nearTarget].size/100)
-//                             }
-//                         }
-//                     totalEXP=totalEXP+enemy[nearTarget].exp
-//                     enemy.splice(nearTarget,1)
-//                     i=enemy.length 
-//                     }
-//                 }
-//             }else{
-//             if(enemy.length!==0){//if not in range move towards
-//                 if ((Math.abs(enemy[nearTarget].x+(enemy[nearTarget].size/2) - this.x) < this.item.range+(this.rangePoints*this.item.rangeMult)+350+(enemy[nearTarget].size/2)||
-//                     (Math.abs(enemy[nearTarget].x - this.x)) < this.item.range+(this.rangePoints*this.item.rangeMult)+350)&&
-//                     ((Math.abs(enemy[nearTarget].y+(enemy[nearTarget].size/2) - this.y) < this.item.range+(this.rangePoints*this.item.rangeMult)+350+(enemy[nearTarget].size/2))||
-//                     (Math.abs(enemy[nearTarget].y - this.y)) < this.item.range+(this.rangePoints*this.item.rangeMult)+350)){
-//                 if(enemy[nearTarget].x+(enemy[nearTarget].size/2)<this.x){
-//                     this.speedX=this.speedX-Math.random()
-//                     this.speedY=this.speedY-Math.random()*2
-//                 }else{
-//                     this.speedX=this.speedX+Math.random()
-//                     this.speedY=this.speedY-Math.random()*2
-//                 }
-//             }
-//             }
-//         }
-//     }
-// }
-// }
-// }
 
     this.hitLeft = function() {//bounce off left wall
         var rockleft = 0;
@@ -1004,10 +900,7 @@ function component(width, height, color, x, y) {//draw new boxes
                         this.y =land[c].y1-this.size;
                     if(this.hp>0){
                         this.speedY=-Math.abs(this.speedY-this.speedY*0.3)
-                        this.gravitySpeed=0
                         this.speedX=this.speedX-this.speedX*0.3
-
-
 
                         if(this.type==="player" && this.hp>0){//logic to do only while on floor
                             nearTarget = closestEnemy(enemy, this.x)
@@ -1125,6 +1018,7 @@ function component(width, height, color, x, y) {//draw new boxes
                                             }
                                         }
                                     totalEXP=totalEXP+enemy[nearTarget].exp
+                                    lastmoney=-1
                                     enemy.splice(nearTarget,1)
                                     i=enemy.length 
                                     }
@@ -1156,13 +1050,12 @@ function component(width, height, color, x, y) {//draw new boxes
                         this.speedX=this.speedX*0.5
                     }else{
                         this.speedY=-Math.abs(this.speedY-this.speedY*0.3)
-                        this.gravitySpeed=0
                         this.speedX=this.speedX-this.speedX*0.3
                     }
             }else{
                 this.y =land[c].y2;
                     if(this.hp>0){
-                        this.speedY=Math.abs((this.speedY-this.speedY*0.3)+this.gravitySpeed)
+                        this.speedY=Math.abs(this.speedY-this.speedY*0.3)
                         this.speedX=this.speedX-this.speedX*0.3
                     }else{
                         this.speedY=0
@@ -1411,23 +1304,32 @@ function updateGameArea() {
     }
 
     //check if hit sign
-    if( (myGamePiece.x>920&&myGamePiece.y>signY-40&&myGamePiece.y<signY+20&&signY>0)||
-        (myGamePiece2.x>920&&myGamePiece2.y>signY-40&&myGamePiece2.y<signY+20&&signY>0)||
-        (myGamePiece3.x>920&&myGamePiece3.y>signY-40&&myGamePiece3.y<signY+20&&signY>0)||
-        (myGamePiece4.x>920&&myGamePiece4.y>signY-40&&myGamePiece4.y<signY+20&&signY>0)){
+    if( (myGamePiece.x>920&&myGamePiece.y>signY-40&&myGamePiece.y<signY+20&&signY>0&&myGamePiece.hp>0)||
+        (myGamePiece2.x>920&&myGamePiece2.y>signY-40&&myGamePiece2.y<signY+20&&signY>0&&myGamePiece2.hp>0)||
+        (myGamePiece3.x>920&&myGamePiece3.y>signY-40&&myGamePiece3.y<signY+20&&signY>0&&myGamePiece3.hp>0)||
+        (myGamePiece4.x>920&&myGamePiece4.y>signY-40&&myGamePiece4.y<signY+20&&signY>0&&myGamePiece4.hp>0)){
         if(area[loadedAreaID].subAreaCount===subArea){
+            clearStage() 
             loadedAreaID=2
+            subArea=1
             renderStage()
         }else{
             subArea=subArea+1
             renderStage()
         }
     }
+}
 
-
-
-
-
+function clearStage(){
+    if(area[loadedAreaID].cleared!==2){
+    area[loadedAreaID].cleared=1
+    if(area[loadedAreaID].stageToUnlock1>area.length||area[loadedAreaID].stageToUnlock2>area.length){
+        alert("All current stages unlocked!")//todo
+    }else{
+    area[area[loadedAreaID].stageToUnlock1].unlocked=1
+    area[area[loadedAreaID].stageToUnlock2].unlocked=1
+    }
+}
 }
 
 drag()
@@ -1468,25 +1370,43 @@ function drag(){ //Find which player clicked on / near, set to held
             p1Held=1
         }
         if(area[loadedAreaID].name==="Menu"&&pointerX>372&&pointerX<372+240&&pointerY>260&&pointerY<260+48){
+
+            mapButton=document.createElement("div");
+            mapButton.setAttribute("id", `mapButton`)
+            divcontainer.appendChild(mapButton, divcontainer.firstChild)
+            document.getElementById("mapButton").addEventListener("mouseover", makeButtonLight);
+            document.getElementById("mapButton").addEventListener("mouseout", makeButtonDark);
+            document.getElementById("mapButton").addEventListener("mouseup", goToMap);
+            document.getElementById("mapButton").innerHTML="Return to Map"
+
             loadedAreaID=1
             renderStage()
         }
         if(area[loadedAreaID].name==="Menu"&&pointerX>381&&pointerX<381+224&&pointerY>330&&pointerY<330+48){
+
+            mapButton=document.createElement("div");
+            mapButton.setAttribute("id", `mapButton`)
+            divcontainer.appendChild(mapButton, divcontainer.firstChild)
+            document.getElementById("mapButton").addEventListener("mouseover", makeButtonLight);
+            document.getElementById("mapButton").addEventListener("mouseout", makeButtonDark);
+            document.getElementById("mapButton").addEventListener("mouseup", goToMap);
+            document.getElementById("mapButton").innerHTML="Return to Map"
+
             saveCode = prompt("Paste your save code here:")
             loadSaveFromCode()
         }
-        if(area[loadedAreaID].name==="Map"&&pointerX>area[1].x&&pointerX<area[1].x+20&&pointerY>area[1].y&&pointerY<area[1].y+20){
-            loadedAreaID=1
-            renderStage()
-        }
-        if(area[loadedAreaID].name==="Map"&&pointerX>area[3].x&&pointerX<area[3].x+20&&pointerY>area[3].y&&pointerY<area[3].y+20){
-            loadedAreaID=3
-            renderStage()
-        }
-        if(area[loadedAreaID].name==="Map"&&pointerX>area[4].x&&pointerX<area[4].x+20&&pointerY>area[4].y&&pointerY<area[4].y+20){
-            loadedAreaID=4
-            renderStage()
-        }
+    checkClickOnLevelOnMap()
+    }
+}
+
+function checkClickOnLevelOnMap(){
+    for(aa=0;aa<area.length;aa++){
+        if(area[aa].cleared>-1){
+    if(area[loadedAreaID].name==="Map"&&pointerX>area[aa].x&&pointerX<area[aa].x+20&&pointerY>area[aa].y&&pointerY<area[aa].y+20){
+        loadedAreaID=aa
+        renderStage()
+    }
+    }
     }
 }
 
@@ -1527,66 +1447,94 @@ function playerMoveToMouse(playerHeld, event){ //Move player currently held towa
             playerHeld.gravitySpeed = 0
 }
 
-document.addEventListener('keydown', logKey);//enemy spawning
 let i = 0
 let enemy=[]
-function logKey(e) {
-  if(e.code==="KeyA"){
-    enemy[i] = new component(20, 20, "purple", 480, 270);
-    enemy[i].size=20
-    enemy[i].gravity = 0.5;
-    enemy[i].hp=10
+function spawnEnemy(_size,_colour,_posX,_posY,_gravity,_hp,_movementType,_exp,_weapon,_coinValue,_coinChance,
+    _healValue,_healChance,_drop1ID,_drop1Chance,_drop2ID,_drop2Chance,_drop3ID,_drop3Chance,_drop4ID,_drop4Chance){
+    enemy[i] = new component(_size, _size, _colour, _posX, _posY);
+    enemy[i].size=_size
+    enemy[i].gravity = _gravity;
+    enemy[i].hp=_hp
     enemy[i].maxhp=enemy[i].hp
     enemy[i].type="enemy"
-    enemy[i].movementType="SlowWalk"
-    enemy[i].item=items[0]
-    enemy[i].exp=1
-    enemy[i].weapon=items[5]
+    enemy[i].movementType=_movementType
+    enemy[i].exp=_exp
+    enemy[i].weapon=items[_weapon]
     enemy[i].atkCD=0
     enemy[i].drops={
-        coin:1,
-        coinChance:100,
-        healPotion:0.1,
-        healChance:10,
-        itemID1:1,
-        itemID1Chance:1,
-        itemID2:2,
-        itemID2Chance:1,
-        itemID3:3,
-        itemID3Chance:1,
-        itemID4:4,
-        itemID4Chance:1
+        coin:_coinValue,
+        coinChance:_coinChance,
+        healPotion:_healValue,
+        healChance:_healChance,
+        itemID1:_drop1ID,
+        itemID1Chance:_drop1Chance,
+        itemID2:_drop2ID,
+        itemID2Chance:_drop2Chance,
+        itemID3:_drop3ID,
+        itemID3Chance:_drop3Chance,
+        itemID4:_drop4ID,
+        itemID4Chance:_drop4Chance
     }
     i++
-  }
-  if(e.code==="KeyS"){
-    enemy[i] = new component(200, 200, "purple", 680, 270);
-    enemy[i].size=200
-    enemy[i].gravity = 0.5;
-    enemy[i].hp=100
-    enemy[i].maxhp=enemy[i].hp
-    enemy[i].type="enemy"
-    enemy[i].movementType="SlowWalk"
-    enemy[i].item=items[0]
-    enemy[i].exp=15
-    enemy[i].weapon=items[6]
-    enemy[i].atkCD=0
-    enemy[i].drops={
-        coin:100,
-        coinChance:20,
-        healPotion:1,
-        healChance:100,
-        itemID1:1,
-        itemID1Chance:10,
-        itemID2:2,
-        itemID2Chance:10,
-        itemID3:3,
-        itemID3Chance:10,
-        itemID4:4,
-        itemID4Chance:10
-    }
-    i++
-  }
 }
+
+// document.addEventListener('keydown', logKey);//enemy spawning
+
+// function logKey(e) {
+//   if(e.code==="KeyA"){
+//     enemy[i] = new component(20, 20, "purple", 480, 270);
+//     enemy[i].size=20
+//     enemy[i].gravity = 0.5;
+//     enemy[i].hp=10
+//     enemy[i].maxhp=enemy[i].hp
+//     enemy[i].type="enemy"
+//     enemy[i].movementType="SlowWalk"
+//     enemy[i].exp=1
+//     enemy[i].weapon=items[5]
+//     enemy[i].atkCD=0
+//     enemy[i].drops={
+//         coin:1,
+//         coinChance:100,
+//         healPotion:0.1,
+//         healChance:10,
+//         itemID1:1,
+//         itemID1Chance:100,
+//         itemID2:2,
+//         itemID2Chance:1,
+//         itemID3:3,
+//         itemID3Chance:1,
+//         itemID4:4,
+//         itemID4Chance:1
+//     }
+//     i++
+//   }
+//   if(e.code==="KeyS"){
+//     enemy[i] = new component(200, 200, "purple", 680, 270);
+//     enemy[i].size=200
+//     enemy[i].gravity = 0.5;
+//     enemy[i].hp=100
+//     enemy[i].maxhp=enemy[i].hp
+//     enemy[i].type="enemy"
+//     enemy[i].movementType="SlowWalk"
+//     enemy[i].exp=15
+//     enemy[i].weapon=items[6]
+//     enemy[i].atkCD=0
+//     enemy[i].drops={
+//         coin:100,
+//         coinChance:20,
+//         healPotion:1,
+//         healChance:100,
+//         itemID1:1,
+//         itemID1Chance:10,
+//         itemID2:2,
+//         itemID2Chance:10,
+//         itemID3:3,
+//         itemID3Chance:10,
+//         itemID4:4,
+//         itemID4Chance:10
+//     }
+//     i++
+//   }
+// }
 
 document.getElementById(inv.length-1).style.background='#5c5c5c' //Page background

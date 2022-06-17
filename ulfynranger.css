@@ -249,7 +249,7 @@ body {
     max-width: 111px;
     min-height: 18px;
     max-height: 18px;
-    background-color: #a2a2a2;
+    background-color: #b4b4b4;
     border: 5px solid #8a8a8a;
   
     left: -470px;
@@ -271,7 +271,7 @@ body {
     max-width: 5px;
     min-height: 5px;
     max-height: 5px;
-    background-color: #a2a2a2;
+    background-color: #b4b4b4;
     border: 5px solid #8a8a8a;
   
     left: -353px;
@@ -286,7 +286,7 @@ body {
     max-width: 5px;
     min-height: 5px;
     max-height: 5px;
-    background-color: #a2a2a2;
+    background-color: #b4b4b4;
     border: 5px solid #8a8a8a;
   
     left: -353px;
@@ -301,7 +301,7 @@ body {
     max-width: 5px;
     min-height: 5px;
     max-height: 5px;
-    background-color: #a2a2a2;
+    background-color: #b4b4b4;
     border: 5px solid #8a8a8a;
   
     left: -353px;
@@ -315,9 +315,24 @@ body {
     max-width: 5px;
     min-height: 5px;
     max-height: 5px;
-    background-color: #a2a2a2;
+    background-color: #b4b4b4;
     border: 5px solid #8a8a8a;
   
     left: -353px;
     bottom: 447px;
+  }
+
+  #mapButton {
+    position: relative;
+    z-index:1;
+    padding: 1px 5px;
+    min-width: 95px;
+    max-width: 95px;
+    min-height: 20px;
+    max-height: 20px;
+    background-color: #b4b4b4;
+    border: 5px solid #8a8a8a;
+  
+    left: 355px;
+    bottom: 1082px;
   }
