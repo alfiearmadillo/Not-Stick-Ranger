@@ -9,7 +9,7 @@
 //textures?
 //lines between unlocked stages?
 //more levels, enemies, weapons, content
-
+let healRngNum=Math.floor(Math.random() * 40)
 let signY=0
 let saveCode=0
 let area = []
@@ -443,9 +443,9 @@ function renderStage(){ //Stage loading
         if(subArea===2){//Main menu
             newLand(-1,510,1000,5400)
             newLand(320,490,710,5400)
-            spawnEnemy(20,"#7b139c",350,400,0.5,8,"SlowWalk",1,1,1,55,0.2,10,1,1,2,1,3,1,4,1)
-            spawnEnemy(20,"#7b139c",600,400,0.5,8,"SlowWalk",1,1,1,55,0.2,10,1,1,2,1,3,1,4,1)
-            spawnEnemy(20,"#7b139c",870,400,0.5,8,"SlowWalk",1,1,1,55,0.2,10,1,1,2,1,3,1,4,1)
+            spawnEnemy(20,"#7b139c",350,400,0.5,8,"SlowWalk",1,5,1,55,0.2,10,1,1,2,1,3,1,4,1)
+            spawnEnemy(20,"#7b139c",600,400,0.5,8,"SlowWalk",1,5,1,55,0.2,10,1,1,2,1,3,1,4,1)
+            spawnEnemy(20,"#7b139c",870,400,0.5,8,"SlowWalk",1,5,1,55,0.2,10,1,1,2,1,3,1,4,1)
             playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
             playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
             playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
@@ -457,8 +457,8 @@ function renderStage(){ //Stage loading
             newLand(520,495,1000,5400)
             newLand(650,470,1000,5400)
             newLand(880,450,1000,5400)
-            spawnEnemy(20,"#6a0f87",470,400,0.5,10,"SlowWalk",2,1,2,55,0.2,10,1,2,2,2,3,2,4,2)
-            spawnEnemy(20,"#6a0f87",490,400,0.5,10,"SlowWalk",2,1,2,55,0.2,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(20,"#6a0f87",470,400,0.5,10,"SlowWalk",2,5,2,55,0.2,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(20,"#6a0f87",490,400,0.5,10,"SlowWalk",2,5,2,55,0.2,10,1,2,2,2,3,2,4,2)
             spawnEnemy(15,"#1b1280",550,400,0.5,5,"SlowWalk",3,7,10,25,0.2,10,1,5,2,5,3,5,4,5)
             playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
             playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
@@ -1144,6 +1144,38 @@ function updateGameArea() {
             ctx.fillRect(land[w].x1, land[w].y1, land[w].x2-land[w].x1, 10);
         }
     }
+
+    if(area[loadedAreaID].name==="Town"){//todo
+        ctx = myGameArea.context;
+        ctx.font = '15px serif';
+        ctx.fillStyle = "#1d6f82"
+        ctx.fillRect(372, 260, 240, 48);
+        ctx.fillStyle = "#4832a8"
+        ctx.fillText("Shop", 380, 300)
+    }
+
+    healRngNum=Math.floor(Math.random() * 40)
+    if(area[loadedAreaID].name==="Town"){
+    if(healRngNum===14){
+        playerNumber.hp+=Math.floor(playerNumber.maxhp/80)
+        if(playerNumber.hp>playerNumber.maxhp){
+            playerNumber.hp=playerNumber.maxhp
+        }
+        playerNumber2.hp+=Math.floor(playerNumber2.maxhp/80)
+        if(playerNumber2.hp>playerNumber2.maxhp){
+            playerNumber2.hp=playerNumber2.maxhp
+        }
+        playerNumber3.hp+=Math.floor(playerNumber3.maxhp/80)
+        if(playerNumber3.hp>playerNumber3.maxhp){
+            playerNumber3.hp=playerNumber3.maxhp
+        }
+        playerNumber4.hp+=Math.floor(playerNumber4.maxhp/80)
+        if(playerNumber4.hp>playerNumber4.maxhp){
+            playerNumber4.hp=playerNumber4.maxhp
+        }
+    }
+}
+
 
     if(area[loadedAreaID].name==="Menu"){
         ctx = myGameArea.context;
