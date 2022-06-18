@@ -1350,7 +1350,7 @@ function updateGameArea() {
 function clearStage(){
     if(area[loadedAreaID].cleared!==2){
     area[loadedAreaID].cleared=1
-    if(area[loadedAreaID].stageToUnlock1>area.length||area[loadedAreaID].stageToUnlock2>area.length){
+    if(area[loadedAreaID].stageToUnlock1>=area.length||area[loadedAreaID].stageToUnlock2>=area.length){
         alert("All current stages unlocked!")//todo
     }else{
     area[area[loadedAreaID].stageToUnlock1].unlocked=1
