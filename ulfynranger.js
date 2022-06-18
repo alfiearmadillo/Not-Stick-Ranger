@@ -393,7 +393,7 @@ area[0]={name:"Menu",subAreaCount:1,unlocked:0,cleared:-1} //Stage list
 area[1]={name:"Town",subAreaCount:1,unlocked:1,x:100,y:300,cleared:2,stageToUnlock1:3,stageToUnlock2:3}
 area[2]={name:"Map",subAreaCount:1,unlocked:0,cleared:-1}
 area[3]={name:"Intro Avenue",subAreaCount:9,unlocked:1,x:150,y:300,cleared:0,stageToUnlock1:4,stageToUnlock2:3}
-area[4]={name:"Grassy Fields",subAreaCount:7,unlocked:0,x:140,y:230,cleared:0,stageToUnlock1:5,stageToUnlock2:3}
+area[4]={name:"Grassy Fields",subAreaCount:7,unlocked:0,x:180,y:250,cleared:0,stageToUnlock1:5,stageToUnlock2:3}
 
 function renderStage(){ //Stage loading
     land=[]
