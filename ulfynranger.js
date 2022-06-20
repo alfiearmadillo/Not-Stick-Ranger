@@ -1,4 +1,3 @@
-// save / load, Item stored in all inv slots, money, HP, assigned SP, spare SP, XP, LV
 //beating current highest stage
 //Projectiles for players & enemies
 //enemy types (flying random movent every x time), player like walker
