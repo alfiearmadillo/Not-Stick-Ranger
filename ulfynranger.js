@@ -218,7 +218,7 @@ document.getElementById("saveCodeDisplay").innerHTML = `${saveString}`
 saveCodeNameDisplay=document.createElement("div");
 saveCodeNameDisplay.setAttribute("id", `saveCodeNameDisplay`)
 divcontainer.appendChild(saveCodeNameDisplay, divcontainer.firstChild)
-document.getElementById("saveCodeNameDisplay").innerHTML = `Save Code:`
+document.getElementById("saveCodeNameDisplay").innerHTML = `Save Code`
 
 function goToMap(){
     loadedAreaID=2
