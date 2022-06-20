@@ -1,6 +1,5 @@
 
-//SP Respec in starting area w/ shop, hp regen, free revivals
-//shop contains items, enemy info, bonus SP (10,100,1000 etc.)
+//SP Respec in starting area w/ shop contains items, bonus SP (10,100,1000 etc.)
 // save / load, Item stored in all inv slots, money, HP, assigned SP, spare SP, XP, LV
 //game over tp to town after wait
 //Projectiles for players & enemies
@@ -9,6 +8,9 @@
 //textures?
 //lines between unlocked stages?
 //more levels, enemies, weapons, content
+let itemToBuy=-1
+let spPrice=100
+let shopOpen=0
 let healRngNum=Math.floor(Math.random() * 40)
 let signY=0
 let saveCode=0
@@ -211,6 +213,8 @@ divcontainer.appendChild(delaySPButton, divcontainer.firstChild)
 
 function goToMap(){
     loadedAreaID=2
+    shopOpen=-1
+    itemToBuy=-1
     subArea=1
     renderStage()
 }
@@ -776,7 +780,7 @@ function component(width, height, color, x, y) {//draw new boxes
             }
     }
     this.hitRight = function() {//bounce off right wall
-        var rockRight = 930;
+        var rockRight = 960-this.size;
         if (this.x > rockRight) {
             this.x = rockRight;
             if(this.hp>0){
@@ -1147,11 +1151,135 @@ function updateGameArea() {
 
     if(area[loadedAreaID].name==="Town"){//todo
         ctx = myGameArea.context;
-        ctx.font = '15px serif';
-        ctx.fillStyle = "#1d6f82"
-        ctx.fillRect(372, 260, 240, 48);
-        ctx.fillStyle = "#4832a8"
-        ctx.fillText("Shop", 380, 300)
+        ctx.globalCompositeOperation='destination-over';
+        ctx.font = 'bold 25px serif';
+        ctx.fillStyle = "#000000"
+        ctx.fillText("Shop", 468, 440)
+        ctx.fillStyle = "#573508"
+        ctx.fillRect(402, 360, 190, 150);
+        ctx.setTransform(1, 0, 0, 1, -151, 390);
+        ctx.rotate(-45* Math.PI / 180)
+        ctx.fillStyle = "#422911"
+        ctx.fillRect(412, 370, 134, 134);
+        ctx.rotate(45* Math.PI / 180)
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.globalCompositeOperation="source-over";
+    }
+
+    if(area[loadedAreaID].name==="Town" && shopOpen===1){
+        ctx = myGameArea.context;
+        ctx.fillStyle = "#4a4a4a" //shop bg
+        ctx.fillRect(100, 100, 760, 340);
+
+        ctx.fillStyle = "#ff0000" //close button
+        ctx.fillRect(830, 100, 30, 30);
+
+        ctx.fillStyle = "#911616" //item sp
+        ctx.fillRect(150, 150, 30, 30);
+        ctx.fillStyle = `${items[1].colour}` //item 1
+        ctx.fillRect(190, 150, 30, 30);
+        ctx.fillStyle = `${items[2].colour}` //item 2
+        ctx.fillRect(230, 150, 30, 30);
+        ctx.fillStyle = `${items[3].colour}` //item 3
+        ctx.fillRect(270, 150, 30, 30);
+        ctx.fillStyle = `${items[4].colour}` //item 4
+        ctx.fillRect(310, 150, 30, 30);
+
+        if(itemToBuy!==-1){
+            switch( itemToBuy){
+                case "SP":
+                    if(spPrice<=money){
+                        ctx.fillStyle = "#6b6b6b"
+                        ctx.fillRect( 473, 395,105,38)
+                        ctx.fillStyle = "#25801b"
+                        ctx.fillRect( 478, 400,95,28)
+                    }else{
+                        ctx.fillStyle = "#6b6b6b"
+                        ctx.fillRect( 473, 395,105,38)
+                        ctx.fillStyle = "#7d2323"
+                        ctx.fillRect( 478, 400,95,28)
+                    }
+                break
+                case 1:
+                    if(items[itemToBuy].worth*3<=money){
+                        ctx.fillStyle = "#6b6b6b"
+                        ctx.fillRect( 473, 395,105,38)
+                        ctx.fillStyle = "#25801b"
+                        ctx.fillRect( 478, 400,95,28)
+                    }else{
+                        ctx.fillStyle = "#6b6b6b"
+                        ctx.fillRect( 473, 395,105,38)
+                        ctx.fillStyle = "#7d2323"
+                        ctx.fillRect( 478, 400,95,28)
+                    }
+                break
+                case 2:
+                    if(items[itemToBuy].worth*3<=money){
+                        ctx.fillStyle = "#6b6b6b"
+                        ctx.fillRect( 473, 395,105,38)
+                        ctx.fillStyle = "#25801b"
+                        ctx.fillRect( 478, 400,95,28)
+                    }else{
+                        ctx.fillStyle = "#6b6b6b"
+                        ctx.fillRect( 473, 395,105,38)
+                        ctx.fillStyle = "#7d2323"
+                        ctx.fillRect( 478, 400,95,28)
+                    }
+                break
+                case 3:
+                    if(items[itemToBuy].worth*3<=money){
+                        ctx.fillStyle = "#6b6b6b"
+                        ctx.fillRect( 473, 395,105,38)
+                        ctx.fillStyle = "#25801b"
+                        ctx.fillRect( 478, 400,95,28)
+                    }else{
+                        ctx.fillStyle = "#6b6b6b"
+                        ctx.fillRect( 473, 395,105,38)
+                        ctx.fillStyle = "#7d2323"
+                        ctx.fillRect( 478, 400,95,28)
+                    }
+                break
+                case 4:
+                    if(items[itemToBuy].worth*3<=money){
+                        ctx.fillStyle = "#6b6b6b"
+                        ctx.fillRect( 473, 395,105,38)
+                        ctx.fillStyle = "#25801b"
+                        ctx.fillRect( 478, 400,95,28)
+                    }else{
+                        ctx.fillStyle = "#6b6b6b"
+                        ctx.fillRect( 473, 395,105,38)
+                        ctx.fillStyle = "#7d2323"
+                        ctx.fillRect( 478, 400,95,28)
+                    }
+                break
+        }
+    }
+
+        ctx.font = 'bold 20px serif';
+        ctx.fillStyle = "#000000"
+
+        switch(itemToBuy){
+            case "SP":
+            ctx.fillText("+1 Skill Point", 438, 140)
+            ctx.fillText(`${spPrice}`, 483, 420)
+            break;
+            case 1:
+            ctx.fillText(`${items[1].name}`, 438, 140)
+            ctx.fillText(`${items[1].worth*3}`, 483, 420)
+            break;
+            case 2:
+            ctx.fillText(`${items[2].name}`, 438, 140)
+            ctx.fillText(`${items[2].worth*3}`, 483, 420)
+            break;
+            case 3:
+            ctx.fillText(`${items[3].name}`, 438, 140)
+            ctx.fillText(`${items[3].worth*3}`, 483, 420)
+            break;
+            case 4:
+            ctx.fillText(`${items[4].name}`, 438, 140)
+            ctx.fillText(`${items[4].worth*3}`, 483, 420)
+            break;
+        }
     }
 
     healRngNum=Math.floor(Math.random() * 40)
@@ -1338,6 +1466,8 @@ function updateGameArea() {
         if(area[loadedAreaID].subAreaCount===subArea){
             clearStage() 
             loadedAreaID=2
+            shopOpen=-1
+            itemToBuy=-1
             subArea=1
             renderStage()
         }else{
@@ -1422,6 +1552,111 @@ function drag(){ //Find which player clicked on / near, set to held
             saveCode = prompt("Paste your save code here:", "lol nah its not done yet")//todo
             loadSaveFromCode()
         }
+
+        if(area[loadedAreaID].name==="Town"&&shopOpen!==1&&pointerX>402&&pointerX<402+190&&pointerY>360&&pointerY<360+150){
+            shopOpen=1
+        }
+
+        if(area[loadedAreaID].name==="Town"&&shopOpen===1){
+            if(pointerX>830&&pointerX<830+30&&pointerY>100&&pointerY<100+30){
+                itemToBuy=-1
+                shopOpen=-1
+            }
+            if(pointerX>150&&pointerX<150+30&&pointerY>150&&pointerY<150+30){
+                itemToBuy="SP"
+            }
+            if(pointerX>190&&pointerX<190+30&&pointerY>150&&pointerY<150+30){
+                itemToBuy=1
+            }
+            if(pointerX>230&&pointerX<230+30&&pointerY>150&&pointerY<150+30){
+                itemToBuy=2
+            }
+            if(pointerX>270&&pointerX<270+30&&pointerY>150&&pointerY<150+30){
+                itemToBuy=3
+            }
+            if(pointerX>310&&pointerX<310+30&&pointerY>150&&pointerY<150+30){
+                itemToBuy=4
+            }
+            if(itemToBuy!==1&&pointerX>473&&pointerX<473+105&&pointerY>395&&pointerY<395+38){
+                if(itemToBuy!==-1){
+                    switch( itemToBuy){
+                        case "SP":
+                            if(spPrice<=money){
+                                money=money-spPrice
+                                spPrice=spPrice*10
+                                playerNumber.skillPoints++
+                                playerNumber2.skillPoints++
+                                playerNumber3.skillPoints++
+                                playerNumber4.skillPoints++
+                            }
+                        break
+                        case 1:
+                            if(items[itemToBuy].worth*3<=money){
+                                money=money-items[itemToBuy].worth*3
+                                droppedItem[droppedItem.length] = new component(15, 15, items[itemToBuy].colour, 480, 270);
+                                droppedItem[droppedItem.length-1].data={
+                                    value:itemToBuy,
+                                    cooldown:150
+                                }
+                                droppedItem[droppedItem.length-1].size=15
+                                droppedItem[droppedItem.length-1].type="item"
+                                droppedItem[droppedItem.length-1].gravity = 0.5;
+                                droppedItem[droppedItem.length-1].speedX=Math.random()*8-4
+                                droppedItem[droppedItem.length-1].speedY=-Math.random()*15
+                            }
+                        break
+                        case 2:
+                            if(items[itemToBuy].worth*3<=money){
+                                money=money-items[itemToBuy].worth*3
+                                droppedItem[droppedItem.length] = new component(15, 15, items[itemToBuy].colour, 480, 270);
+                                droppedItem[droppedItem.length-1].data={
+                                    value:itemToBuy,
+                                    cooldown:150
+                                }
+                                droppedItem[droppedItem.length-1].size=15
+                                droppedItem[droppedItem.length-1].type="item"
+                                droppedItem[droppedItem.length-1].gravity = 0.5;
+                                droppedItem[droppedItem.length-1].speedX=Math.random()*8-4
+                                droppedItem[droppedItem.length-1].speedY=-Math.random()*15
+                            }
+                        break
+                        case 3:
+                            if(items[itemToBuy].worth*3<=money){
+                                money=money-items[itemToBuy].worth*3
+                                droppedItem[droppedItem.length] = new component(15, 15, items[itemToBuy].colour, 480, 270);
+                                droppedItem[droppedItem.length-1].data={
+                                    value:itemToBuy,
+                                    cooldown:150
+                                }
+                                droppedItem[droppedItem.length-1].size=15
+                                droppedItem[droppedItem.length-1].type="item"
+                                droppedItem[droppedItem.length-1].gravity = 0.5;
+                                droppedItem[droppedItem.length-1].speedX=Math.random()*8-4
+                                droppedItem[droppedItem.length-1].speedY=-Math.random()*15
+                            }
+                        break
+                        case 4:
+                            if(items[itemToBuy].worth*3<=money){
+                                money=money-items[itemToBuy].worth*3
+                                droppedItem[droppedItem.length] = new component(15, 15, items[itemToBuy].colour, 480, 270);
+                                droppedItem[droppedItem.length-1].data={
+                                    value:itemToBuy,
+                                    cooldown:150
+                                }
+                                droppedItem[droppedItem.length-1].size=15
+                                droppedItem[droppedItem.length-1].type="item"
+                                droppedItem[droppedItem.length-1].gravity = 0.5;
+                                droppedItem[droppedItem.length-1].speedX=Math.random()*8-4
+                                droppedItem[droppedItem.length-1].speedY=-Math.random()*15
+                            }
+                        break
+            }
+        }
+    }
+        }
+
+
+
     checkClickOnLevelOnMap()
     }
 }
@@ -1533,6 +1768,9 @@ function spawnEnemy(_size,_colour,_posX,_posY,_gravity,_hp,_movementType,_exp,_w
 //         itemID4Chance:1
 //     }
 //     i++
+//   }
+//   if(e.code==="KeyJ"){
+//       money+=100
 //   }
 //   if(e.code==="KeyS"){
 //     enemy[i] = new component(200, 200, "purple", 680, 270);
