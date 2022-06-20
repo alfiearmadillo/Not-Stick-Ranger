@@ -114,8 +114,8 @@ body {
     z-index:1;
     pointer-events: none;
     padding: 5px 5px;
-    min-width: 138px;
-    max-width: 138px;
+    min-width: 192px;
+    max-width: 192px;
     min-height: 148px;
     max-height: 148px;
     background-color: #b4b4b4;
@@ -136,8 +136,8 @@ body {
     position: relative;
     z-index:1;
     pointer-events: none;
-    min-width: 148px;
-    max-width: 148px;
+    min-width: 202px;
+    max-width: 202px;
     min-height: 10px;
     max-height: 10px;
     background-color: #b4b4b4;
@@ -334,5 +334,34 @@ body {
     border: 5px solid #8a8a8a;
   
     left: 355px;
-    bottom: 1082px;
+    bottom: 1132px;
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently*/
+   
+  }
+
+  #saveCodeDisplay{
+    position: relative;
+    color:#FFFFFF;
+    font-size: 20px;
+    height:25px;
+    width:820px;
+    border:1px solid;
+    overflow: auto;
+    white-space: nowrap;
+    left: -400px;
+    bottom: 1147px;
+  }
+
+  #saveCodeNameDisplay{
+    position: relative;
+    color:#FFFFFF;
+    font-size: 20px;
+    left: -40px;
+    bottom: 1217px;
   }

@@ -1,16 +1,19 @@
 // save / load, Item stored in all inv slots, money, HP, assigned SP, spare SP, XP, LV
+//beating current highest stage
 //Projectiles for players & enemies
 //enemy types (flying random movent every x time), player like walker
 //terrain side collision?
 //textures?
 //lines between unlocked stages?
 //more levels, enemies, weapons, content
+let saveString=""
+let splitSaveString=[]
+//let saveStringPass="47;18;-87;342;543;13;764;243;-43;83;21;5;12;876;324;-765;324;345;43;17;-18;345;835;21;463;782;-5;23;7;123;564;23;-465;1;435;-76;-34;-233;723;4;0"
 let itemToBuy=-1
 let spPrice=100
 let shopOpen=0
 let healRngNum=Math.floor(Math.random() * 40)
 let signY=0
-let saveCode=0
 let area = []
 let loadedAreaID=0
 let subArea = 1
@@ -114,10 +117,10 @@ function startGame() {
 
 
 items[0]={name:"None",damageMin:1,damageMax:1,range:11,atkRate:100,lifeSteal:0,defence:0,type:"None", colour:'#b4b4b4', worth:0, multi:0, rangeMult:0.1}
-items[1]={name:"Test Sword",damageMin:2,damageMax:4,range:25,atkRate:50,lifeSteal:0,defence:0,type:"Sword", colour:'#a83232', worth:10, multi:0, rangeMult:0.1}
-items[2]={name:"Test Shield",damageMin:1,damageMax:1,range:15,atkRate:100,lifeSteal:0,defence:1,type:"Shield", colour:'#75a832', worth:10, multi:0, rangeMult:0.1}
-items[3]={name:"Test Bow",damageMin:1,damageMax:3,range:160,atkRate:66,lifeSteal:0,defence:0,type:"Bow", colour:'#634f1c', worth:10, multi:0, rangeMult:3}
-items[4]={name:"Test Staff",damageMin:0,damageMax:1,range:300,atkRate:200,lifeSteal:0,defence:0,type:"Staff", colour:'#660033', worth:10, multi:0, rangeMult:3}
+items[1]={name:"Slightly Sharp Stick",damageMin:2,damageMax:4,range:25,atkRate:50,lifeSteal:0,defence:0,type:"Sword", colour:'#a83232', worth:10, multi:0, rangeMult:0.1}
+items[2]={name:"Cardboard Shield",damageMin:1,damageMax:1,range:15,atkRate:100,lifeSteal:0,defence:1,type:"Shield", colour:'#75a832', worth:10, multi:0, rangeMult:0.1}
+items[3]={name:"Cheap Toy Bow",damageMin:1,damageMax:3,range:160,atkRate:66,lifeSteal:0,defence:0,type:"Bow", colour:'#634f1c', worth:10, multi:0, rangeMult:3}
+items[4]={name:"Small Plastic Wand",damageMin:0,damageMax:1,range:300,atkRate:200,lifeSteal:0,defence:0,type:"Staff", colour:'#660033', worth:10, multi:0, rangeMult:3}
 items[5]={name:"CR_IntoAveBasic",damageMin:1,damageMax:2,range:45,atkRate:200,lifeSteal:0,defence:0,type:"CR_Melee", colour:'#191919', worth:-1, multi:0, rangeMult:0.1}
 items[6]={name:"CR_IntroAveBoss",damageMin:5,damageMax:18,range:300,atkRate:200,lifeSteal:0,defence:0,type:"CR_Special1", colour:'#191919', worth:-1, multi:1, rangeMult:3}
 items[7]={name:"CR_IntroAveRanged",damageMin:1,damageMax:2,range:130,atkRate:200,lifeSteal:0,defence:0,type:"CR_Ranged", colour:'#191919', worth:-1, multi:0, rangeMult:3}
@@ -208,6 +211,16 @@ delaySPButton=document.createElement("div");
 delaySPButton.setAttribute("id", `delaySPButton`)
 divcontainer.appendChild(delaySPButton, divcontainer.firstChild)
 
+saveCodeDisplay=document.createElement("div");
+saveCodeDisplay.setAttribute("id", `saveCodeDisplay`)
+divcontainer.appendChild(saveCodeDisplay, divcontainer.firstChild)
+document.getElementById("saveCodeDisplay").innerHTML = `${saveString}`
+
+saveCodeNameDisplay=document.createElement("div");
+saveCodeNameDisplay.setAttribute("id", `saveCodeNameDisplay`)
+divcontainer.appendChild(saveCodeNameDisplay, divcontainer.firstChild)
+document.getElementById("saveCodeNameDisplay").innerHTML = `Save Code:`
+
 function goToMap(){
     loadedAreaID=2
     shopOpen=-1
@@ -292,7 +305,7 @@ function revivePlayer(){
     if(playerNumber.hp===0&&playerNumber2.hp===0&&playerNumber3.hp===0&&playerNumber4.hp===0){}else{
     if(playerNumberStatsShown.hp===0){
     if(money>=Math.floor((money/2)+5+(level*2))){
-    playerNumberStatsShown.hp=(playerNumberStatsShown.maxhp+playerNumberStatsShown.hpPoints*5)/2
+    playerNumberStatsShown.hp=(playerNumberStatsShown.maxhp+playerNumberStatsShown.hpPoints*20)/2
     money=money-Math.floor((money/2)+5+(level*2))
     document.getElementById("reviveButton").style.background="#517a59"
     reviveButton.innerHTML="Player Alive"
@@ -384,7 +397,58 @@ function clickButton(num){
     lastRevCostShown=-1
 }
 
-function loadSaveFromCode(){//todo
+function loadSaveFromCode(){//saveload
+    lastmoney=-1
+    
+    document.getElementById("saveCodeDisplay").innerHTML = `${saveString}`
+    splitSaveString=saveString.split(";")
+    for(ac=0;ac<splitSaveString.length;ac++){
+        splitSaveString[ac]=parseInt(splitSaveString[ac])
+    }
+    inv[0].storedItem=splitSaveString[0]
+    inv[1].storedItem=splitSaveString[1]
+    inv[2].storedItem=splitSaveString[2]
+    inv[3].storedItem=splitSaveString[3]
+    inv[4].storedItem=splitSaveString[4]
+    inv[5].storedItem=splitSaveString[5]
+    inv[6].storedItem=splitSaveString[6]
+    inv[7].storedItem=splitSaveString[7]
+    inv[8].storedItem=splitSaveString[8]
+    inv[9].storedItem=splitSaveString[9]
+    inv[10].storedItem=splitSaveString[10]
+    inv[11].storedItem=splitSaveString[11]
+    inv[12].storedItem=splitSaveString[12]
+    inv[13].storedItem=splitSaveString[13]
+    playerNumber.hp=splitSaveString[14]
+    playerNumber.hpPoints=splitSaveString[15]
+    playerNumber.dmgPoints=splitSaveString[16]
+    playerNumber.rangePoints=splitSaveString[17]
+    playerNumber.cdPoints=splitSaveString[18]
+    playerNumber.skillPoints=splitSaveString[19]
+    playerNumber2.hp=splitSaveString[20]
+    playerNumber2.hpPoints=splitSaveString[21]
+    playerNumber2.dmgPoints=splitSaveString[22]
+    playerNumber2.rangePoints=splitSaveString[23]
+    playerNumber2.cdPoints=splitSaveString[24]
+    playerNumber2.skillPoints=splitSaveString[25]
+    playerNumber3.hp=splitSaveString[26]
+    playerNumber3.hpPoints=splitSaveString[27]
+    playerNumber3.dmgPoints=splitSaveString[28]
+    playerNumber3.rangePoints=splitSaveString[29]
+    playerNumber3.cdPoints=splitSaveString[30]
+    playerNumber3.skillPoints=splitSaveString[31]
+    playerNumber4.hp=splitSaveString[32]
+    playerNumber4.hpPoints=splitSaveString[33]
+    playerNumber4.dmgPoints=splitSaveString[34]
+    playerNumber4.rangePoints=splitSaveString[35]
+    playerNumber4.cdPoints=splitSaveString[36]
+    playerNumber4.skillPoints=splitSaveString[37]
+    money=splitSaveString[38]
+    area[3].cleared=splitSaveString[39]
+    area[4].unlocked=splitSaveString[40]
+    area[4].cleared=splitSaveString[41]
+    clickButton(0)
+    clickButton(0)
     loadedAreaID=1
     renderStage()
 }
@@ -630,7 +694,7 @@ function refreshPlayerStatsBox(){
 
     playerStatsBox.innerHTML=`
     <br />
-    Health: ${playerNumberStatsShown.hp}/${(playerNumberStatsShown.maxhp+playerNumberStatsShown.hpPoints*5)}<br/>
+    Health: ${playerNumberStatsShown.hp}/${(playerNumberStatsShown.maxhp+playerNumberStatsShown.hpPoints*20)}<br/>
     Damage: ${Math.floor((playerNumberStatsShown.item.damageMin+(playerNumberStatsShown.dmgPoints*0.2))*((100+playerNumberStatsShown.dmgPoints)/100))} - ${Math.floor((playerNumberStatsShown.item.damageMax+(playerNumberStatsShown.dmgPoints*0.3))*((100+playerNumberStatsShown.dmgPoints)/100))}<br/>
     Range: ${playerNumberStatsShown.item.range+Math.round((playerNumberStatsShown.rangePoints*playerNumberStatsShown.item.rangeMult) * 10) / 10}<br/>
     Attack Delay: ${Math.floor(playerNumberStatsShown.item.atkRate/((100+playerNumberStatsShown.cdPoints*2.5)/100))}<br/>
@@ -702,7 +766,7 @@ function component(width, height, color, x, y) {//draw new boxes
             ctx.fillRect(this.x, this.y-15, this.size, 2);
             ctx.fillStyle = "#007f00";
             if(this.type==="player"){
-            ctx.fillRect(this.x-1, this.y-16, ((this.hp/(this.maxhp+this.hpPoints*5))*this.size)+2, 4);
+            ctx.fillRect(this.x-1, this.y-16, ((this.hp/(this.maxhp+this.hpPoints*20))*this.size)+2, 4);
             }else{
                 ctx.fillRect(this.x-1, this.y-16, ((this.hp/this.maxhp)*this.size)+2, 4);
             }
@@ -738,9 +802,9 @@ function component(width, height, color, x, y) {//draw new boxes
                         droppedItem.splice(b, 1)
                     }else if(droppedItem[b].type==="health"&&droppedItem[b].data.cooldown===0){
                         if(this.hp!==this.maxhp){
-                        this.hp=this.hp+Math.floor(droppedItem[b].data.value*(this.maxhp+(this.hpPoints*5)))
-                        if(this.hp>(this.maxhp+this.hpPoints*5)){
-                            this.hp=(this.maxhp+this.hpPoints*5)
+                        this.hp=this.hp+Math.floor(droppedItem[b].data.value*(this.maxhp+(this.hpPoints*20)))
+                        if(this.hp>(this.maxhp+this.hpPoints*20)){
+                            this.hp=(this.maxhp+this.hpPoints*20)
                         }
                         lastEXP=-1
                         droppedItem.splice(b, 1)
@@ -1162,7 +1226,7 @@ function updateGameArea() {
         }
     }
 
-    if(area[loadedAreaID].name==="Town"){//todo
+    if(area[loadedAreaID].name==="Town"){
         ctx = myGameArea.context;
         ctx.globalCompositeOperation='destination-over';
         ctx.font = 'bold 25px serif';
@@ -1198,71 +1262,90 @@ function updateGameArea() {
         ctx.fillStyle = `${items[4].colour}` //item 4
         ctx.fillRect(310, 150, 30, 30);
 
+
+        if(level*10<=money){//respec
+            ctx.fillStyle = "#6b6b6b"
+            ctx.fillRect( 223, 395,115,38)
+            ctx.fillStyle = "#25801b"
+            ctx.fillRect( 228, 400,105,28)
+            ctx.font = '13px serif';
+            ctx.fillStyle = "#000000"
+            ctx.fillText(`Respec SP: £${level*10}`, 234, 418)
+        }else{
+            ctx.fillStyle = "#6b6b6b"
+            ctx.fillRect( 223, 395,115,38)
+            ctx.fillStyle = "#7d2323"
+            ctx.fillRect( 228, 400,105,28)
+            ctx.font = '13px serif';
+            ctx.fillStyle = "#000000"
+            ctx.fillText(`Respec SP: £${level*10}`, 234, 418)
+        }
+
         if(itemToBuy!==-1){
             switch( itemToBuy){
                 case "SP":
                     if(spPrice<=money){
                         ctx.fillStyle = "#6b6b6b"
-                        ctx.fillRect( 473, 395,105,38)
+                        ctx.fillRect( 433, 395,105,38)
                         ctx.fillStyle = "#25801b"
-                        ctx.fillRect( 478, 400,95,28)
+                        ctx.fillRect( 438, 400,95,28)
                     }else{
                         ctx.fillStyle = "#6b6b6b"
-                        ctx.fillRect( 473, 395,105,38)
+                        ctx.fillRect( 433, 395,105,38)
                         ctx.fillStyle = "#7d2323"
-                        ctx.fillRect( 478, 400,95,28)
+                        ctx.fillRect( 438, 400,95,28)
                     }
                 break
                 case 1:
                     if(items[itemToBuy].worth*3<=money){
                         ctx.fillStyle = "#6b6b6b"
-                        ctx.fillRect( 473, 395,105,38)
+                        ctx.fillRect( 433, 395,105,38)
                         ctx.fillStyle = "#25801b"
-                        ctx.fillRect( 478, 400,95,28)
+                        ctx.fillRect( 438, 400,95,28)
                     }else{
                         ctx.fillStyle = "#6b6b6b"
-                        ctx.fillRect( 473, 395,105,38)
+                        ctx.fillRect( 433, 395,105,38)
                         ctx.fillStyle = "#7d2323"
-                        ctx.fillRect( 478, 400,95,28)
+                        ctx.fillRect( 438, 400,95,28)
                     }
                 break
                 case 2:
                     if(items[itemToBuy].worth*3<=money){
                         ctx.fillStyle = "#6b6b6b"
-                        ctx.fillRect( 473, 395,105,38)
+                        ctx.fillRect( 433, 395,105,38)
                         ctx.fillStyle = "#25801b"
-                        ctx.fillRect( 478, 400,95,28)
+                        ctx.fillRect( 438, 400,95,28)
                     }else{
                         ctx.fillStyle = "#6b6b6b"
-                        ctx.fillRect( 473, 395,105,38)
+                        ctx.fillRect( 433, 395,105,38)
                         ctx.fillStyle = "#7d2323"
-                        ctx.fillRect( 478, 400,95,28)
+                        ctx.fillRect( 438, 400,95,28)
                     }
                 break
                 case 3:
                     if(items[itemToBuy].worth*3<=money){
                         ctx.fillStyle = "#6b6b6b"
-                        ctx.fillRect( 473, 395,105,38)
+                        ctx.fillRect( 433, 395,105,38)
                         ctx.fillStyle = "#25801b"
-                        ctx.fillRect( 478, 400,95,28)
+                        ctx.fillRect( 438, 400,95,28)
                     }else{
                         ctx.fillStyle = "#6b6b6b"
-                        ctx.fillRect( 473, 395,105,38)
+                        ctx.fillRect( 433, 395,105,38)
                         ctx.fillStyle = "#7d2323"
-                        ctx.fillRect( 478, 400,95,28)
+                        ctx.fillRect( 438, 400,95,28)
                     }
                 break
                 case 4:
                     if(items[itemToBuy].worth*3<=money){
                         ctx.fillStyle = "#6b6b6b"
-                        ctx.fillRect( 473, 395,105,38)
+                        ctx.fillRect( 433, 395,105,38)
                         ctx.fillStyle = "#25801b"
-                        ctx.fillRect( 478, 400,95,28)
+                        ctx.fillRect( 438, 400,95,28)
                     }else{
                         ctx.fillStyle = "#6b6b6b"
-                        ctx.fillRect( 473, 395,105,38)
+                        ctx.fillRect( 433, 395,105,38)
                         ctx.fillStyle = "#7d2323"
-                        ctx.fillRect( 478, 400,95,28)
+                        ctx.fillRect( 438, 400,95,28)
                     }
                 break
         }
@@ -1274,23 +1357,23 @@ function updateGameArea() {
         switch(itemToBuy){
             case "SP":
             ctx.fillText("+1 Skill Point", 438, 140)
-            ctx.fillText(`${spPrice}`, 483, 420)
+            ctx.fillText(`${spPrice}`, 443, 420)
             break;
             case 1:
             ctx.fillText(`${items[1].name}`, 438, 140)
-            ctx.fillText(`${items[1].worth*3}`, 483, 420)
+            ctx.fillText(`${items[1].worth*3}`, 443, 420)
             break;
             case 2:
             ctx.fillText(`${items[2].name}`, 438, 140)
-            ctx.fillText(`${items[2].worth*3}`, 483, 420)
+            ctx.fillText(`${items[2].worth*3}`, 443, 420)
             break;
             case 3:
             ctx.fillText(`${items[3].name}`, 438, 140)
-            ctx.fillText(`${items[3].worth*3}`, 483, 420)
+            ctx.fillText(`${items[3].worth*3}`, 443, 420)
             break;
             case 4:
             ctx.fillText(`${items[4].name}`, 438, 140)
-            ctx.fillText(`${items[4].worth*3}`, 483, 420)
+            ctx.fillText(`${items[4].worth*3}`, 443, 420)
             break;
         }
     }
@@ -1478,6 +1561,7 @@ function updateGameArea() {
         (playerNumber4.x>920&&playerNumber4.y>signY-40&&playerNumber4.y<signY+20&&signY>0&&playerNumber4.hp>0)){
         if(area[loadedAreaID].subAreaCount===subArea){
             clearStage() 
+            updateSaveCode()
             loadedAreaID=2
             shopOpen=-1
             itemToBuy=-1
@@ -1485,10 +1569,18 @@ function updateGameArea() {
             renderStage()
         }else{
             subArea=subArea+1
+            updateSaveCode()
             renderStage()
         }
     }
 }
+
+function updateSaveCode(){
+    saveString=`${inv[0].storedItem};${inv[1].storedItem};${inv[2].storedItem};${inv[3].storedItem};${inv[4].storedItem};${inv[5].storedItem};${inv[6].storedItem};${inv[7].storedItem};${inv[8].storedItem};${inv[9].storedItem};${inv[10].storedItem};${inv[11].storedItem};${inv[12].storedItem};${inv[13].storedItem};${playerNumber.hp};${playerNumber.hpPoints};${playerNumber.dmgPoints};${playerNumber.rangePoints};${playerNumber.cdPoints};${playerNumber.skillPoints};${playerNumber2.hp};${playerNumber2.hpPoints};${playerNumber2.dmgPoints};${playerNumber2.rangePoints};${playerNumber2.cdPoints};${playerNumber2.skillPoints};${playerNumber3.hp};${playerNumber3.hpPoints};${playerNumber3.dmgPoints};${playerNumber3.rangePoints};${playerNumber3.cdPoints};${playerNumber3.skillPoints};${playerNumber4.hp};${playerNumber4.hpPoints};${playerNumber4.dmgPoints};${playerNumber4.rangePoints};${playerNumber4.cdPoints};${playerNumber4.skillPoints};${money};${area[3].cleared};${area[4].unlocked};${area[4].cleared}`
+    document.getElementById("saveCodeDisplay").innerHTML = `${saveString}`
+}
+
+
 
 function clearStage(){
     if(area[loadedAreaID].cleared!==2){
@@ -1559,7 +1651,8 @@ function drag(){ //Find which player clicked on / near, set to held
             renderStage()
         }
         if(area[loadedAreaID].name==="Menu"&&pointerX>381&&pointerX<381+224&&pointerY>330&&pointerY<330+48){
-
+            saveString = prompt("Paste your save code here:")
+            if(saveString!==null){
             mapButton=document.createElement("div");
             mapButton.setAttribute("id", `mapButton`)
             divcontainer.appendChild(mapButton, divcontainer.firstChild)
@@ -1568,13 +1661,42 @@ function drag(){ //Find which player clicked on / near, set to held
             document.getElementById("mapButton").addEventListener("mouseup", goToMap);
             document.getElementById("mapButton").innerHTML="Return to Map"
 
-            saveCode = prompt("Paste your save code here:", "lol nah its not done yet")//todo
+            
+            
             loadSaveFromCode()
+            }
         }
 
         
 
         if(area[loadedAreaID].name==="Town"&&shopOpen===1){
+            if(pointerX>223&&pointerX<223+115&&pointerY>395&&pointerY<395+38){
+                money=money-level*10
+                playerNumber.skillPoints=playerNumber.skillPoints+playerNumber.hpPoints+playerNumber.dmgPoints+playerNumber.rangePoints+playerNumber.cdPoints
+                playerNumber.hpPoints=0
+                playerNumber.dmgPoints=0
+                playerNumber.rangePoints=0
+                playerNumber.cdPoints=0
+
+                playerNumber2.skillPoints=playerNumber2.skillPoints+playerNumber2.hpPoints+playerNumber2.dmgPoints+playerNumber2.rangePoints+playerNumber2.cdPoints
+                playerNumber2.hpPoints=0
+                playerNumber2.dmgPoints=0
+                playerNumber2.rangePoints=0
+                playerNumber2.cdPoints=0
+
+                playerNumber3.skillPoints=playerNumber3.skillPoints+playerNumber3.hpPoints+playerNumber3.dmgPoints+playerNumber3.rangePoints+playerNumber3.cdPoints
+                playerNumber3.hpPoints=0
+                playerNumber3.dmgPoints=0
+                playerNumber3.rangePoints=0
+                playerNumber3.cdPoints=0
+
+                playerNumber4.skillPoints=playerNumber4.skillPoints+playerNumber4.hpPoints+playerNumber4.dmgPoints+playerNumber4.rangePoints+playerNumber4.cdPoints
+                playerNumber4.hpPoints=0
+                playerNumber4.dmgPoints=0
+                playerNumber4.rangePoints=0
+                playerNumber4.cdPoints=0
+                lastmoney=-1
+            }
             if(pointerX>830&&pointerX<830+30&&pointerY>100&&pointerY<100+30){
                 itemToBuy=-1
                 shopOpen=-1
@@ -1594,8 +1716,7 @@ function drag(){ //Find which player clicked on / near, set to held
             if(pointerX>310&&pointerX<310+30&&pointerY>150&&pointerY<150+30){
                 itemToBuy=4
             }
-            if(itemToBuy!==1&&pointerX>473&&pointerX<473+105&&pointerY>395&&pointerY<395+38){
-                if(itemToBuy!==-1){
+            if(itemToBuy!==-1&&pointerX>433&&pointerX<433+105&&pointerY>395&&pointerY<395+38){
                     switch( itemToBuy){
                         case "SP":
                             if(spPrice<=money){
@@ -1670,7 +1791,6 @@ function drag(){ //Find which player clicked on / near, set to held
             }
         }
     }
-        }
 
 
 
