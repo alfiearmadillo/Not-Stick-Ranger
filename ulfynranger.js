@@ -1,7 +1,4 @@
-
-//SP Respec in starting area w/ shop contains items, bonus SP (10,100,1000 etc.)
 // save / load, Item stored in all inv slots, money, HP, assigned SP, spare SP, XP, LV
-//game over tp to town after wait
 //Projectiles for players & enemies
 //enemy types (flying random movent every x time), player like walker
 //terrain side collision?
@@ -44,7 +41,7 @@ let totalEXP=0
 let lastEXP = -1
 let expToLevelUp=50
 let lastLevelExp=0
-let gameover = 100
+let gameover = 500
 let lastRevCostShown=-1
 let land=[]
 
@@ -1120,8 +1117,24 @@ function updateGameArea() {
 
     if(playerNumber.hp===0&&playerNumber2.hp===0&&playerNumber3.hp===0&&playerNumber4.hp===0&&gameover>-1){ //Check for TPK, game over
         gameover=gameover-1
+        if(gameover<450){
+            ctx.font = `bold ${((500-gameover)/5)+5}px serif`;
+            ctx.fillStyle = "#850a04"
+            ctx.fillText(":(", 468-(500-gameover/10)+468, 300)
+        }
         if(gameover===0){
-            alert("Game Over")//todo
+            gameover=500
+            land=[]
+            enemy=[]
+            i=0
+            droppedItem=[]
+            loadedAreaID=1
+            playerNumber.hp=1
+            playerNumber2.hp=1
+            playerNumber3.hp=1
+            playerNumber4.hp=1
+            renderStage()
+            
         }
     }
 
@@ -1525,7 +1538,13 @@ function drag(){ //Find which player clicked on / near, set to held
         }else
         if(blockToMouseX<40 && blockToMouseY<40){
             p1Held=1
+        }else 
+        if(area[loadedAreaID].name==="Town"&&shopOpen!==1&&pointerX>402&&pointerX<402+190&&pointerY>360&&pointerY<360+150){
+            shopOpen=1
         }
+
+
+
         if(area[loadedAreaID].name==="Menu"&&pointerX>372&&pointerX<372+240&&pointerY>260&&pointerY<260+48){
 
             mapButton=document.createElement("div");
@@ -1553,9 +1572,7 @@ function drag(){ //Find which player clicked on / near, set to held
             loadSaveFromCode()
         }
 
-        if(area[loadedAreaID].name==="Town"&&shopOpen!==1&&pointerX>402&&pointerX<402+190&&pointerY>360&&pointerY<360+150){
-            shopOpen=1
-        }
+        
 
         if(area[loadedAreaID].name==="Town"&&shopOpen===1){
             if(pointerX>830&&pointerX<830+30&&pointerY>100&&pointerY<100+30){
@@ -1739,66 +1756,66 @@ function spawnEnemy(_size,_colour,_posX,_posY,_gravity,_hp,_movementType,_exp,_w
     i++
 }
 
-// document.addEventListener('keydown', logKey);//enemy spawning
+document.addEventListener('keydown', logKey);//enemy spawning
 
-// function logKey(e) {
-//   if(e.code==="KeyA"){
-//     enemy[i] = new component(20, 20, "purple", 480, 270);
-//     enemy[i].size=20
-//     enemy[i].gravity = 0.5;
-//     enemy[i].hp=10
-//     enemy[i].maxhp=enemy[i].hp
-//     enemy[i].type="enemy"
-//     enemy[i].movementType="SlowWalk"
-//     enemy[i].exp=1
-//     enemy[i].weapon=items[5]
-//     enemy[i].atkCD=0
-//     enemy[i].drops={
-//         coin:1,
-//         coinChance:100,
-//         healPotion:0.1,
-//         healChance:10,
-//         itemID1:1,
-//         itemID1Chance:100,
-//         itemID2:2,
-//         itemID2Chance:1,
-//         itemID3:3,
-//         itemID3Chance:1,
-//         itemID4:4,
-//         itemID4Chance:1
-//     }
-//     i++
-//   }
-//   if(e.code==="KeyJ"){
-//       money+=100
-//   }
-//   if(e.code==="KeyS"){
-//     enemy[i] = new component(200, 200, "purple", 680, 270);
-//     enemy[i].size=200
-//     enemy[i].gravity = 0.5;
-//     enemy[i].hp=100
-//     enemy[i].maxhp=enemy[i].hp
-//     enemy[i].type="enemy"
-//     enemy[i].movementType="SlowWalk"
-//     enemy[i].exp=15
-//     enemy[i].weapon=items[6]
-//     enemy[i].atkCD=0
-//     enemy[i].drops={
-//         coin:100,
-//         coinChance:20,
-//         healPotion:1,
-//         healChance:100,
-//         itemID1:1,
-//         itemID1Chance:10,
-//         itemID2:2,
-//         itemID2Chance:10,
-//         itemID3:3,
-//         itemID3Chance:10,
-//         itemID4:4,
-//         itemID4Chance:10
-//     }
-//     i++
-//   }
-// }
+function logKey(e) {
+  if(e.code==="KeyA"){
+    enemy[i] = new component(20, 20, "purple", 480, 270);
+    enemy[i].size=20
+    enemy[i].gravity = 0.5;
+    enemy[i].hp=10
+    enemy[i].maxhp=enemy[i].hp
+    enemy[i].type="enemy"
+    enemy[i].movementType="SlowWalk"
+    enemy[i].exp=1
+    enemy[i].weapon=items[5]
+    enemy[i].atkCD=0
+    enemy[i].drops={
+        coin:1,
+        coinChance:100,
+        healPotion:0.1,
+        healChance:10,
+        itemID1:1,
+        itemID1Chance:100,
+        itemID2:2,
+        itemID2Chance:1,
+        itemID3:3,
+        itemID3Chance:1,
+        itemID4:4,
+        itemID4Chance:1
+    }
+    i++
+  }
+  if(e.code==="KeyJ"){
+      money+=100
+  }
+  if(e.code==="KeyS"){
+    enemy[i] = new component(200, 200, "purple", 680, 270);
+    enemy[i].size=200
+    enemy[i].gravity = 0.5;
+    enemy[i].hp=100
+    enemy[i].maxhp=enemy[i].hp
+    enemy[i].type="enemy"
+    enemy[i].movementType="SlowWalk"
+    enemy[i].exp=15
+    enemy[i].weapon=items[6]
+    enemy[i].atkCD=0
+    enemy[i].drops={
+        coin:100,
+        coinChance:20,
+        healPotion:1,
+        healChance:100,
+        itemID1:1,
+        itemID1Chance:10,
+        itemID2:2,
+        itemID2Chance:10,
+        itemID3:3,
+        itemID3Chance:10,
+        itemID4:4,
+        itemID4Chance:10
+    }
+    i++
+  }
+}
 
 document.getElementById(inv.length-1).style.background='#5c5c5c' //Page background
