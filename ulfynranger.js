@@ -7,7 +7,6 @@
 //more levels, enemies, weapons, content
 let saveString=""
 let splitSaveString=[]
-//let saveStringPass="47;18;-87;342;543;13;764;243;-43;83;21;5;12;876;324;-765;324;345;43;17;-18;345;835;21;463;782;-5;23;7;123;564;23;-465;1;435;-76;-34;-233;723;4;0"
 let itemToBuy=-1
 let spPrice=100
 let shopOpen=0
@@ -1624,7 +1623,7 @@ function updateGameArea() {
         ctx = myGameArea.context;
         ctx.font = '80px serif';
         ctx.fillStyle = "#4832a8"
-        ctx.fillText("Ulfyn Ranger", 280, 150)
+        ctx.fillText("Block Ranger", 280, 150)
         ctx.font = '50px serif';
         ctx.fillStyle = "#1d6f82"
         ctx.fillRect(372, 260, 240, 48);
