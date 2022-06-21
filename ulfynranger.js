@@ -1,3 +1,6 @@
+//can join locked stages
+//xp bar messed up on load
+
 //beating current highest stage
 //Projectiles for players & enemies (bows arc, wand straight)
 //enemy types (flying random movent every x time), player like walker
@@ -447,22 +450,32 @@ function loadSaveFromCode(){//saveload
     playerNumber4.skillPoints=splitSaveString[37]
     money=splitSaveString[38]
     area[3].cleared=splitSaveString[39]
-    area[4].unlocked=splitSaveString[40]
-    area[4].cleared=splitSaveString[41]
-    spPrice=splitSaveString[42]
-    totalEXP=splitSaveString[43]
-    level=splitSaveString[44]
-    expToLevelUp=splitSaveString[45]
-    area[5].unlocked=splitSaveString[46]
-    area[5].cleared=splitSaveString[47]
-    area[6].unlocked=splitSaveString[48]
-    area[6].cleared=splitSaveString[49]
-    area[7].unlocked=splitSaveString[50]
-    area[7].cleared=splitSaveString[51]
-    area[8].unlocked=splitSaveString[52]
-    area[8].cleared=splitSaveString[53]
-    area[9].unlocked=splitSaveString[54]
-    area[9].cleared=splitSaveString[55]
+    if(splitSaveString[39]===1){
+    area[4].unlocked=1
+    }
+    area[4].cleared=splitSaveString[40]
+    if(splitSaveString[40]===1){
+    area[5].unlocked=1
+    }
+    spPrice=splitSaveString[41]
+    totalEXP=splitSaveString[42]
+    level=splitSaveString[43]
+    expToLevelUp=splitSaveString[44]
+    area[5].cleared=splitSaveString[45]
+    if(splitSaveString[45]===1){
+    area[6].unlocked=1
+    area[7].unlocked=1
+    }
+    area[6].cleared=splitSaveString[46]
+    if(splitSaveString[46]===1){
+        area[8].unlocked=1
+    }
+    area[7].cleared=splitSaveString[47]
+    if(splitSaveString[47]===1){
+    area[9].unlocked=1
+    }
+    area[8].cleared=splitSaveString[48]
+    area[9].cleared=splitSaveString[49]
     clickButton(0)
     clickButton(0)
     clickButton(1)
@@ -1320,7 +1333,7 @@ function updateGameArea() {
                 }
                 
             }else{
-                if(redPDistY<enemy[j].weapon.range&&redPDist<enemy[j].weapon.range&&redPDist<bluPDist&&redPDist<grnPDist&&redPDist<ylwPDist&&playerNumber.hp>0){
+                if(redPDistY<enemy[j].weapon.range&&redPDist<enemy[j].weapon.range&&(redPDist<bluPDist||playerNumber2.hp>0)&&(redPDist<grnPDist||playerNumber3.hp>0)&&(redPDist<ylwPDist||playerNumber4.hp>0)&&playerNumber.hp>0){
                     if(enemy[j].weapon.damageMin-playerNumber.item.defence<1){
                         playerNumber.hp=playerNumber.hp-1
                         enemy[j].atkCD=enemy[j].weapon.atkRate
@@ -1331,7 +1344,7 @@ function updateGameArea() {
                     if(playerNumber.hp<0){
                         playerNumber.hp=0
                     }
-                }else if(bluPDistY<enemy[j].weapon.range&&bluPDist<enemy[j].weapon.range&&bluPDist<grnPDist&&bluPDist<ylwPDist&&playerNumber2.hp>0){
+                }else if(bluPDistY<enemy[j].weapon.range&&bluPDist<enemy[j].weapon.range&&(bluPDist<grnPDist||playerNumber3.hp>0)&&(bluPDist<ylwPDist||playerNumber4.hp>0)&&playerNumber2.hp>0){
                     if(enemy[j].weapon.damageMin-playerNumber2.item.defence<1){
                         playerNumber2.hp=playerNumber2.hp-1
                         enemy[j].atkCD=enemy[j].weapon.atkRate
@@ -1342,7 +1355,7 @@ function updateGameArea() {
                     if(playerNumber2.hp<0){
                         playerNumber2.hp=0
                     }
-                }else if(grnPDistY<enemy[j].weapon.range&&grnPDist<enemy[j].weapon.range&&grnPDist<ylwPDist&&playerNumber3.hp>0){
+                }else if(grnPDistY<enemy[j].weapon.range&&grnPDist<enemy[j].weapon.range&&(grnPDist<ylwPDist||playerNumber4.hp>0)&&playerNumber3.hp>0){
                     if(enemy[j].weapon.damageMin-playerNumber3.item.defence<1){
                         playerNumber3.hp=playerNumber3.hp-1
                         enemy[j].atkCD=enemy[j].weapon.atkRate
@@ -1844,7 +1857,7 @@ function updateGameArea() {
 }
 
 function updateSaveCode(){
-    saveString=`${inv[0].storedItem};${inv[1].storedItem};${inv[2].storedItem};${inv[3].storedItem};${inv[4].storedItem};${inv[5].storedItem};${inv[6].storedItem};${inv[7].storedItem};${inv[8].storedItem};${inv[9].storedItem};${inv[10].storedItem};${inv[11].storedItem};${inv[12].storedItem};${inv[13].storedItem};${playerNumber.hp};${playerNumber.hpPoints};${playerNumber.dmgPoints};${playerNumber.rangePoints};${playerNumber.cdPoints};${playerNumber.skillPoints};${playerNumber2.hp};${playerNumber2.hpPoints};${playerNumber2.dmgPoints};${playerNumber2.rangePoints};${playerNumber2.cdPoints};${playerNumber2.skillPoints};${playerNumber3.hp};${playerNumber3.hpPoints};${playerNumber3.dmgPoints};${playerNumber3.rangePoints};${playerNumber3.cdPoints};${playerNumber3.skillPoints};${playerNumber4.hp};${playerNumber4.hpPoints};${playerNumber4.dmgPoints};${playerNumber4.rangePoints};${playerNumber4.cdPoints};${playerNumber4.skillPoints};${money};${area[3].cleared};${area[4].unlocked};${area[4].cleared};${spPrice};${totalEXP};${level};${expToLevelUp};${area[5].unlocked};${area[5].cleared};${area[6].unlocked};${area[6].cleared};${area[7].unlocked};${area[7].cleared};${area[8].unlocked};${area[8].cleared};${area[9].unlocked};${area[9].cleared}`
+    saveString=`${inv[0].storedItem};${inv[1].storedItem};${inv[2].storedItem};${inv[3].storedItem};${inv[4].storedItem};${inv[5].storedItem};${inv[6].storedItem};${inv[7].storedItem};${inv[8].storedItem};${inv[9].storedItem};${inv[10].storedItem};${inv[11].storedItem};${inv[12].storedItem};${inv[13].storedItem};${playerNumber.hp};${playerNumber.hpPoints};${playerNumber.dmgPoints};${playerNumber.rangePoints};${playerNumber.cdPoints};${playerNumber.skillPoints};${playerNumber2.hp};${playerNumber2.hpPoints};${playerNumber2.dmgPoints};${playerNumber2.rangePoints};${playerNumber2.cdPoints};${playerNumber2.skillPoints};${playerNumber3.hp};${playerNumber3.hpPoints};${playerNumber3.dmgPoints};${playerNumber3.rangePoints};${playerNumber3.cdPoints};${playerNumber3.skillPoints};${playerNumber4.hp};${playerNumber4.hpPoints};${playerNumber4.dmgPoints};${playerNumber4.rangePoints};${playerNumber4.cdPoints};${playerNumber4.skillPoints};${money};${area[3].cleared};${area[4].cleared};${spPrice};${totalEXP};${level};${expToLevelUp};${area[5].cleared};${area[6].cleared};${area[7].cleared};${area[8].cleared};${area[9].cleared}`
     document.getElementById("saveCodeDisplay").innerHTML = `${saveString}`
 }
 
@@ -2168,11 +2181,11 @@ function logKey(e) {
         itemID1:1,
         itemID1Chance:100,
         itemID2:2,
-        itemID2Chance:1,
+        itemID2Chance:100,
         itemID3:3,
-        itemID3Chance:1,
+        itemID3Chance:100,
         itemID4:4,
-        itemID4Chance:1
+        itemID4Chance:100
     }
     i++
   }
