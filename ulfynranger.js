@@ -1,8 +1,3 @@
-//if beaten stage before unlock next stage in save, to save on reduntant stuff
-//save exp & level
-//save new stages
-
-
 //beating current highest stage
 //Projectiles for players & enemies
 //enemy types (flying random movent every x time), player like walker
