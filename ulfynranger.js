@@ -1,5 +1,5 @@
 //beating current highest stage
-//Projectiles for players & enemies
+//Projectiles for players & enemies (bows arc, wand straight)
 //enemy types (flying random movent every x time), player like walker
 //terrain side collision?
 //textures?
@@ -116,6 +116,7 @@ function startGame() {
 
 
 items[0]={name:"None",damageMin:1,damageMax:1,range:11,atkRate:100,lifeSteal:0,defence:0,type:"None", colour:'#b4b4b4', worth:0, multi:0, rangeMult:0.1}
+
 items[1]={name:"Slightly Sharp Stick",damageMin:2,damageMax:4,range:25,atkRate:50,lifeSteal:0,defence:0,type:"Sword", colour:'#a83232', worth:10, multi:0, rangeMult:0.1}
 items[2]={name:"Cardboard Shield",damageMin:1,damageMax:1,range:15,atkRate:100,lifeSteal:0,defence:1,type:"Shield", colour:'#75a832', worth:10, multi:0, rangeMult:0.1}
 items[3]={name:"Cheap Toy Bow",damageMin:1,damageMax:3,range:160,atkRate:66,lifeSteal:0,defence:0,type:"Bow", colour:'#634f1c', worth:10, multi:0, rangeMult:3}
@@ -125,6 +126,9 @@ items[6]={name:"CR_IntroAveBoss",damageMin:12,damageMax:22,range:300,atkRate:200
 items[7]={name:"CR_IntroAveRanged",damageMin:1,damageMax:2,range:130,atkRate:200,lifeSteal:0,defence:0,type:"CR_Ranged", colour:'#191919', worth:-1, multi:0, rangeMult:3}
 items[8]={name:"CR_IntroAveStrong",damageMin:5,damageMax:10,range:45,atkRate:200,lifeSteal:0,defence:0,type:"CR_Melee", colour:'#191919', worth:-1, multi:0, rangeMult:0.1}
 items[9]={name:"CR_IntroAveWeak",damageMin:0,damageMax:1,range:45,atkRate:400,lifeSteal:0,defence:0,type:"CR_Melee", colour:'#191919', worth:-1, multi:0, rangeMult:0.1}
+
+items[10]={name:"CR_GrassyFieldFlyingMelee",damageMin:19,damageMax:25,range:45,atkRate:200,lifeSteal:0,defence:0,type:"CR_Melee", colour:'#191919', worth:-1, multi:0, rangeMult:0.1}
+items[11]={name:"CR_GrassyFieldFlyingRanged",damageMin:3,damageMax:4,range:120,atkRate:300,lifeSteal:0,defence:0,type:"CR_Ranged", colour:'#191919', worth:-1, multi:0, rangeMult:3}
 
 function addItem(player, itemID){
     switch(player){
@@ -333,7 +337,7 @@ for(e=0;e<inv.length;e++){
 
 
 function clickButton(num){
-
+lastmoney=-1
     if(num<4){
         switch(num){
             case 0:
@@ -462,6 +466,12 @@ function loadSaveFromCode(){//saveload
     area[9].cleared=splitSaveString[55]
     clickButton(0)
     clickButton(0)
+    clickButton(1)
+    clickButton(1)
+    clickButton(2)
+    clickButton(2)
+    clickButton(3)
+    clickButton(3)
     loadedAreaID=1
     renderStage()
 }
@@ -472,10 +482,10 @@ area[1]={name:"Town",subAreaCount:1,unlocked:1,x:100,y:300,cleared:2,stageToUnlo
 area[2]={name:"Map",subAreaCount:1,unlocked:0,cleared:-1}
 area[3]={name:"Intro Avenue",subAreaCount:9,unlocked:1,x:150,y:300,cleared:0,stageToUnlock1:4,stageToUnlock2:1}
 area[4]={name:"Grassy Fields",subAreaCount:7,unlocked:0,x:180,y:250,cleared:0,stageToUnlock1:5,stageToUnlock2:1}
-area[5]={name:"Shaded Woods",subAreaCount:4,unlocked:0,x:230,y:270,cleared:0,stageToUnlock1:6,stageToUnlock2:7}
-area[6]={name:"Hidden Cave",subAreaCount:6,unlocked:0,x:240,y:320,cleared:0,stageToUnlock1:8,stageToUnlock2:1}
-area[7]={name:"Rainy Woods",subAreaCount:5,unlocked:0,x:280,y:275,cleared:0,stageToUnlock1:9,stageToUnlock2:1}
-area[8]={name:"Deep Dark",subAreaCount:4,unlocked:0,x:235,y:370,cleared:0,stageToUnlock1:10,stageToUnlock2:1}
+area[5]={name:"Shaded Woods",subAreaCount:4,unlocked:0,x:230,y:270,cleared:0,stageToUnlock1:6,stageToUnlock2:7, special:"LowDark"}
+area[6]={name:"Hidden Cave",subAreaCount:6,unlocked:0,x:240,y:320,cleared:0,stageToUnlock1:8,stageToUnlock2:1, special:"MidDark"}
+area[7]={name:"Rainy Woods",subAreaCount:5,unlocked:0,x:280,y:275,cleared:0,stageToUnlock1:9,stageToUnlock2:1, special:"Rain"}
+area[8]={name:"Deep Dark",subAreaCount:4,unlocked:0,x:235,y:370,cleared:0,stageToUnlock1:10,stageToUnlock2:1, special:"Dark"}
 area[9]={name:"Forest's Exit",subAreaCount:2,unlocked:0,x:325,y:285,cleared:0,stageToUnlock1:11,stageToUnlock2:1}
 
 function renderStage(){ //Stage loading
@@ -655,7 +665,7 @@ function renderStage(){ //Stage loading
             spawnEnemy(12,"#067806",357,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
             spawnEnemy(20,"#8e17b3",490,400,0.5,10,"SlowWalk",2,5,2,55,0.2,10,1,2,2,2,3,2,4,2)
             spawnEnemy(35,"#7a2b27",682,400,0.5,25,"SlowWalk",5,8,10,40,0.2,10,1,2,2,2,3,2,4,2)
-            spawnEnemy(65,"#3c4b4d",800,400,0.5,200,"SlowWalk",100,6,100,100,1,100,1,10,2,10,3,10,4,10)
+            spawnEnemy(65,"#3c4b4d",800,400,0.5,200,"SlowWalk",33,6,100,100,1,100,1,10,2,10,3,10,4,10)
             spawnEnemy(15,"#1b1280",880,400,0.5,5,"SlowWalk",3,7,10,25,0.2,10,1,5,2,5,3,5,4,5)
             spawnEnemy(15,"#1b1280",910,400,0.5,5,"SlowWalk",3,7,10,25,0.2,10,1,5,2,5,3,5,4,5)
             playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
@@ -668,6 +678,12 @@ function renderStage(){ //Stage loading
     if(area[loadedAreaID].name==="Grassy Fields"){//Main menu
         if(subArea===1){
             newLand(-1,510,1000,5400)
+            spawnEnemy(20,"#b56824",732,204,0,5,"Flying",3,10,3,55,0.2,10,1,0,2,0,3,0,4,0)
+            spawnEnemy(20,"#b56824",679,312,0,5,"Flying",3,10,3,55,0.2,10,1,0,2,0,3,0,4,0)
+            spawnEnemy(20,"#b56824",555,184,0,5,"Flying",3,10,3,55,0.2,10,1,0,2,0,3,0,4,0)
+            spawnEnemy(20,"#b56824",377,275,0,5,"Flying",3,10,3,55,0.2,10,1,0,2,0,3,0,4,0)//BasicFlyer
+            
+
             playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
             playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
             playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
@@ -1211,13 +1227,33 @@ function updateGameArea() {
     myGameArea.frameNo += 1;
 
     for(j=0;j<enemy.length;j++){
-        if(enemy[j].movementType="SlowWalk"){
+        if(enemy[j].movementType==="SlowWalk"){
             move = Math.floor(Math.random() * 1000);
             if(move>10&&move<20 ){
                 enemy[j].x=enemy[j].x+1
             }
             if(move>20&&move<32){
                 enemy[j].x=enemy[j].x-1
+            }
+        }
+        if(enemy[j].movementType==="Flying"){
+            if(enemy[j].y<0){
+                enemy[j].speedY+=1
+            }
+            if(Math.floor(Math.random()*40)===10){
+                enemy[j].speedX=enemy[j].speedX+(Math.floor(Math.random()*5)-2.5)
+                enemy[j].speedY=enemy[j].speedY+(Math.floor(Math.random()*5)-2.5)
+                if(enemy[j].speedX>5){
+                    enemy[j].speedX=3
+                }else if(enemy[j].speedX<-5){
+                    enemy[j].speedX=-3
+                }
+                if(enemy[j].speedY>5){
+                    enemy[j].speedY=2
+                }else if(enemy[j].speedY<-5){
+                    enemy[j].speedY=-2
+                }
+                
             }
         }
         enemy[j].update()
@@ -1228,88 +1264,109 @@ function updateGameArea() {
         grnPDist=Math.abs(playerNumber3.x-(enemy[j].x-(playerNumber3.size/2)+(enemy[j].size/2)))
         ylwPDist=Math.abs(playerNumber4.x-(enemy[j].x-(playerNumber4.size/2)+(enemy[j].size/2)))
 
+        redPDistY=Math.abs(playerNumber.y-(enemy[j].y-(playerNumber.size/2)+(enemy[j].size/2)))
+        bluPDistY=Math.abs(playerNumber2.y-(enemy[j].y-(playerNumber2.size/2)+(enemy[j].size/2)))
+        grnPDistY=Math.abs(playerNumber3.y-(enemy[j].y-(playerNumber3.size/2)+(enemy[j].size/2)))
+        ylwPDistY=Math.abs(playerNumber4.y-(enemy[j].y-(playerNumber4.size/2)+(enemy[j].size/2)))
+
         if(enemy[j].atkCD<=0){
             if(enemy[j].weapon.multi===1){
-                if(redPDist<enemy[j].weapon.range&&playerNumber.hp>0){
+                if(redPDistY<enemy[j].weapon.range&&redPDist<enemy[j].weapon.range&&playerNumber.hp>0){
                     if(enemy[j].weapon.damageMin-playerNumber.item.defence<1){
                     playerNumber.hp=playerNumber.hp-1
+                    enemy[j].atkCD=enemy[j].weapon.atkRate
                     }else{
                     playerNumber.hp=playerNumber.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-playerNumber.item.defence)
-                    }
+                    enemy[j].atkCD=enemy[j].weapon.atkRate
+                }
                     if(playerNumber.hp<0){
                         playerNumber.hp=0
                     }
                 }
-                if(bluPDist<enemy[j].weapon.range&&playerNumber2.hp>0){
+                if(bluPDistY<enemy[j].weapon.range&&bluPDist<enemy[j].weapon.range&&playerNumber2.hp>0){
                     if(enemy[j].weapon.damageMin-playerNumber2.item.defence<1){
                         playerNumber2.hp=playerNumber2.hp-1
+                        enemy[j].atkCD=enemy[j].weapon.atkRate
                         }else{
                     playerNumber2.hp=playerNumber2.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-playerNumber2.item.defence)
-                        }
+                    enemy[j].atkCD=enemy[j].weapon.atkRate        
+                }
                     if(playerNumber2.hp<0){
                         playerNumber2.hp=0
                     }
                 }
-                if(grnPDist<enemy[j].weapon.range&&playerNumber3.hp>0){
+                if(grnPDistY<enemy[j].weapon.range&&grnPDist<enemy[j].weapon.range&&playerNumber3.hp>0){
                     if(enemy[j].weapon.damageMin-playerNumber3.item.defence<1){
                         playerNumber3.hp=playerNumber3.hp-1
+                        enemy[j].atkCD=enemy[j].weapon.atkRate
                         }else{
                     playerNumber3.hp=playerNumber3.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-playerNumber3.item.defence)
-                        }
+                    enemy[j].atkCD=enemy[j].weapon.atkRate       
+                }
                     if(playerNumber3.hp<0){
                         playerNumber3.hp=0
                     }
                 }
-                if(ylwPDist<enemy[j].weapon.range&&playerNumber4.hp>0){
+                if(ylwPDistY<enemy[j].weapon.range&&ylwPDist<enemy[j].weapon.range&&playerNumber4.hp>0){
                     if(enemy[j].weapon.damageMin-playerNumber4.item.defence<1){
                         playerNumber4.hp=playerNumber4.hp-1
+                        enemy[j].atkCD=enemy[j].weapon.atkRate
                         }else{
                     playerNumber4.hp=playerNumber4.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-playerNumber4.item.defence)
-                        }
+                    enemy[j].atkCD=enemy[j].weapon.atkRate       
+                }
                     if(playerNumber4.hp<0){
                         playerNumber4.hp=0
                     }
                 }
-                enemy[j].atkCD=enemy[j].weapon.atkRate
+                
             }else{
-                if(redPDist<enemy[j].weapon.range &&redPDist<bluPDist&&redPDist<grnPDist&&redPDist<ylwPDist&&playerNumber.hp>0){
+                if(redPDistY<enemy[j].weapon.range&&redPDist<enemy[j].weapon.range&&redPDist<bluPDist&&redPDist<grnPDist&&redPDist<ylwPDist&&playerNumber.hp>0){
                     if(enemy[j].weapon.damageMin-playerNumber.item.defence<1){
                         playerNumber.hp=playerNumber.hp-1
+                        enemy[j].atkCD=enemy[j].weapon.atkRate
                         }else{
                     playerNumber.hp=playerNumber.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-playerNumber.item.defence)
-                        }
+                    enemy[j].atkCD=enemy[j].weapon.atkRate       
+                }
                     if(playerNumber.hp<0){
                         playerNumber.hp=0
                     }
-                }else if(bluPDist<enemy[j].weapon.range&&bluPDist<grnPDist&&bluPDist<ylwPDist&&playerNumber2.hp>0){
+                }else if(bluPDistY<enemy[j].weapon.range&&bluPDist<enemy[j].weapon.range&&bluPDist<grnPDist&&bluPDist<ylwPDist&&playerNumber2.hp>0){
                     if(enemy[j].weapon.damageMin-playerNumber2.item.defence<1){
                         playerNumber2.hp=playerNumber2.hp-1
+                        enemy[j].atkCD=enemy[j].weapon.atkRate
                         }else{
                     playerNumber2.hp=playerNumber2.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-playerNumber2.item.defence)
-                        }
+                    enemy[j].atkCD=enemy[j].weapon.atkRate      
+                }
                     if(playerNumber2.hp<0){
                         playerNumber2.hp=0
                     }
-                }else if(grnPDist<enemy[j].weapon.range&&grnPDist<ylwPDist&&playerNumber3.hp>0){
+                }else if(grnPDistY<enemy[j].weapon.range&&grnPDist<enemy[j].weapon.range&&grnPDist<ylwPDist&&playerNumber3.hp>0){
                     if(enemy[j].weapon.damageMin-playerNumber3.item.defence<1){
                         playerNumber3.hp=playerNumber3.hp-1
+                        enemy[j].atkCD=enemy[j].weapon.atkRate
                         }else{
                     playerNumber3.hp=playerNumber3.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-playerNumber3.item.defence)
-                        }
+                    enemy[j].atkCD=enemy[j].weapon.atkRate      
+                }
                     if(playerNumber3.hp<0){
                         playerNumber3.hp=0
                     }
-                }else if(ylwPDist<enemy[j].weapon.range&&playerNumber4.hp>0){
+                }else if(ylwPDistY<enemy[j].weapon.range&&ylwPDist<enemy[j].weapon.range&&playerNumber4.hp>0){
                     if(enemy[j].weapon.damageMin-playerNumber4.item.defence<1){
                         playerNumber4.hp=playerNumber4.hp-1
+                        enemy[j].atkCD=enemy[j].weapon.atkRate
                         }else{
                     playerNumber4.hp=playerNumber4.hp-Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-playerNumber4.item.defence)
-                        }
+                    enemy[j].atkCD=enemy[j].weapon.atkRate       
+                }
                     if(playerNumber4.hp<0){
                         playerNumber4.hp=0
                     }
                 }
-            enemy[j].atkCD=enemy[j].weapon.atkRate
+            
             }
 
         }else{
@@ -1643,7 +1700,7 @@ function updateGameArea() {
                                 ctx.fillRect(area[r].x-7, area[r].y-7, 34, 34);
                                 ctx.globalCompositeOperation="source-over";
                                 ctx.font = '16px serif';
-                                ctx.fillStyle = "#000000"
+                                ctx.fillStyle = "#072b4a"
                                 ctx.fillText(`${area[r].name}`, area[r].x-area[r].name.length*2, area[r].y-16)
                             }
                         }else if(area[r].cleared===1){
@@ -1655,7 +1712,7 @@ function updateGameArea() {
                                 ctx.fillRect(area[r].x-7, area[r].y-7, 34, 34);
                                 ctx.globalCompositeOperation="source-over";
                                 ctx.font = '16px serif';
-                                ctx.fillStyle = "#000000"
+                                ctx.fillStyle = "#072b4a"
                                 ctx.fillText(`${area[r].name}`, area[r].x-area[r].name.length*2, area[r].y-16)
                             }
                         }else if(area[r].cleared===2){
@@ -2071,6 +2128,8 @@ function spawnEnemy(_size,_colour,_posX,_posY,_gravity,_hp,_movementType,_exp,_w
     enemy[i].exp=_exp
     enemy[i].weapon=items[_weapon]
     enemy[i].atkCD=0
+    enemy[i].speedX=0
+    enemy[i].speedY=0
     enemy[i].drops={
         coin:_coinValue,
         coinChance:_coinChance,
