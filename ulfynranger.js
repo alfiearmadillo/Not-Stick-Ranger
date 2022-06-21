@@ -1,3 +1,7 @@
+//HEY SAVE THE COST OF THE SKILL POJTS LOl
+//revive box once again does not update sometimes (if die while selected)
+//if beaten stage before unlock next stage in save, to save on reduntant stuff
+
 //beating current highest stage
 //Projectiles for players & enemies
 //enemy types (flying random movent every x time), player like walker
@@ -123,8 +127,8 @@ items[4]={name:"Small Plastic Wand",damageMin:0,damageMax:1,range:300,atkRate:20
 items[5]={name:"CR_IntoAveBasic",damageMin:1,damageMax:2,range:45,atkRate:200,lifeSteal:0,defence:0,type:"CR_Melee", colour:'#191919', worth:-1, multi:0, rangeMult:0.1}
 items[6]={name:"CR_IntroAveBoss",damageMin:5,damageMax:18,range:300,atkRate:200,lifeSteal:0,defence:0,type:"CR_Special1", colour:'#191919', worth:-1, multi:1, rangeMult:3}
 items[7]={name:"CR_IntroAveRanged",damageMin:1,damageMax:2,range:130,atkRate:200,lifeSteal:0,defence:0,type:"CR_Ranged", colour:'#191919', worth:-1, multi:0, rangeMult:3}
-items[8]={name:"CR_IntroAveStrong",damageMin:5,damageMax:10,range:45,atkRate:200,lifeSteal:0,defence:0,type:"CR_Ranged", colour:'#191919', worth:-1, multi:0, rangeMult:0.1}
-items[9]={name:"CR_IntroAveWeak",damageMin:0,damageMax:1,range:45,atkRate:400,lifeSteal:0,defence:0,type:"CR_Ranged", colour:'#191919', worth:-1, multi:0, rangeMult:0.1}
+items[8]={name:"CR_IntroAveStrong",damageMin:5,damageMax:10,range:45,atkRate:200,lifeSteal:0,defence:0,type:"CR_Melee", colour:'#191919', worth:-1, multi:0, rangeMult:0.1}
+items[9]={name:"CR_IntroAveWeak",damageMin:0,damageMax:1,range:45,atkRate:400,lifeSteal:0,defence:0,type:"CR_Melee", colour:'#191919', worth:-1, multi:0, rangeMult:0.1}
 
 function addItem(player, itemID){
     switch(player){
@@ -563,6 +567,7 @@ function renderStage(){ //Stage loading
         }
         if(subArea===5){//Main menu
             newLand(-1,510,1000,5400)
+            newLand(400,200,500,5400)
             playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
             playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
             playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
@@ -595,6 +600,7 @@ function renderStage(){ //Stage loading
         }
         if(subArea===9){//Main menu
             newLand(-1,510,1000,5400)
+            spawnEnemy(12,"#067806",653,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
             playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
             playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
             playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
@@ -800,7 +806,7 @@ function component(width, height, color, x, y) {//draw new boxes
                         money=money+droppedItem[b].data.value
                         droppedItem.splice(b, 1)
                     }else if(droppedItem[b].type==="health"&&droppedItem[b].data.cooldown===0){
-                        if(this.hp!==this.maxhp){
+                        if(this.hp!==this.maxhp+(this.hpPoints*20)){
                         this.hp=this.hp+Math.floor(droppedItem[b].data.value*(this.maxhp+(this.hpPoints*20)))
                         if(this.hp>(this.maxhp+this.hpPoints*20)){
                             this.hp=(this.maxhp+this.hpPoints*20)
@@ -1380,21 +1386,21 @@ function updateGameArea() {
     healRngNum=Math.floor(Math.random() * 40)
     if(area[loadedAreaID].name==="Town"){
     if(healRngNum===14){
-        playerNumber.hp+=Math.floor(playerNumber.maxhp/80)
-        if(playerNumber.hp>playerNumber.maxhp){
-            playerNumber.hp=playerNumber.maxhp
+        playerNumber.hp+=Math.floor((playerNumber.maxhp+(playerNumber.hpPoints*20))/80)
+        if(playerNumber.hp>playerNumber.maxhp+(playerNumber.hpPoints*20)){
+            playerNumber.hp=playerNumber.maxhp+(playerNumber.hpPoints*20)
         }
-        playerNumber2.hp+=Math.floor(playerNumber2.maxhp/80)
-        if(playerNumber2.hp>playerNumber2.maxhp){
-            playerNumber2.hp=playerNumber2.maxhp
+        playerNumber2.hp+=Math.floor((playerNumber2.maxhp+(playerNumber2.hpPoints*20))/80)
+        if(playerNumber2.hp>playerNumber2.maxhp+(playerNumber2.hpPoints*20)){
+            playerNumber2.hp=playerNumber2.maxhp+(playerNumber2.hpPoints*20)
         }
-        playerNumber3.hp+=Math.floor(playerNumber3.maxhp/80)
-        if(playerNumber3.hp>playerNumber3.maxhp){
-            playerNumber3.hp=playerNumber3.maxhp
+        playerNumber3.hp+=Math.floor((playerNumber3.maxhp+(playerNumber3.hpPoints*20))/80)
+        if(playerNumber3.hp>playerNumber3.maxhp+(playerNumber3.hpPoints*20)){
+            playerNumber3.hp=playerNumber3.maxhp+(playerNumber3.hpPoints*20)
         }
-        playerNumber4.hp+=Math.floor(playerNumber4.maxhp/80)
-        if(playerNumber4.hp>playerNumber4.maxhp){
-            playerNumber4.hp=playerNumber4.maxhp
+        playerNumber4.hp+=Math.floor((playerNumber4.maxhp+(playerNumber4.hpPoints*20))/80)
+        if(playerNumber4.hp>playerNumber4.maxhp+(playerNumber4.hpPoints*20)){
+            playerNumber4.hp=playerNumber4.maxhp+(playerNumber4.hpPoints*20)
         }
     }
 }
@@ -1554,10 +1560,10 @@ function updateGameArea() {
     }
 
     //check if hit sign
-    if( (playerNumber.x>920&&playerNumber.y>signY-40&&playerNumber.y<signY+20&&signY>0&&playerNumber.hp>0)||
+    if( ((playerNumber.x>920&&playerNumber.y>signY-40&&playerNumber.y<signY+20&&signY>0&&playerNumber.hp>0)||
         (playerNumber2.x>920&&playerNumber2.y>signY-40&&playerNumber2.y<signY+20&&signY>0&&playerNumber2.hp>0)||
         (playerNumber3.x>920&&playerNumber3.y>signY-40&&playerNumber3.y<signY+20&&signY>0&&playerNumber3.hp>0)||
-        (playerNumber4.x>920&&playerNumber4.y>signY-40&&playerNumber4.y<signY+20&&signY>0&&playerNumber4.hp>0)){
+        (playerNumber4.x>920&&playerNumber4.y>signY-40&&playerNumber4.y<signY+20&&signY>0&&playerNumber4.hp>0))&&(enemy.length===0||subArea!==area[loadedAreaID].subAreaCount)){
         if(area[loadedAreaID].subAreaCount===subArea){
             clearStage() 
             updateSaveCode()
