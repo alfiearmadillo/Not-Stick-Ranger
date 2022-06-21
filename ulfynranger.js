@@ -1,6 +1,7 @@
-//HEY SAVE THE COST OF THE SKILL POJTS LOl
-//revive box once again does not update sometimes (if die while selected)
 //if beaten stage before unlock next stage in save, to save on reduntant stuff
+//save exp & level
+//save new stages
+
 
 //beating current highest stage
 //Projectiles for players & enemies
@@ -125,7 +126,7 @@ items[2]={name:"Cardboard Shield",damageMin:1,damageMax:1,range:15,atkRate:100,l
 items[3]={name:"Cheap Toy Bow",damageMin:1,damageMax:3,range:160,atkRate:66,lifeSteal:0,defence:0,type:"Bow", colour:'#634f1c', worth:10, multi:0, rangeMult:3}
 items[4]={name:"Small Plastic Wand",damageMin:0,damageMax:1,range:300,atkRate:200,lifeSteal:0,defence:0,type:"Staff", colour:'#660033', worth:10, multi:0, rangeMult:3}
 items[5]={name:"CR_IntoAveBasic",damageMin:1,damageMax:2,range:45,atkRate:200,lifeSteal:0,defence:0,type:"CR_Melee", colour:'#191919', worth:-1, multi:0, rangeMult:0.1}
-items[6]={name:"CR_IntroAveBoss",damageMin:5,damageMax:18,range:300,atkRate:200,lifeSteal:0,defence:0,type:"CR_Special1", colour:'#191919', worth:-1, multi:1, rangeMult:3}
+items[6]={name:"CR_IntroAveBoss",damageMin:12,damageMax:22,range:300,atkRate:200,lifeSteal:0,defence:0,type:"CR_Special1", colour:'#191919', worth:-1, multi:1, rangeMult:3}
 items[7]={name:"CR_IntroAveRanged",damageMin:1,damageMax:2,range:130,atkRate:200,lifeSteal:0,defence:0,type:"CR_Ranged", colour:'#191919', worth:-1, multi:0, rangeMult:3}
 items[8]={name:"CR_IntroAveStrong",damageMin:5,damageMax:10,range:45,atkRate:200,lifeSteal:0,defence:0,type:"CR_Melee", colour:'#191919', worth:-1, multi:0, rangeMult:0.1}
 items[9]={name:"CR_IntroAveWeak",damageMin:0,damageMax:1,range:45,atkRate:400,lifeSteal:0,defence:0,type:"CR_Melee", colour:'#191919', worth:-1, multi:0, rangeMult:0.1}
@@ -450,6 +451,20 @@ function loadSaveFromCode(){//saveload
     area[3].cleared=splitSaveString[39]
     area[4].unlocked=splitSaveString[40]
     area[4].cleared=splitSaveString[41]
+    spPrice=splitSaveString[42]
+    totalEXP=splitSaveString[43]
+    level=splitSaveString[44]
+    expToLevelUp=splitSaveString[45]
+    area[5].unlocked=splitSaveString[46]
+    area[5].cleared=splitSaveString[47]
+    area[6].unlocked=splitSaveString[48]
+    area[6].cleared=splitSaveString[49]
+    area[7].unlocked=splitSaveString[50]
+    area[7].cleared=splitSaveString[51]
+    area[8].unlocked=splitSaveString[52]
+    area[8].cleared=splitSaveString[53]
+    area[9].unlocked=splitSaveString[54]
+    area[9].cleared=splitSaveString[55]
     clickButton(0)
     clickButton(0)
     loadedAreaID=1
@@ -458,10 +473,15 @@ function loadSaveFromCode(){//saveload
 
 //update for each new level when make level making levels
 area[0]={name:"Menu",subAreaCount:1,unlocked:0,cleared:-1} //Stage list
-area[1]={name:"Town",subAreaCount:1,unlocked:1,x:100,y:300,cleared:2,stageToUnlock1:3,stageToUnlock2:3}
+area[1]={name:"Town",subAreaCount:1,unlocked:1,x:100,y:300,cleared:2,stageToUnlock1:3,stageToUnlock2:1}
 area[2]={name:"Map",subAreaCount:1,unlocked:0,cleared:-1}
-area[3]={name:"Intro Avenue",subAreaCount:9,unlocked:1,x:150,y:300,cleared:0,stageToUnlock1:4,stageToUnlock2:3}
-area[4]={name:"Grassy Fields",subAreaCount:7,unlocked:0,x:180,y:250,cleared:0,stageToUnlock1:5,stageToUnlock2:3}
+area[3]={name:"Intro Avenue",subAreaCount:9,unlocked:1,x:150,y:300,cleared:0,stageToUnlock1:4,stageToUnlock2:1}
+area[4]={name:"Grassy Fields",subAreaCount:7,unlocked:0,x:180,y:250,cleared:0,stageToUnlock1:5,stageToUnlock2:1}
+area[5]={name:"Shaded Woods",subAreaCount:4,unlocked:0,x:230,y:270,cleared:0,stageToUnlock1:6,stageToUnlock2:7}
+area[6]={name:"Hidden Cave",subAreaCount:6,unlocked:0,x:240,y:320,cleared:0,stageToUnlock1:8,stageToUnlock2:1}
+area[7]={name:"Rainy Woods",subAreaCount:5,unlocked:0,x:280,y:275,cleared:0,stageToUnlock1:9,stageToUnlock2:1}
+area[8]={name:"Deep Dark",subAreaCount:4,unlocked:0,x:235,y:370,cleared:0,stageToUnlock1:10,stageToUnlock2:1}
+area[9]={name:"Forest's Exit",subAreaCount:2,unlocked:0,x:325,y:285,cleared:0,stageToUnlock1:11,stageToUnlock2:1}
 
 function renderStage(){ //Stage loading
     land=[]
@@ -511,9 +531,9 @@ function renderStage(){ //Stage loading
         if(subArea===2){//Main menu
             newLand(-1,510,1000,5400)
             newLand(320,490,710,5400)
-            spawnEnemy(20,"#7b139c",350,400,0.5,8,"SlowWalk",1,5,1,55,0.2,10,1,1,2,1,3,1,4,1)
-            spawnEnemy(20,"#7b139c",600,400,0.5,8,"SlowWalk",1,5,1,55,0.2,10,1,1,2,1,3,1,4,1)
-            spawnEnemy(20,"#7b139c",870,400,0.5,8,"SlowWalk",1,5,1,55,0.2,10,1,1,2,1,3,1,4,1)
+            spawnEnemy(20,"#8e17b3",350,400,0.5,8,"SlowWalk",1,5,1,55,0.2,10,1,1,2,1,3,1,4,1)
+            spawnEnemy(20,"#8e17b3",600,400,0.5,8,"SlowWalk",1,5,1,55,0.2,10,1,1,2,1,3,1,4,1)
+            spawnEnemy(20,"#8e17b3",870,400,0.5,8,"SlowWalk",1,5,1,55,0.2,10,1,1,2,1,3,1,4,1)
             playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
             playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
             playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
@@ -525,8 +545,8 @@ function renderStage(){ //Stage loading
             newLand(520,495,1000,5400)
             newLand(650,470,1000,5400)
             newLand(880,450,1000,5400)
-            spawnEnemy(20,"#6a0f87",470,400,0.5,10,"SlowWalk",2,5,2,55,0.2,10,1,2,2,2,3,2,4,2)
-            spawnEnemy(20,"#6a0f87",490,400,0.5,10,"SlowWalk",2,5,2,55,0.2,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(20,"#8e17b3",470,400,0.5,10,"SlowWalk",2,5,2,55,0.2,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(20,"#8e17b3",490,400,0.5,10,"SlowWalk",2,5,2,55,0.2,10,1,2,2,2,3,2,4,2)
             spawnEnemy(15,"#1b1280",550,400,0.5,5,"SlowWalk",3,7,10,25,0.2,10,1,5,2,5,3,5,4,5)
             playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
             playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
@@ -567,7 +587,21 @@ function renderStage(){ //Stage loading
         }
         if(subArea===5){//Main menu
             newLand(-1,510,1000,5400)
-            newLand(400,200,500,5400)
+            newLand(-1,510,850,5400)
+            newLand(-1,485,770,5400)
+            newLand(-1,455,700,5400)
+            newLand(-1,430,500,5400)
+            
+            
+            
+            spawnEnemy(12,"#067806",457,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",497,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(15,"#1b1280",550,400,0.5,5,"SlowWalk",3,7,10,25,0.2,10,1,5,2,5,3,5,4,5)
+            spawnEnemy(15,"#1b1280",640,400,0.5,5,"SlowWalk",3,7,10,25,0.2,10,1,5,2,5,3,5,4,5)
+            spawnEnemy(20,"#8e17b3",670,400,0.5,10,"SlowWalk",2,5,2,55,0.2,10,1,2,2,2,3,2,4,2)
+
+            spawnEnemy(35,"#7a2b27",800,400,0.5,25,"SlowWalk",5,8,10,40,0.2,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(35,"#7a2b27",710,400,0.5,25,"SlowWalk",5,8,10,40,0.2,10,1,2,2,2,3,2,4,2)
             playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
             playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
             playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
@@ -576,14 +610,26 @@ function renderStage(){ //Stage loading
         }
         if(subArea===6){//Main menu
             newLand(-1,510,1000,5400)
+            newLand(-1,490,600,5400)
+            newLand(800,490,1000,5400)
+            spawnEnemy(35,"#7a2b27",800,400,0.5,25,"SlowWalk",5,8,10,40,0.2,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(35,"#7a2b27",572,400,0.5,25,"SlowWalk",5,8,10,40,0.2,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(35,"#7a2b27",376,400,0.5,25,"SlowWalk",5,8,10,40,0.2,10,1,2,2,2,3,2,4,2)
             playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
             playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
             playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
             playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
-            signY=478
+            signY=458
         }
         if(subArea===7){//Main menu
             newLand(-1,510,1000,5400)
+            newLand(325,487,783,5400)
+            spawnEnemy(15,"#1b1280",200,400,0.5,5,"SlowWalk",3,7,10,25,0.2,10,1,5,2,5,3,5,4,5)
+            spawnEnemy(15,"#1b1280",310,400,0.5,5,"SlowWalk",3,7,10,25,0.2,10,1,5,2,5,3,5,4,5)
+            spawnEnemy(15,"#1b1280",332,400,0.5,5,"SlowWalk",3,7,10,25,0.2,10,1,5,2,5,3,5,4,5)
+            spawnEnemy(15,"#1b1280",335,400,0.5,5,"SlowWalk",3,7,10,25,0.2,10,1,5,2,5,3,5,4,5)
+            spawnEnemy(15,"#1b1280",340,400,0.5,5,"SlowWalk",3,7,10,25,0.2,10,1,5,2,5,3,5,4,5)
+            spawnEnemy(15,"#1b1280",732,400,0.5,5,"SlowWalk",3,7,10,25,0.2,10,1,5,2,5,3,5,4,5)
             playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
             playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
             playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
@@ -592,6 +638,17 @@ function renderStage(){ //Stage loading
         }
         if(subArea===8){//Main menu
             newLand(-1,510,1000,5400)
+            newLand(-1,487,603,5400)
+            spawnEnemy(20,"#8e17b3",201,400,0.5,10,"SlowWalk",2,5,2,55,0.2,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(20,"#8e17b3",338,400,0.5,10,"SlowWalk",2,5,2,55,0.2,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(20,"#8e17b3",381,400,0.5,10,"SlowWalk",2,5,2,55,0.2,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(20,"#8e17b3",412,400,0.5,10,"SlowWalk",2,5,2,55,0.2,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(20,"#8e17b3",461,400,0.5,10,"SlowWalk",2,5,2,55,0.2,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(20,"#8e17b3",470,400,0.5,10,"SlowWalk",2,5,2,55,0.2,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(20,"#8e17b3",510,400,0.5,10,"SlowWalk",2,5,2,55,0.2,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(20,"#8e17b3",550,400,0.5,10,"SlowWalk",2,5,2,55,0.2,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(35,"#7a2b27",760,400,0.5,25,"SlowWalk",5,8,10,40,0.2,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(15,"#1b1280",810,400,0.5,5,"SlowWalk",3,7,10,25,0.2,10,1,5,2,5,3,5,4,5)
             playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
             playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
             playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
@@ -600,7 +657,12 @@ function renderStage(){ //Stage loading
         }
         if(subArea===9){//Main menu
             newLand(-1,510,1000,5400)
-            spawnEnemy(12,"#067806",653,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(12,"#067806",357,400,0.5,3,"SlowWalk",1,9,1,30,0.2,35,1,1,2,1,3,1,4,1)
+            spawnEnemy(20,"#8e17b3",490,400,0.5,10,"SlowWalk",2,5,2,55,0.2,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(35,"#7a2b27",682,400,0.5,25,"SlowWalk",5,8,10,40,0.2,10,1,2,2,2,3,2,4,2)
+            spawnEnemy(65,"#3c4b4d",800,400,0.5,200,"SlowWalk",100,6,100,100,1,100,1,10,2,10,3,10,4,10)
+            spawnEnemy(15,"#1b1280",880,400,0.5,5,"SlowWalk",3,7,10,25,0.2,10,1,5,2,5,3,5,4,5)
+            spawnEnemy(15,"#1b1280",910,400,0.5,5,"SlowWalk",3,7,10,25,0.2,10,1,5,2,5,3,5,4,5)
             playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
             playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
             playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
@@ -608,13 +670,113 @@ function renderStage(){ //Stage loading
             signY=478
         }
     }
-    if(area[loadedAreaID].name==="Grassy Fields"&&subArea===1){//Main menu
-        newLand(-1,510,1000,5400)
-        playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
-        playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
-        playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
-        playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
-        signY=478
+    if(area[loadedAreaID].name==="Grassy Fields"){//Main menu
+        if(subArea===1){
+            newLand(-1,510,1000,5400)
+            playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+            playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+            playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+            playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
+            signY=478
+        }
+        if(subArea===2){
+            newLand(-1,510,1000,5400)
+            playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+            playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+            playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+            playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
+            signY=478
+        }
+        if(subArea===3){
+            newLand(-1,510,1000,5400)
+            playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+            playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+            playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+            playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
+            signY=478
+        }
+        if(subArea===4){
+            newLand(-1,510,1000,5400)
+            playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+            playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+            playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+            playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
+            signY=478
+        }
+        if(subArea===5){
+            newLand(-1,510,1000,5400)
+            playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+            playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+            playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+            playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
+            signY=478
+        }
+        if(subArea===6){
+            newLand(-1,510,1000,5400)
+            playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+            playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+            playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+            playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
+            signY=478
+        }
+        if(subArea===7){
+            newLand(-1,510,1000,5400)
+            playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+            playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+            playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+            playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
+            signY=478
+        }
+    }
+    if(area[loadedAreaID].name==="Shaded Woods"){
+        if(subArea===1){
+            newLand(-1,510,1000,5400)
+            playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+            playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+            playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+            playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
+            signY=478
+        }
+    }
+    if(area[loadedAreaID].name==="Hidden Cave"){
+        if(subArea===1){
+            newLand(-1,510,1000,5400)
+            playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+            playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+            playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+            playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
+            signY=478
+        }
+    }
+    if(area[loadedAreaID].name==="Rainy Woods"){
+        if(subArea===1){
+            newLand(-1,510,1000,5400)
+            playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+            playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+            playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+            playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
+            signY=478
+        }
+    }
+    if(area[loadedAreaID].name==="Deep Dark"){
+        if(subArea===1){
+            newLand(-1,510,1000,5400)
+            playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+            playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+            playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+            playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
+            signY=478
+        }
+    }
+    if(area[loadedAreaID].name==="Forest's Exit"){
+        if(subArea===1){
+            newLand(-1,510,1000,5400)
+            playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
+            playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
+            playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
+            playerNumber.x=130;playerNumber.y=370;playerNumber.speedX=0;playerNumber.speedY=0
+            signY=478
+        }
     }
 }
 
@@ -1430,6 +1592,53 @@ function updateGameArea() {
                     case 0:
                         break;
                     case 1:
+                        ctx.globalCompositeOperation='destination-over';
+                        ctx.lineWidth = 2;
+                        ctx.setLineDash([4, 2]);
+                        if(area[r].name==="Intro Avenue"){
+                            ctx.beginPath()
+                            ctx.moveTo(area[r].x+10, area[r].y+10)
+                            ctx.lineTo(area[1].x+10, area[1].y+10)
+                            ctx.stroke();  
+                        }
+                        if(area[r].name==="Grassy Fields"){
+                            ctx.beginPath()
+                            ctx.moveTo(area[r].x+10, area[r].y+10)
+                            ctx.lineTo(area[3].x+10, area[3].y+10)
+                            ctx.stroke();
+                        }
+                        if(area[r].name==="Shaded Woods"){
+                            ctx.beginPath()
+                            ctx.moveTo(area[r].x+10, area[r].y+10)
+                            ctx.lineTo(area[4].x+10, area[4].y+10)
+                            ctx.stroke();
+                        }
+                        if(area[r].name==="Hidden Cave"){
+                            ctx.beginPath()
+                            ctx.moveTo(area[r].x+10, area[r].y+10)
+                            ctx.lineTo(area[5].x+10, area[5].y+10)
+                            ctx.stroke();
+                        }
+                        if(area[r].name==="Rainy Woods"){
+                            ctx.beginPath()
+                            ctx.moveTo(area[r].x+10, area[r].y+10)
+                            ctx.lineTo(area[5].x+10, area[5].y+10)
+                            ctx.stroke();
+                        }
+                        if(area[r].name==="Deep Dark"){
+                            ctx.beginPath()
+                            ctx.moveTo(area[r].x+10, area[r].y+10)
+                            ctx.lineTo(area[6].x+10, area[6].y+10)
+                            ctx.stroke();
+                        }
+                        if(area[r].name==="Forest's Exit"){
+                            ctx.beginPath()
+                            ctx.moveTo(area[r].x+10, area[r].y+10)
+                            ctx.lineTo(area[7].x+10, area[7].y+10)
+                            ctx.stroke();
+                        }
+                        ctx.globalCompositeOperation="source-over";
+
                         if(area[r].cleared===0){//draw stages on map
                             ctx.fillStyle = "#e0dd1d"
                             ctx.fillRect(area[r].x, area[r].y, 20, 20);
@@ -1440,7 +1649,7 @@ function updateGameArea() {
                                 ctx.globalCompositeOperation="source-over";
                                 ctx.font = '16px serif';
                                 ctx.fillStyle = "#000000"
-                                ctx.fillText(`${area[r].name}`, area[r].x-10, area[r].y-20)
+                                ctx.fillText(`${area[r].name}`, area[r].x-area[r].name.length*2, area[r].y-16)
                             }
                         }else if(area[r].cleared===1){
                             ctx.fillStyle = "#2bc4a1"
@@ -1452,7 +1661,7 @@ function updateGameArea() {
                                 ctx.globalCompositeOperation="source-over";
                                 ctx.font = '16px serif';
                                 ctx.fillStyle = "#000000"
-                                ctx.fillText(`${area[r].name}`, area[r].x-10, area[r].y-20)
+                                ctx.fillText(`${area[r].name}`, area[r].x-area[r].name.length*2, area[r].y-16)
                             }
                         }else if(area[r].cleared===2){
                             ctx.fillStyle = "#FFFFFF"
@@ -1464,9 +1673,11 @@ function updateGameArea() {
                                 ctx.globalCompositeOperation="source-over";
                                 ctx.font = '16px serif';
                                 ctx.fillStyle = "#000000"
-                                ctx.fillText(`${area[r].name}`, area[r].x-10, area[r].y-20)
+                                ctx.fillText(`${area[r].name}`, area[r].x-area[r].name.length*2, area[r].y-16)
                             }
                         }
+
+                        
                         break;
                     default:
                         break;
@@ -1522,7 +1733,7 @@ function updateGameArea() {
         if(totalEXP>=expToLevelUp){
             level++
             lastLevelExp=expToLevelUp
-            expToLevelUp=Math.floor(expToLevelUp*1.2)
+            expToLevelUp=50+Math.floor(expToLevelUp*1.2)
             playerNumber.skillPoints+=2
             playerNumber2.skillPoints+=2
             playerNumber3.skillPoints+=2
@@ -1552,6 +1763,7 @@ function updateGameArea() {
             if(money>=Math.floor((money/2)+5+(level*2))){
                 document.getElementById("reviveButton").innerHTML=`Revive: £${Math.floor((money/2)+5+(level*2))}`
                 document.getElementById("reviveButton").style.background="#517a59"
+                lastRevCostShown=-1
             }else{
                 document.getElementById("reviveButton").innerHTML=`Revive: £${Math.floor((money/2)+5+(level*2))}`
                 document.getElementById("reviveButton").style.background="#9c4c4c" 
@@ -1581,7 +1793,7 @@ function updateGameArea() {
 }
 
 function updateSaveCode(){
-    saveString=`${inv[0].storedItem};${inv[1].storedItem};${inv[2].storedItem};${inv[3].storedItem};${inv[4].storedItem};${inv[5].storedItem};${inv[6].storedItem};${inv[7].storedItem};${inv[8].storedItem};${inv[9].storedItem};${inv[10].storedItem};${inv[11].storedItem};${inv[12].storedItem};${inv[13].storedItem};${playerNumber.hp};${playerNumber.hpPoints};${playerNumber.dmgPoints};${playerNumber.rangePoints};${playerNumber.cdPoints};${playerNumber.skillPoints};${playerNumber2.hp};${playerNumber2.hpPoints};${playerNumber2.dmgPoints};${playerNumber2.rangePoints};${playerNumber2.cdPoints};${playerNumber2.skillPoints};${playerNumber3.hp};${playerNumber3.hpPoints};${playerNumber3.dmgPoints};${playerNumber3.rangePoints};${playerNumber3.cdPoints};${playerNumber3.skillPoints};${playerNumber4.hp};${playerNumber4.hpPoints};${playerNumber4.dmgPoints};${playerNumber4.rangePoints};${playerNumber4.cdPoints};${playerNumber4.skillPoints};${money};${area[3].cleared};${area[4].unlocked};${area[4].cleared}`
+    saveString=`${inv[0].storedItem};${inv[1].storedItem};${inv[2].storedItem};${inv[3].storedItem};${inv[4].storedItem};${inv[5].storedItem};${inv[6].storedItem};${inv[7].storedItem};${inv[8].storedItem};${inv[9].storedItem};${inv[10].storedItem};${inv[11].storedItem};${inv[12].storedItem};${inv[13].storedItem};${playerNumber.hp};${playerNumber.hpPoints};${playerNumber.dmgPoints};${playerNumber.rangePoints};${playerNumber.cdPoints};${playerNumber.skillPoints};${playerNumber2.hp};${playerNumber2.hpPoints};${playerNumber2.dmgPoints};${playerNumber2.rangePoints};${playerNumber2.cdPoints};${playerNumber2.skillPoints};${playerNumber3.hp};${playerNumber3.hpPoints};${playerNumber3.dmgPoints};${playerNumber3.rangePoints};${playerNumber3.cdPoints};${playerNumber3.skillPoints};${playerNumber4.hp};${playerNumber4.hpPoints};${playerNumber4.dmgPoints};${playerNumber4.rangePoints};${playerNumber4.cdPoints};${playerNumber4.skillPoints};${money};${area[3].cleared};${area[4].unlocked};${area[4].cleared};${spPrice};${totalEXP};${level};${expToLevelUp};${area[5].unlocked};${area[5].cleared};${area[6].unlocked};${area[6].cleared};${area[7].unlocked};${area[7].cleared};${area[8].unlocked};${area[8].cleared};${area[9].unlocked};${area[9].cleared}`
     document.getElementById("saveCodeDisplay").innerHTML = `${saveString}`
 }
 
@@ -1591,7 +1803,7 @@ function clearStage(){
     if(area[loadedAreaID].cleared!==2){
     area[loadedAreaID].cleared=1
     if(area[loadedAreaID].stageToUnlock1>=area.length||area[loadedAreaID].stageToUnlock2>=area.length){
-        alert("All current stages unlocked!")//todo
+        alert("More stages to come!")//todo
     }else{
     area[area[loadedAreaID].stageToUnlock1].unlocked=1
     area[area[loadedAreaID].stageToUnlock2].unlocked=1
@@ -1913,6 +2125,10 @@ function logKey(e) {
   }
   if(e.code==="KeyJ"){
       money+=100
+  }
+  if(e.code==="KeyK"){
+    totalEXP+=10
+    lastmoney=-1
   }
   if(e.code==="KeyS"){
     enemy[i] = new component(200, 200, "purple", 680, 270);

@@ -349,13 +349,13 @@ body {
     position: relative;
     color:#FFFFFF;
     font-size: 20px;
-    height:25px;
+    height:40px;
     width:820px;
     border:1px solid;
     overflow: auto;
     white-space: nowrap;
     left: -400px;
-    bottom: 1147px;
+    bottom: 1152px;
   }
 
   #saveCodeNameDisplay{
@@ -363,7 +363,7 @@ body {
     color:#FFFFFF;
     font-size: 20px;
     left: -40px;
-    bottom: 1147px;
+    bottom: 1155px;
 
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
