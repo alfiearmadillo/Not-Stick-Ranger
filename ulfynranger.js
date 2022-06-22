@@ -1,5 +1,9 @@
 //xmas make all grass snow, rain to snow
 //only highest speed is 30, other is lowered to arrive at cursor at same time as higher speed one 
+//path of the swordsman, tanky enemies, full range
+//path of the archer, fairly melee enemies
+//path of the caster, mid range v high dps enemies
+//path of the tank, swarms of mid damage(reduced to 1 with shield) low hp mid atk speed enemies (mid range also)
 
 
 //beating current highest stage
