@@ -2450,7 +2450,7 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
             }
         }
     }
-    if(area[loadedAreaID].special==="Snow"||((debugXmas===1||debugXmas===2)&&area[loadedAreaID].name!=="Map")){
+    if(area[loadedAreaID].special==="Snow"||((debugXmas===1||debugXmas===2)&&area[loadedAreaID].name!=="Map"&&area[loadedAreaID].name!=="Rainy Woods"&&area[loadedAreaID].name!=="Deep Dark"&&area[loadedAreaID].name!=="Hidden Cave")){
         spawnSnow()
         for(af=0;af<snow.length;af++){
             snow[af].newPos();
