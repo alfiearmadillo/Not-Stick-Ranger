@@ -2445,7 +2445,7 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
         for(ae=0;ae<rain.length;ae++){
             rain[ae].newPos();
             rain[ae].update();
-            if(rain[ae].y>600){
+            if(rain[ae].y>600||rain[ae].x===0){
                 rain.splice(ae,1)
             }
         }
@@ -2455,7 +2455,7 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
         for(af=0;af<snow.length;af++){
             snow[af].newPos();
             snow[af].update();
-            if(snow[af].y>600||snow[af].x<0.5){
+            if(snow[af].y>600||snow[af].x===0||snow[af].x>962){
                 snow.splice(af,1)
             }
         }
@@ -2725,16 +2725,27 @@ function playerMoveToMouse(playerHeld, event){ //Move player currently held towa
 }
 let rain = []
 function spawnRain(){
-    rain[rain.length] = new component(2, 8, "#a0a6b8", Math.random()*960, -95);
-    rain[rain.length-1].gravity=0.5+(Math.floor(Math.random()*2)/5)
-    rain[rain.length-1].speedX=0
-    rain[rain.length-1].speedY=0
+    rain[rain.length] = new component(2, 8, "#a0a6b8", Math.random()*1160, -95);
+    rain[rain.length-1].gravity=0
+    rain[rain.length-1].speedX=-2
+    rain[rain.length-1].speedY=Math.random()*10+8
     rain[rain.length-1].type="Rain"
-    rain[rain.length] = new component(2, 8, "#a0a6b8", Math.random()*960, -95);
-    rain[rain.length-1].gravity=0.5-(Math.floor(Math.random()*2)/5)
-    rain[rain.length-1].speedX=0
-    rain[rain.length-1].speedY=0
+    rain[rain.length] = new component(2, 8, "#a0a6b8", Math.random()*1160, -95);
+    rain[rain.length-1].gravity=0
+    rain[rain.length-1].speedX=-2
+    rain[rain.length-1].speedY=Math.random()*10+8
     rain[rain.length-1].type="Rain"
+    rain[rain.length] = new component(2, 8, "#a0a6b8", Math.random()*1160, -95);
+    rain[rain.length-1].gravity=0
+    rain[rain.length-1].speedX=-2
+    rain[rain.length-1].speedY=Math.random()*10+8
+    rain[rain.length-1].type="Rain"
+    rain[rain.length] = new component(2, 8, "#a0a6b8", Math.random()*1160, -95);
+    rain[rain.length-1].gravity=0
+    rain[rain.length-1].speedX=-2
+    rain[rain.length-1].speedY=Math.random()*10+8
+    rain[rain.length-1].type="Rain"
+    
 }
 
 let snow = []
