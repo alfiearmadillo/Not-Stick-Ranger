@@ -1,4 +1,5 @@
 //player multihit projectiles only hit once
+//damage numbers, attempt 2
 //path of the swordsman, tanky enemies, full range
 //path of the archer, fairly melee enemies
 //path of the caster, mid range v high dps enemies
@@ -1618,7 +1619,6 @@ function updateGameArea() {
                 }else if(enemy[j].speedY<-5){
                     enemy[j].speedY=-2
                 }
-                
             }
         }
         if(enemy[j].movementType==="Playerlike"){
