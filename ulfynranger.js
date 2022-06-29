@@ -10,6 +10,8 @@
 //parish - Player Recolouring, global weather change, Money Sink
 //city - bank?
 
+//backgrounds
+
 //beating current highest stage
 //Projectiles for players & enemies (bows arc, wand straight)
 //terrain side collision?
