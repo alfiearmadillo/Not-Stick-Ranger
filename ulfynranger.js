@@ -5,6 +5,10 @@
 //path of the caster, mid range v high dps enemies
 //path of the tank, swarms of mid damage(reduced to 1 with shield) low hp mid atk speed enemies (mid range also)
 //legendary weapons, very rare global drop, changed which one every 5 levels
+//village - exclusive items
+//hamlet - Enchanter - perm boost into 2 of an items stats, random, legendary get boost to all stats
+//parish - Player Recolouring, global weather change, Money Sink
+//city - bank?
 
 //beating current highest stage
 //Projectiles for players & enemies (bows arc, wand straight)
