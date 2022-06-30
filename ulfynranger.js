@@ -10,6 +10,10 @@
 //parish - Player Recolouring, global weather change, Money Sink
 //city - bank?
 
+//tree enemies
+//burster enemies (split when die into other enemies)
+//tele enemies (change colour before tp)
+
 //backgrounds
 
 //beating current highest stage
