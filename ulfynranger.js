@@ -10,6 +10,9 @@
 //parish - Player Recolouring, global weather change, Money Sink
 //city - bank?
 
+//piercing / terrain piercing
+//homing
+
 //tree enemies
 //burster enemies (split when die into other enemies)
 //tele enemies (change colour before tp)
