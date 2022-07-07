@@ -9,6 +9,8 @@
 //parish - Player Recolouring, global weather change, Money Sink
 //city - bank?
 
+//BUG tracker enemies stop tracking when on dead YELLOW
+
 //piercing / terrain piercing
 //homing
 
