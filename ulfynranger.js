@@ -12,10 +12,6 @@
 //piercing / terrain piercing
 //homing
 
-//BODIES GIOVE DMG NUMBERS
-
-
-
 //tree enemies
 //splitter enemies (split when die into other enemies)
 //tele enemies (change colour before tp)
