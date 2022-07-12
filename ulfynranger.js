@@ -13,6 +13,8 @@
 //hanging enemies? (tree)
 //roof crawler enemies, drop when above
 
+//dont save infinite money, save as 1e300
+
 //switch static 4 drops to an array of objects
 
 //piercing / terrain piercing
