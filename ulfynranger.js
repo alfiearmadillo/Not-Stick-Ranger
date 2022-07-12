@@ -13,6 +13,8 @@
 //hanging enemies? (tree)
 //roof crawler enemies, drop when above
 
+//switch static 4 drops to an array of objects
+
 //piercing / terrain piercing
 //homing
 
