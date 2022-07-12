@@ -9,6 +9,10 @@
 //parish - Player Recolouring, global weather change, Money Sink
 //city - bank?
 
+//slow projectile high dmg enemies cave 1
+//hanging enemies? (tree)
+//roof crawler enemies, drop when above
+
 //piercing / terrain piercing
 //homing
 
