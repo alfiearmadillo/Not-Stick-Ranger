@@ -1384,12 +1384,17 @@ function component(width, height, color, x, y) {//draw new boxes
                 }else{
                     ctx.fillStyle = "#2ad413"
                 }
+                if(this.opacity>0.015){
+                this.opacity-=0.015
+                }
+                ctx.globalAlpha=this.opacity
                 ctx.shadowColor = "#000000";
                 ctx.shadowOffsetX = 1;
                 ctx.shadowOffsetY = 1; 
                 ctx.font="16px Sans-serif"
                 ctx.fillText(`${Math.abs(this.value)}`,this.x,this.y)
                 ctx.shadowColor = "rgba(0, 0, 0, 0)"
+                ctx.globalAlpha=1
             }else if(this.type==="Projectile"){ //todo projectile
                 ctx.fillStyle = color;
                 ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -2040,15 +2045,17 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
             }else{
                 if(redPDistY<enemy[j].weapon.range&&redPDist<enemy[j].weapon.range&&playerNumber.hp>0){
                     if(enemy[j].weapon.damageMin-playerNumber.item.defence<1){
-                    playerNumber.hp=playerNumber.hp-1
-                    if(playerNumber.hp>0)
-                    spawnDamageNumber(playerNumber, 1)
+                        if(playerNumber.hp>0)
+                        spawnDamageNumber(playerNumber, 1)
+                        playerNumber.hp=playerNumber.hp-1
+                    
                     enemy[j].atkCD=enemy[j].weapon.atkRate
                     }else{
                         tempDamageStorage=Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-playerNumber.item.defence)
-                    playerNumber.hp=playerNumber.hp-tempDamageStorage
-                    if(playerNumber.hp>0)
-                    spawnDamageNumber(playerNumber, tempDamageStorage)
+                        if(playerNumber.hp>0)
+                        spawnDamageNumber(playerNumber, tempDamageStorage)
+                        playerNumber.hp=playerNumber.hp-tempDamageStorage
+
                     enemy[j].atkCD=enemy[j].weapon.atkRate
                 }
                     if(playerNumber.hp<0){
@@ -2057,15 +2064,17 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
                 }
                 if(bluPDistY<enemy[j].weapon.range&&bluPDist<enemy[j].weapon.range&&playerNumber2.hp>0){
                     if(enemy[j].weapon.damageMin-playerNumber2.item.defence<1){
-                        playerNumber2.hp=playerNumber2.hp-1
                         if(playerNumber2.hp>0)
                         spawnDamageNumber(playerNumber2, 1)
+                        playerNumber2.hp=playerNumber2.hp-1
+                        
                         enemy[j].atkCD=enemy[j].weapon.atkRate
                         }else{
                             tempDamageStorage=Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-playerNumber2.item.defence)
-                    playerNumber2.hp=playerNumber2.hp-tempDamageStorage
-                    if(playerNumber2.hp>0)
-                    spawnDamageNumber(playerNumber2, tempDamageStorage)
+                            if(playerNumber2.hp>0)
+                            spawnDamageNumber(playerNumber2, tempDamageStorage)
+                            playerNumber2.hp=playerNumber2.hp-tempDamageStorage
+                   
                     enemy[j].atkCD=enemy[j].weapon.atkRate        
                 }
                     if(playerNumber2.hp<0){
@@ -2074,15 +2083,17 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
                 }
                 if(grnPDistY<enemy[j].weapon.range&&grnPDist<enemy[j].weapon.range&&playerNumber3.hp>0){
                     if(enemy[j].weapon.damageMin-playerNumber3.item.defence<1){
-                        playerNumber3.hp=playerNumber3.hp-1
                         if(playerNumber3.hp>0)
                         spawnDamageNumber(playerNumber3, 1)
+                        playerNumber3.hp=playerNumber3.hp-1
+                        
                         enemy[j].atkCD=enemy[j].weapon.atkRate
                         }else{
                             tempDamageStorage=Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-playerNumber3.item.defence)
-                    playerNumber3.hp=playerNumber3.hp-tempDamageStorage
-                    if(playerNumber3.hp>0)
-                    spawnDamageNumber(playerNumber3, tempDamageStorage)
+                            if(playerNumber3.hp>0)
+                            spawnDamageNumber(playerNumber3, tempDamageStorage)
+                            playerNumber3.hp=playerNumber3.hp-tempDamageStorage
+                    
                     enemy[j].atkCD=enemy[j].weapon.atkRate       
                 }
                     if(playerNumber3.hp<0){
@@ -2091,15 +2102,17 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
                 }
                 if(ylwPDistY<enemy[j].weapon.range&&ylwPDist<enemy[j].weapon.range&&playerNumber4.hp>0){
                     if(enemy[j].weapon.damageMin-playerNumber4.item.defence<1){
-                        playerNumber4.hp=playerNumber4.hp-1
                         if(playerNumber4.hp>0)
-                        spawnDamageNumber(playerNumber4, 1)
+                        spawnDamageNumber(playerNumber4, 1) 
+                        playerNumber4.hp=playerNumber4.hp-1
+                        
                         enemy[j].atkCD=enemy[j].weapon.atkRate
                         }else{
                             tempDamageStorage=Math.max(0, randomDmg(enemy[j].weapon.damageMin, enemy[j].weapon.damageMax)-playerNumber4.item.defence)
-                    playerNumber4.hp=playerNumber4.hp-tempDamageStorage
-                    if(playerNumber4.hp>0)
-                    spawnDamageNumber(playerNumber4, tempDamageStorage)
+                            if(playerNumber4.hp>0)
+                            spawnDamageNumber(playerNumber4, tempDamageStorage)
+                            playerNumber4.hp=playerNumber4.hp-tempDamageStorage
+                    
                     enemy[j].atkCD=enemy[j].weapon.atkRate       
                 }
                     if(playerNumber4.hp<0){
@@ -2126,15 +2139,19 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
     inv[14].storedItem=0
     
     if(p1Held===1){ //Check if any player is held, if they are, start dragging them
+        lastslot=3
         playerMoveToMouse(playerNumber)
     }
     if(p2Held===1){
+        lastslot=2
         playerMoveToMouse(playerNumber2)
     }
     if(p3Held===1){
+        lastslot=1
         playerMoveToMouse(playerNumber3)
     }
     if(p4Held===1){
+        lastslot=0
         playerMoveToMouse(playerNumber4)
     }
 
@@ -2469,9 +2486,10 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
                 if(projectiles[ag].x<playerNumber.x+playerNumber.size+projectiles[ag].projSpeedcap&&projectiles[ag].x>playerNumber.x-projectiles[ag].projSpeedcap&&projectiles[ag].y<playerNumber.y+playerNumber.size+projectiles[ag].projSpeedcap&&projectiles[ag].y>playerNumber.y-projectiles[ag].projSpeedcap){
                     if(!projectiles[ag].hit.includes(playerNumber.id)){
                         tempDamageStorage=randomDmg(projectiles[ag].damageMin,projectiles[ag].damageMax)
-                        playerNumber.hp=playerNumber.hp-tempDamageStorage
                         if(playerNumber.hp>0)
                         spawnDamageNumber(playerNumber,tempDamageStorage)
+                        playerNumber.hp=playerNumber.hp-tempDamageStorage
+                       
                         projectiles[ag].hit[projectiles[ag].hit.length]=playerNumber.id
                         if(playerNumber.hp<0){
                             playerNumber.hp=0
@@ -2481,9 +2499,10 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
                 if(projectiles[ag].x<playerNumber2.x+playerNumber2.size+projectiles[ag].projSpeedcap&&projectiles[ag].x>playerNumber2.x-projectiles[ag].projSpeedcap&&projectiles[ag].y<playerNumber2.y+playerNumber2.size+projectiles[ag].projSpeedcap&&projectiles[ag].y>playerNumber2.y-projectiles[ag].projSpeedcap){
                     if(!projectiles[ag].hit.includes(playerNumber2.id)){
                         tempDamageStorage=randomDmg(projectiles[ag].damageMin,projectiles[ag].damageMax)
-                        playerNumber2.hp=playerNumber2.hp-tempDamageStorage
                         if(playerNumber2.hp>0)
                         spawnDamageNumber(playerNumber2,tempDamageStorage)
+                        playerNumber2.hp=playerNumber2.hp-tempDamageStorage
+                        
                         projectiles[ag].hit[projectiles[ag].hit.length]=playerNumber2.id
                         if(playerNumber2.hp<0){
                             playerNumber2.hp=0
@@ -2493,9 +2512,10 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
                 if(projectiles[ag].x<playerNumber3.x+playerNumber3.size+projectiles[ag].projSpeedcap&&projectiles[ag].x>playerNumber3.x-projectiles[ag].projSpeedcap&&projectiles[ag].y<playerNumber3.y+playerNumber3.size+projectiles[ag].projSpeedcap&&projectiles[ag].y>playerNumber3.y-projectiles[ag].projSpeedcap){
                     if(!projectiles[ag].hit.includes(playerNumber3.id)){
                         tempDamageStorage=randomDmg(projectiles[ag].damageMin,projectiles[ag].damageMax)
-                        playerNumber3.hp=playerNumber3.hp-tempDamageStorage
                         if(playerNumber3.hp>0)
                         spawnDamageNumber(playerNumber3,tempDamageStorage)
+                        playerNumber3.hp=playerNumber3.hp-tempDamageStorage
+                        
                         projectiles[ag].hit[projectiles[ag].hit.length]=playerNumber3.id
                         if(playerNumber3.hp<0){
                             playerNumber3.hp=0
@@ -2505,9 +2525,10 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
                 if(projectiles[ag].x<playerNumber4.x+playerNumber4.size+projectiles[ag].projSpeedcap&&projectiles[ag].x>playerNumber4.x-projectiles[ag].projSpeedcap&&projectiles[ag].y<playerNumber4.y+playerNumber4.size+projectiles[ag].projSpeedcap&&projectiles[ag].y>playerNumber4.y-projectiles[ag].projSpeedcap){
                     if(!projectiles[ag].hit.includes(playerNumber4.id)){
                         tempDamageStorage=randomDmg(projectiles[ag].damageMin,projectiles[ag].damageMax)
-                        playerNumber4.hp=playerNumber4.hp-tempDamageStorage
                         if(playerNumber4.hp>0)
                         spawnDamageNumber(playerNumber4,tempDamageStorage)
+                        playerNumber4.hp=playerNumber4.hp-tempDamageStorage
+                        
                         projectiles[ag].hit[projectiles[ag].hit.length]=playerNumber4.id
                         if(playerNumber4.hp<0){
                             playerNumber4.hp=0
@@ -2518,9 +2539,10 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
 
                 if(projectiles[ag].x<closeGuy.x+closeGuy.size+projectiles[ag].projSpeedcap&&projectiles[ag].x>closeGuy.x-projectiles[ag].projSpeedcap&&projectiles[ag].y<closeGuy.y+closeGuy.size+projectiles[ag].projSpeedcap&&projectiles[ag].y>closeGuy.y-projectiles[ag].projSpeedcap){
                     tempDamageStorage=randomDmg(projectiles[ag].damageMin,projectiles[ag].damageMax)
-                    closeGuy.hp=closeGuy.hp-tempDamageStorage
                     if(closeGuy.hp>0)
                     spawnDamageNumber(closeGuy,tempDamageStorage)
+                    closeGuy.hp=closeGuy.hp-tempDamageStorage
+                    
                     if(playerNumber2.hp<0){
                         playerNumber2.hp=0
                     }
@@ -2978,24 +3000,28 @@ function drag(){ //Find which player clicked on / near, set to held
                 playerNumber.dmgPoints=0
                 playerNumber.rangePoints=0
                 playerNumber.cdPoints=0
+                playerNumber.hp=playerNumber.maxhp
 
                 playerNumber2.skillPoints=playerNumber2.skillPoints+playerNumber2.hpPoints+playerNumber2.dmgPoints+playerNumber2.rangePoints+playerNumber2.cdPoints
                 playerNumber2.hpPoints=0
                 playerNumber2.dmgPoints=0
                 playerNumber2.rangePoints=0
                 playerNumber2.cdPoints=0
+                playerNumber2.hp=playerNumber2.maxhp
 
                 playerNumber3.skillPoints=playerNumber3.skillPoints+playerNumber3.hpPoints+playerNumber3.dmgPoints+playerNumber3.rangePoints+playerNumber3.cdPoints
                 playerNumber3.hpPoints=0
                 playerNumber3.dmgPoints=0
                 playerNumber3.rangePoints=0
                 playerNumber3.cdPoints=0
+                playerNumber3.hp=playerNumber3.maxhp
 
                 playerNumber4.skillPoints=playerNumber4.skillPoints+playerNumber4.hpPoints+playerNumber4.dmgPoints+playerNumber4.rangePoints+playerNumber4.cdPoints
                 playerNumber4.hpPoints=0
                 playerNumber4.dmgPoints=0
                 playerNumber4.rangePoints=0
                 playerNumber4.cdPoints=0
+                playerNumber4.hp=playerNumber4.maxhp
                 lastmoney=-1
             }
             if(pointerX>830&&pointerX<830+30&&pointerY>100&&pointerY<100+30){
@@ -3098,6 +3124,10 @@ function updateMouseCoords(event){ //Mouse position tracking
 }
 
 function playerMoveToMouse(playerHeld, event){ //Move player currently held towards mouse
+    if(lastslot!==-1){
+        refreshItemStatsBox()
+        lastslot=-1
+    }
     playerHeld.atkCD=Math.floor(playerHeld.item.atkRate/((100+playerHeld.cdPoints*2.5)/100))
             if(playerNumberStatsShown.id!==0){
             playerNumberStatsShown=playerHeld
@@ -3171,6 +3201,7 @@ function spawnDamageNumber(origin, hpChange){
     damageNumbers[damageNumbers.length-1].speedY=-3.5-(Math.random()*2)
     damageNumbers[damageNumbers.length-1].type="damageNumber"
     damageNumbers[damageNumbers.length-1].value=hpChange
+    damageNumbers[damageNumbers.length-1].opacity=1
 }
 
 let projectiles = [] //todo projectiles
