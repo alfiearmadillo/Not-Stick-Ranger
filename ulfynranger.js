@@ -28,7 +28,6 @@
 //backgrounds
 
 //beating current highest stage
-//arcing projectiles
 //terrain side collision?
 //textures?
 //more levels, enemies, weapons, content
@@ -1429,7 +1428,13 @@ function component(width, height, color, x, y) {//draw new boxes
                 if(this.shape="Rect"){
                     ctx.translate(this.x+this.size/2, this.y+this.size);
                     if(this.speedCap!==-1){
-                    ctx.rotate((this.speedY/(this.speedX+1))/Math.PI);
+                        angle=(this.speedY/(this.speedX+1))/Math.PI
+                        if(angle>1.5708){
+                            angle=1.5708
+                        }else if(angle<-1.5708){
+                            angle=-1.5708
+                        }
+                    ctx.rotate(angle);
                     }
                     ctx.fillStyle = color;
                     ctx.fillRect(-this.size, -this.size, this.width, this.height);
@@ -1633,7 +1638,6 @@ function component(width, height, color, x, y) {//draw new boxes
                         this.speedX=this.speedX-this.speedX*0.3
                         }else{
                             this.markedForDeletion+=1
-                            this.speedX=0
                             if(this.markedForDeletion>2){
                                 this.x=-100
                             }
