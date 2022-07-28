@@ -24,9 +24,7 @@
 //splitter enemies (split when die into other enemies)
 //tele enemies (change colour before tp)
 //spawner enemies
-
 //backgrounds
-
 //beating current highest stage
 //terrain side collision?
 //textures?
@@ -603,6 +601,7 @@ function renderStage(){ //Stage loading
     }
     if(area[loadedAreaID].name==="Town"){//Main menu
         newLand(-1,510,1000,5400)
+        newLand(400,200,550,5400)
         playerNumber4.x=10;playerNumber4.y=370;playerNumber4.speedX=0;playerNumber4.speedY=0
         playerNumber3.x=50;playerNumber3.y=370;playerNumber3.speedX=0;playerNumber3.speedY=0
         playerNumber2.x=90;playerNumber2.y=370;playerNumber2.speedX=0;playerNumber2.speedY=0
@@ -1426,7 +1425,7 @@ function component(width, height, color, x, y) {//draw new boxes
                 ctx.globalAlpha=1
             }else if(this.type==="Projectile"){ //todo projectile
                 if(this.shape==="Rect"){
-                    ctx.translate(this.x+this.size, this.y+this.size);
+                    ctx.translate(this.x+this.size/2, this.y+this.size);
                     if(this.speedX!==-1){
                         if(this.speedX>0){
                             this.angle=((this.speedY/(this.speedX/2+1))/Math.PI)/1.2
@@ -1444,7 +1443,7 @@ function component(width, height, color, x, y) {//draw new boxes
                     }
                     ctx.fillStyle = color;
                     ctx.globalAlpha = 1-(this.markedForDeletion/30)
-                    ctx.fillRect(-this.size, -this.size, this.width, this.height);
+                    ctx.fillRect(-this.size, -this.size/2, this.width, this.height);
                     ctx.globalAlpha = 1
                     ctx.setTransform(1, 0, 0, 1, 0, 0);
                 }else{
@@ -1653,7 +1652,7 @@ function component(width, height, color, x, y) {//draw new boxes
                             this.markedForDeletion+=1
                             this.speedX=0
                             if(this.markedForDeletion>30){
-                                this.x=-100
+                                this.x=1000
                             }
                         }
                     }
@@ -2624,7 +2623,7 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
                     }
                     projectiles.splice(ag,1)
                     
-                }else if(projectiles[ag].y>600||projectiles[ag].x<1||projectiles[ag].y<-10||projectiles[ag].x>1000){
+                }else if(projectiles[ag].y>600||projectiles[ag].x<1||projectiles[ag].x>1000){
                     projectiles.splice(ag,1)
                 }
             }
@@ -2642,7 +2641,7 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
                     
                     projectiles.splice(ag,1)
                         
-                }else if(projectiles[ag].y>600||projectiles[ag].x<1||projectiles[ag].y<-10||projectiles[ag].x>1000){
+                }else if(projectiles[ag].y>600||projectiles[ag].x<1||projectiles[ag].x>1000){
                     projectiles.splice(ag,1)
                 }
             }
@@ -3336,7 +3335,7 @@ function spawnProjectile(user,speedCap,size,shape,colour,damageMin,damageMax,mul
         projectiles[projectiles.length-1].gravity=0.5
         projectiles[projectiles.length-1].speedY-=(aimY)/1.04
         projectiles[projectiles.length-1].speedY-=12
-        projectiles[projectiles.length-1].speedX-=(aimX)/1.0225
+        projectiles[projectiles.length-1].speedX-=((aimX)/1.0225)*(1+(-aimY/32000))
     }
     if(user.type==="player"){
         projectiles[projectiles.length-1].affiliation="Friendly"
