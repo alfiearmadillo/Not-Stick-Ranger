@@ -80,6 +80,7 @@ let celestialBody = new component(50, 50, "#000000", 300, 300);
 celestialBody.type="celestialBody"
 let sunTime=20
 let debugTime=0
+let helpBoxOpen=0
 
 function startGame() {
     playerNumber = new component(30, 30, "#ff0000", 130, 370);
@@ -272,7 +273,7 @@ divcontainer.appendChild(saveCodeNameDisplay, divcontainer.firstChild)
 document.getElementById("saveCodeNameDisplay").innerHTML = `Save Code`
 
 function goToMap(){
-    if(gameover===500){
+    if(gameover===500&&helpBoxOpen!==1){
     loadedAreaID=2
     canvasVar.style.background=area[loadedAreaID].skyColour
     shopOpen=-1
@@ -280,6 +281,35 @@ function goToMap(){
     subArea=1
     renderStage()
     }
+}
+
+function openHelpBox(){
+    helpBoxOpen=1
+    ctx = myGameArea.context;
+        ctx.fillStyle = "#4a4a4a" //help bg
+        ctx.fillRect(100, 100, 760, 340);
+
+        ctx.fillStyle = "#ff0000" //help close button
+        ctx.fillRect(830, 100, 30, 30);
+        ctx.fillStyle = "#ffffff"
+        ctx.font = "14px Arial";
+        ctx.fillText("                                                                                      How to play:", 120, 130);
+        ctx.fillText("You can move the 4 boxes by dragging them around. They will move towards enemies within their sight range.", 120, 150);
+        ctx.fillText("They automatically attack enemies within their attack range.", 120, 170);
+        ctx.fillText("If a player touches the sign to the right of the level, you will proceed to the next stage.", 120, 190);
+        ctx.fillText("Pick up dropped items by having a box touch them on the floor.", 120, 210);
+        ctx.fillText("Light pink items heal players for a percentage of their health.", 120, 230);
+        ctx.fillText("Gold/Yellow items are coins, and increase your money.", 120, 250);
+        ctx.fillText("Other items will be added to your inventory.", 120, 270);
+        ctx.fillText("You can sell items in your inventory by clicking on the Sell Item slot, then the item you want to sell, or vice versa.", 120, 290);
+        ctx.fillText("You can move items in your inventory by clicking on an item, then clicking on the slot to switch it with.", 120, 310);
+        ctx.fillText("The first 4 inventory slots are item slots for the players, items in them will be used by the respective player.", 120, 330);
+        ctx.fillText("The stats of the last selected item are shown in the box under the player item slots", 120, 350);
+        ctx.fillText("Player stats are shown to the left of the player item slots.", 120, 370);
+        ctx.fillText("The Player Alive box will show Revive while a player is dead. Click it to revive the player at 50% hp for the shown cost.", 120, 390);
+        ctx.fillText("When you level up, all players gain 2 SP. These can be assigned into one of 4 stats with the red button next to them.", 120, 410);
+        ctx.fillText("You can redo your SP for a small price in the shop, if you wish to change how they're assigned.", 120, 430);
+        
 }
 
 stars=[]
@@ -1630,6 +1660,7 @@ function closestEnemy(enemy, playerposX, playerposY){//finding closesnt enemy to
 
 var move = 0//updating all entities each frame
 function updateGameArea() {
+    if(helpBoxOpen!==1){
     myGameArea.clear();
     myGameArea.frameNo += 1;
 
@@ -2892,6 +2923,7 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
     }
     
 }
+}
 
 function updateSaveCode(){// update if add new stage :) new level
     saveString=`${inv[0].storedItem};${inv[1].storedItem};${inv[2].storedItem};${inv[3].storedItem};${inv[4].storedItem};${inv[5].storedItem};${inv[6].storedItem};${inv[7].storedItem};${inv[8].storedItem};${inv[9].storedItem};${inv[10].storedItem};${inv[11].storedItem};${inv[12].storedItem};${inv[13].storedItem};${playerNumber.hp};${playerNumber.hpPoints};${playerNumber.dmgPoints};${playerNumber.rangePoints};${playerNumber.cdPoints};${playerNumber.skillPoints};${playerNumber2.hp};${playerNumber2.hpPoints};${playerNumber2.dmgPoints};${playerNumber2.rangePoints};${playerNumber2.cdPoints};${playerNumber2.skillPoints};${playerNumber3.hp};${playerNumber3.hpPoints};${playerNumber3.dmgPoints};${playerNumber3.rangePoints};${playerNumber3.cdPoints};${playerNumber3.skillPoints};${playerNumber4.hp};${playerNumber4.hpPoints};${playerNumber4.dmgPoints};${playerNumber4.rangePoints};${playerNumber4.cdPoints};${playerNumber4.skillPoints};${money};${area[3].cleared};${area[4].cleared};${spPrice};${totalEXP};${level};${expToLevelUp};${area[5].cleared};${area[6].cleared};${area[7].cleared};${area[8].cleared};${area[9].cleared}`
@@ -2969,6 +3001,14 @@ function drag(){ //Find which player clicked on / near, set to held
             document.getElementById("mapButton").addEventListener("mouseup", goToMap);
             document.getElementById("mapButton").innerHTML="Return to Map"
 
+            helpButton=document.createElement("div");
+            helpButton.setAttribute("id", `helpButton`)
+            divcontainer.appendChild(helpButton, divcontainer.firstChild)
+            document.getElementById("helpButton").addEventListener("mouseover", makeButtonLight);
+            document.getElementById("helpButton").addEventListener("mouseout", makeButtonDark);
+            document.getElementById("helpButton").addEventListener("mouseup", openHelpBox);
+            document.getElementById("helpButton").innerHTML="Pause"
+
             loadedAreaID=1
             canvasVar.style.background=area[loadedAreaID].skyColour
             renderStage()
@@ -2984,13 +3024,27 @@ function drag(){ //Find which player clicked on / near, set to held
             document.getElementById("mapButton").addEventListener("mouseup", goToMap);
             document.getElementById("mapButton").innerHTML="Return to Map"
 
+            helpButton=document.createElement("div");
+            helpButton.setAttribute("id", `helpButton`)
+            divcontainer.appendChild(helpButton, divcontainer.firstChild)
+            document.getElementById("helpButton").addEventListener("mouseover", makeButtonLight);
+            document.getElementById("helpButton").addEventListener("mouseout", makeButtonDark);
+            document.getElementById("helpButton").addEventListener("mouseup", openHelpBox);
+            document.getElementById("helpButton").innerHTML="Pause"
+
             
             
             loadSaveFromCode()
             }
         }
 
-        
+        if(shopOpen===1||helpBoxOpen===1){//closing help / shop box
+        if(pointerX>830&&pointerX<830+30&&pointerY>100&&pointerY<100+30){
+            itemToBuy=-1
+            shopOpen=-1
+            helpBoxOpen=-1
+        }
+    }
 
         if(area[loadedAreaID].name==="Town"&&shopOpen===1){//new item new level update shop buying
             if(pointerX>223&&pointerX<223+115&&pointerY>395&&pointerY<395+38){
@@ -3024,10 +3078,7 @@ function drag(){ //Find which player clicked on / near, set to held
                 playerNumber4.hp=playerNumber4.maxhp
                 lastmoney=-1
             }
-            if(pointerX>830&&pointerX<830+30&&pointerY>100&&pointerY<100+30){
-                itemToBuy=-1
-                shopOpen=-1
-            }
+            
             if(pointerX>150&&pointerX<150+30&&pointerY>150&&pointerY<150+30){
                 itemToBuy="SP"
             }
@@ -3100,7 +3151,7 @@ function drag(){ //Find which player clicked on / near, set to held
 function checkClickOnLevelOnMap(){
     for(aa=0;aa<area.length;aa++){
         if(area[aa].cleared>-1&&area[aa].unlocked>0){
-    if(area[loadedAreaID].name==="Map"&&pointerX>area[aa].x&&pointerX<area[aa].x+20&&pointerY>area[aa].y&&pointerY<area[aa].y+20){
+    if(area[loadedAreaID].name==="Map"&&helpBoxOpen!==1&&pointerX>area[aa].x&&pointerX<area[aa].x+20&&pointerY>area[aa].y&&pointerY<area[aa].y+20){
         loadedAreaID=aa
         canvasVar.style.background=area[loadedAreaID].skyColour
         renderStage()
