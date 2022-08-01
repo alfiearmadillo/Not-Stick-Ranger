@@ -9,6 +9,8 @@
 //parish - Player Recolouring, global weather change, Money Sink
 //city - bank?
 
+//Hold shift to sell
+
 //slow projectile high dmg enemies cave 1
 //hanging enemies? (tree)
 //roof crawler enemies, drop when above
@@ -174,6 +176,8 @@ items[19]={name:"CR_ShadedWoodFlying",damageMin:1,damageMax:20,range:50,atkRate:
 items[20]={name:"CR_ShadedWoodBoss",damageMin:8,damageMax:8,range:50,atkRate:100,lifeSteal:0,defence:0,type:"CR_Melee", colour:'#191919', worth:-1, multi:0, rangeMult:0.1}
 
 items[21]={name:"Present",damageMin:-10,damageMax:-10,range:100,atkRate:10,lifeSteal:0,defence:10,type:"Special", colour:'#9c0012', worth:10, multi:0, rangeMult:0}
+
+items[22]={name:"CR_TestBigMan",damageMin:100000000000000,damageMax:100000000000000,range:200,atkRate:10,lifeSteal:0,defence:0,type:"CR_Special1", colour:'#191919', worth:-1, multi:1, rangeMult:5, projSpeedcap:10, projSize:8, projShape:"Square", projColour:"#e86d61"}
 
 function addItem(player, itemID){//clean this
     switch(player){
@@ -2548,7 +2552,7 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
             if(projectiles[ag].affiliation==="Enemy"){
                 
                 if(projectiles[ag].multi===1){
-                if(projectiles[ag].x<playerNumber.x+playerNumber.size+projectiles[ag].projSpeedcap&&projectiles[ag].x>playerNumber.x-projectiles[ag].projSpeedcap&&projectiles[ag].y<playerNumber.y+playerNumber.size+projectiles[ag].projSpeedcap&&projectiles[ag].y>playerNumber.y-projectiles[ag].projSpeedcap){
+                if(projectiles[ag].x<playerNumber.x+playerNumber.size+projectiles[ag].projSpeedcap&&projectiles[ag].x>playerNumber.x-projectiles[ag].projSpeedcap&&projectiles[ag].y<playerNumber.y+playerNumber.size+projectiles[ag].projSpeedcap&&projectiles[ag].y>playerNumber.y-projectiles[ag].projSpeedcap&&projectiles[ag].affiliation==="Enemy"){
                     if(!projectiles[ag].hit.includes(playerNumber.id)){
                         tempDamageStorage=randomDmg(projectiles[ag].damageMin,projectiles[ag].damageMax)
                         if(playerNumber.hp>0)
@@ -2561,7 +2565,7 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
                         }
                     }
                 }
-                if(projectiles[ag].x<playerNumber2.x+playerNumber2.size+projectiles[ag].projSpeedcap&&projectiles[ag].x>playerNumber2.x-projectiles[ag].projSpeedcap&&projectiles[ag].y<playerNumber2.y+playerNumber2.size+projectiles[ag].projSpeedcap&&projectiles[ag].y>playerNumber2.y-projectiles[ag].projSpeedcap){
+                if(projectiles[ag].x<playerNumber2.x+playerNumber2.size+projectiles[ag].projSpeedcap&&projectiles[ag].x>playerNumber2.x-projectiles[ag].projSpeedcap&&projectiles[ag].y<playerNumber2.y+playerNumber2.size+projectiles[ag].projSpeedcap&&projectiles[ag].y>playerNumber2.y-projectiles[ag].projSpeedcap&&projectiles[ag].affiliation==="Enemy"){
                     if(!projectiles[ag].hit.includes(playerNumber2.id)){
                         tempDamageStorage=randomDmg(projectiles[ag].damageMin,projectiles[ag].damageMax)
                         if(playerNumber2.hp>0)
@@ -2574,7 +2578,7 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
                         }
                     }
                 }
-                if(projectiles[ag].x<playerNumber3.x+playerNumber3.size+projectiles[ag].projSpeedcap&&projectiles[ag].x>playerNumber3.x-projectiles[ag].projSpeedcap&&projectiles[ag].y<playerNumber3.y+playerNumber3.size+projectiles[ag].projSpeedcap&&projectiles[ag].y>playerNumber3.y-projectiles[ag].projSpeedcap){
+                if(projectiles[ag].x<playerNumber3.x+playerNumber3.size+projectiles[ag].projSpeedcap&&projectiles[ag].x>playerNumber3.x-projectiles[ag].projSpeedcap&&projectiles[ag].y<playerNumber3.y+playerNumber3.size+projectiles[ag].projSpeedcap&&projectiles[ag].y>playerNumber3.y-projectiles[ag].projSpeedcap&&projectiles[ag].affiliation==="Enemy"){
                     if(!projectiles[ag].hit.includes(playerNumber3.id)){
                         tempDamageStorage=randomDmg(projectiles[ag].damageMin,projectiles[ag].damageMax)
                         if(playerNumber3.hp>0)
@@ -2587,7 +2591,7 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
                         }
                     }
                 }
-                if(projectiles[ag].x<playerNumber4.x+playerNumber4.size+projectiles[ag].projSpeedcap&&projectiles[ag].x>playerNumber4.x-projectiles[ag].projSpeedcap&&projectiles[ag].y<playerNumber4.y+playerNumber4.size+projectiles[ag].projSpeedcap&&projectiles[ag].y>playerNumber4.y-projectiles[ag].projSpeedcap){
+                if(projectiles[ag].x<playerNumber4.x+playerNumber4.size+projectiles[ag].projSpeedcap&&projectiles[ag].x>playerNumber4.x-projectiles[ag].projSpeedcap&&projectiles[ag].y<playerNumber4.y+playerNumber4.size+projectiles[ag].projSpeedcap&&projectiles[ag].y>playerNumber4.y-projectiles[ag].projSpeedcap&&projectiles[ag].affiliation==="Enemy"){
                     if(!projectiles[ag].hit.includes(playerNumber4.id)){
                         tempDamageStorage=randomDmg(projectiles[ag].damageMin,projectiles[ag].damageMax)
                         if(playerNumber4.hp>0)
@@ -2599,10 +2603,12 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
                             playerNumber4.hp=0
                         }
                     }
-                }  
+                }else if(projectiles[ag].y>600||projectiles[ag].x<1||projectiles[ag].x>1000){
+                    projectiles.splice(ag,1)
+                }
             }else{
 
-                if(projectiles[ag].x<closeGuy.x+closeGuy.size+projectiles[ag].projSpeedcap&&projectiles[ag].x>closeGuy.x-projectiles[ag].projSpeedcap&&projectiles[ag].y<closeGuy.y+closeGuy.size+projectiles[ag].projSpeedcap&&projectiles[ag].y>closeGuy.y-projectiles[ag].projSpeedcap){
+                if(projectiles[ag].x<closeGuy.x+closeGuy.size+projectiles[ag].projSpeedcap&&projectiles[ag].x>closeGuy.x-projectiles[ag].projSpeedcap&&projectiles[ag].y<closeGuy.y+closeGuy.size+projectiles[ag].projSpeedcap&&projectiles[ag].y>closeGuy.y-projectiles[ag].projSpeedcap&&projectiles[ag].affiliation==="Enemy"){
                     tempDamageStorage=randomDmg(projectiles[ag].damageMin,projectiles[ag].damageMax)
                     if(closeGuy.hp>0)
                     spawnDamageNumber(closeGuy,tempDamageStorage)
@@ -2629,7 +2635,7 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
             }else if(projectiles[ag].affiliation==="Friendly"){
                 for(ah=0;ah<enemy.length;ah++){
                     if(projectiles.length>ag){
-                if(projectiles[ag].x<enemy[ah].x+enemy[ah].size+projectiles[ag].projSpeedcap&&projectiles[ag].x>enemy[ah].x-projectiles[ag].projSpeedcap&&projectiles[ag].y<enemy[ah].y+enemy[ah].size+projectiles[ag].projSpeedcap&&projectiles[ag].y>enemy[ah].y-projectiles[ag].projSpeedcap){
+                if(projectiles[ag].x<enemy[ah].x+enemy[ah].size+projectiles[ag].projSpeedcap&&projectiles[ag].x>enemy[ah].x-projectiles[ag].projSpeedcap&&projectiles[ag].y<enemy[ah].y+enemy[ah].size+projectiles[ag].projSpeedcap&&projectiles[ag].y>enemy[ah].y-projectiles[ag].projSpeedcap&&projectiles[ag].affiliation==="Friendly"){
                     tempDamageStorage=randomDmg(projectiles[ag].damageMin,projectiles[ag].damageMax)
                     enemy[ah].hp=enemy[ah].hp-tempDamageStorage
                     spawnDamageNumber(enemy[ah],tempDamageStorage)
@@ -3296,6 +3302,11 @@ function spawnProjectile(user,speedCap,size,shape,colour,damageMin,damageMax,mul
     }else if(shape==="Square"){
     projectiles[projectiles.length] = new component(size,size,colour,user.x+user.size/2-size/2,user.y+user.size/2-size/2)
     }
+    if(user.type==="player"){
+        projectiles[projectiles.length-1].affiliation="Friendly"
+    }else{
+        projectiles[projectiles.length-1].affiliation="Enemy"
+    }
     projectiles[projectiles.length-1].size=size
     projectiles[projectiles.length-1].damageMax=damageMax
     projectiles[projectiles.length-1].damageMin=damageMin
@@ -3336,11 +3347,7 @@ function spawnProjectile(user,speedCap,size,shape,colour,damageMin,damageMax,mul
         projectiles[projectiles.length-1].speedY-=12
         projectiles[projectiles.length-1].speedX-=((aimX)/1.0225)*(1+(-aimY/32000))
     }
-    if(user.type==="player"){
-        projectiles[projectiles.length-1].affiliation="Friendly"
-    }else{
-        projectiles[projectiles.length-1].affiliation="Enemy"
-    }
+    
 
     
 
@@ -3460,12 +3467,12 @@ function logKey(e) {
     enemy[i] = new component(200, 200, "purple", 680, 270);
     enemy[i].size=200
     enemy[i].gravity = 0.5;
-    enemy[i].hp=100
+    enemy[i].hp=1000000000000
     enemy[i].maxhp=enemy[i].hp
     enemy[i].type="enemy"
     enemy[i].movementType="SlowWalk"
     enemy[i].exp=15
-    enemy[i].weapon=items[6]
+    enemy[i].weapon=items[22]
     enemy[i].atkCD=0
     enemy[i].drops={
         coin:100,
