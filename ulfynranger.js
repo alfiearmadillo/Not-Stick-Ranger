@@ -9,8 +9,6 @@
 //parish - Player Recolouring, global weather change, Money Sink
 //city - bank?
 
-//Hold shift to sell
-
 //slow projectile high dmg enemies cave 1
 //hanging enemies? (tree)
 //roof crawler enemies, drop when above
@@ -80,6 +78,7 @@ celestialBody.type="celestialBody"
 let sunTime=20
 let debugTime=0
 let helpBoxOpen=0
+let overSlot=-1
 
 function startGame() {
     playerNumber = new component(30, 30, "#ff0000", 130, 370);
@@ -177,7 +176,7 @@ items[20]={name:"CR_ShadedWoodBoss",damageMin:8,damageMax:8,range:50,atkRate:100
 
 items[21]={name:"Present",damageMin:-10,damageMax:-10,range:100,atkRate:10,lifeSteal:0,defence:10,type:"Special", colour:'#9c0012', worth:10, multi:0, rangeMult:0}
 
-items[22]={name:"CR_TestBigMan",damageMin:100000000000000,damageMax:100000000000000,range:200,atkRate:10,lifeSteal:0,defence:0,type:"CR_Special1", colour:'#191919', worth:-1, multi:1, rangeMult:5, projSpeedcap:10, projSize:8, projShape:"Square", projColour:"#e86d61"}
+items[22]={name:"CR_TestBigMan",damageMin:1,damageMax:100000000,range:200,atkRate:10,lifeSteal:0,defence:0,type:"CR_Special1", colour:'#191919', worth:-1, multi:1, rangeMult:5, projSpeedcap:10, projSize:8, projShape:"Square", projColour:"#e86d61"}
 
 function addItem(player, itemID){//clean this
     switch(player){
@@ -302,7 +301,7 @@ function openHelpBox(){
         ctx.fillText("Light pink items heal players for a percentage of their health.", 120, 230);
         ctx.fillText("Gold/Yellow items are coins, and increase your money.", 120, 250);
         ctx.fillText("Other items will be added to your inventory.", 120, 270);
-        ctx.fillText("You can sell items in your inventory by clicking on the Sell Item slot, then the item you want to sell, or vice versa.", 120, 290);
+        ctx.fillText("You can sell items in your inventory by clicking on the Sell Item slot, then the item you want to sell, or holding shift.", 120, 290);
         ctx.fillText("You can move items in your inventory by clicking on an item, then clicking on the slot to switch it with.", 120, 310);
         ctx.fillText("The first 4 inventory slots are item slots for the players, items in them will be used by the respective player.", 120, 330);
         ctx.fillText("The stats of the last selected item are shown in the box under the player item slots", 120, 350);
@@ -367,6 +366,7 @@ for(n=0;n<buttonsToMake;n++){
 for(n=0;n<buttonsToMake;n++){
 document.getElementById(n).addEventListener("mouseover", makeButtonLight);
 function makeButtonLight(){
+    overSlot=this.id
     if(this.style.background==="rgb(180, 180, 180)" || this.style.background===""){
     this.style.background='#d2d2d2'
     }
@@ -381,6 +381,7 @@ function makeButtonLight(){
 }
 document.getElementById(n).addEventListener("mouseout", makeButtonDark);
 function makeButtonDark(){
+    overSlot=-1
     if(this.style.background==="rgb(210, 210, 210)"||this.style.background===""){
     this.style.background='#b4b4b4'
     }
@@ -2195,8 +2196,14 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
 
     }
 
+    if(lastslot===14&&overSlot!==-1){
+        if(items[inv[overSlot].storedItem].worth===0){
+            sellItemBox.innerHTML = `Sell<br />Item`
+        }else{
+            sellItemBox.innerHTML = `Sell<br />£${items[inv[overSlot].storedItem].worth}`
+        }
+    }
 
-    
     playerNumber.newPos();
     playerNumber.update();
     playerNumber2.newPos();
@@ -3281,8 +3288,16 @@ function spawnSnow(){
 }
 
 let damageNumbers = []
+let tmpx=0
 function spawnDamageNumber(origin, hpChange){
-    damageNumbers[damageNumbers.length] = new component(1,1, hpChange, origin.x+origin.size/2-2.5, origin.y-12);
+    if(origin.type==="player"){
+        tmpx=origin.x
+        tmpx-=(5*Math.ceil(Math.log10(hpChange+1)))-5
+        damageNumbers[damageNumbers.length] = new component(1,1, hpChange, tmpx+origin.size/2-2.5, origin.y-12);
+    }else{
+        damageNumbers[damageNumbers.length] = new component(1,1, hpChange, origin.x+origin.size/2-2.5, origin.y-12);
+    }
+    
     damageNumbers[damageNumbers.length-1].gravity=0.2
     if(origin.type==="player"){
         damageNumbers[damageNumbers.length-1].speedX=-1.5-Math.random()/4
@@ -3425,8 +3440,14 @@ function findClosestPlayer(me){
 
 
 
-
+    document.addEventListener('keyup', logKeyUp);
 document.addEventListener('keydown', logKey);//enemy spawning
+function logKeyUp(e){
+    if(e.code==="ShiftLeft"){
+        lastslot=-1
+        document.getElementById(14).style.borderColor='#8a8a8a'
+      }
+}
 
 function logKey(e) {
   if(e.code==="KeyA"){
@@ -3462,6 +3483,10 @@ function logKey(e) {
   if(e.code==="KeyK"){
     totalEXP+=10
     lastmoney=-1
+  }
+  if(e.code==="ShiftLeft"){
+    lastslot=14
+    document.getElementById(lastslot).style.borderColor='#7a7bb7'
   }
   if(e.code==="KeyS"){
     enemy[i] = new component(200, 200, "purple", 680, 270);
