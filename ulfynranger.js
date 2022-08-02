@@ -284,7 +284,11 @@ function goToMap(){
 }
 
 function openHelpBox(){
+    if(helpBoxOpen!==1){
     helpBoxOpen=1
+    }else{
+        helpBoxOpen=-1
+    }
     ctx = myGameArea.context;
         ctx.fillStyle = "#4a4a4a" //help bg
         ctx.fillRect(100, 100, 760, 340);
