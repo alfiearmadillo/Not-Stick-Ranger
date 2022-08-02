@@ -370,7 +370,7 @@ function makeButtonLight(){
     if(this.style.background==="rgb(180, 180, 180)" || this.style.background===""){
     this.style.background='#d2d2d2'
     }
-    if(lastslot===14){
+    if(lastslot===14&&overSlot<15){
         
         if(items[inv[this.id].storedItem].worth===0){
             sellItemBox.innerHTML = `Sell<br />Item`
@@ -1339,6 +1339,8 @@ function refreshPlayerStatsBox(){
     if(playerNumberStatsShown.hp>0){
     reviveButton.innerHTML="Player Alive"
             document.getElementById("reviveButton").style.background="#517a59"
+        }else{
+
         }
 
     playerStatsBox.innerHTML=`
@@ -2196,7 +2198,7 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
 
     }
 
-    if(lastslot===14&&overSlot!==-1){
+    if(lastslot===14&&overSlot!==-1&&overSlot<15){
         if(items[inv[overSlot].storedItem].worth===0){
             sellItemBox.innerHTML = `Sell<br />Item`
         }else{
@@ -2646,7 +2648,6 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
                     tempDamageStorage=randomDmg(projectiles[ag].damageMin,projectiles[ag].damageMax)
                     enemy[ah].hp=enemy[ah].hp-tempDamageStorage
                     spawnDamageNumber(enemy[ah],tempDamageStorage)
-                    
                     if(enemy[ah].hp<0){
                         enemy[ah].hp=0
                     }
@@ -3290,6 +3291,7 @@ function spawnSnow(){
 let damageNumbers = []
 let tmpx=0
 function spawnDamageNumber(origin, hpChange){
+    lastRevCostShown=-1
     if(origin.type==="player"){
         tmpx=origin.x
         tmpx-=(5*Math.ceil(Math.log10(hpChange+1)))-5
