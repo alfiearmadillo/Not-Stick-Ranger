@@ -2612,7 +2612,7 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
                             playerNumber4.hp=0
                         }
                     }
-                }else if(projectiles[ag].y>600||projectiles[ag].x<1||projectiles[ag].x>1000){
+                }else if(projectiles[ag].y>600||projectiles[ag].x<1||projectiles[ag].x>1000||projectiles[ag].y<-2000){
                     projectiles.splice(ag,1)
                 }
             }else{
@@ -2637,7 +2637,7 @@ if(enemy[j].movementType==="PlayerlikeFlying"){
                     }
                     projectiles.splice(ag,1)
                     
-                }else if(projectiles[ag].y>600||projectiles[ag].x<1||projectiles[ag].x>1000){
+                }else if(projectiles[ag].y>600||projectiles[ag].x<1||projectiles[ag].x>1000||projectiles[ag].y<-2000){
                     projectiles.splice(ag,1)
                 }
             }
@@ -3294,7 +3294,7 @@ function spawnDamageNumber(origin, hpChange){
     lastRevCostShown=-1
     if(origin.type==="player"){
         tmpx=origin.x
-        tmpx-=(5*Math.ceil(Math.log10(hpChange+1)))-5
+        tmpx-=(5*Math.ceil(Math.log10(Math.abs(hpChange)+1)))-5
         damageNumbers[damageNumbers.length] = new component(1,1, hpChange, tmpx+origin.size/2-2.5, origin.y-12);
     }else{
         damageNumbers[damageNumbers.length] = new component(1,1, hpChange, origin.x+origin.size/2-2.5, origin.y-12);
