@@ -80,6 +80,7 @@ let debugTime=0
 let helpBoxOpen=0
 let overSlot=-1
 let playerDot = new component(8, 8, "#fcbf17", 0, 0);
+let debugCommands=0
 
 function startGame() {
     playerNumber = new component(30, 30, "#ff0000", 130, 370);
@@ -92,10 +93,10 @@ function startGame() {
     playerNumber.atkCD=0
     playerNumber.size=30
     playerNumber.skillPoints=0
-    playerNumber.hpPoints=010000
+    playerNumber.hpPoints=0
     playerNumber.dmgPoints=0
-    playerNumber.rangePoints=010000
-    playerNumber.cdPoints=010000
+    playerNumber.rangePoints=0
+    playerNumber.cdPoints=0
     playerNumber.item=items[0]
     playerNumber2 = new component(30, 30, "#0000ff", 90, 370);
     playerNumber2.gravity = 0.5;
@@ -3640,6 +3641,7 @@ function findClosestPlayer(me){
     document.addEventListener('keyup', logKeyUp);
 document.addEventListener('keydown', logKey);//enemy spawning
 function logKeyUp(e){
+    if(debugCommands!==0){
     if(e.code==="ShiftLeft"){
         lastslot=-1
         document.getElementById(14).style.borderColor='#8a8a8a'
@@ -3739,6 +3741,7 @@ function logKey(e) {
     }
     i++
   }
+}
 }
 
 document.getElementById(inv.length-1).style.background='#5c5c5c' //Page background
