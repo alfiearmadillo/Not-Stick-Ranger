@@ -3752,7 +3752,7 @@ function logKey(e) {
     enemy[i].type="enemy"
     enemy[i].movementType="none"
     enemy[i].exp=15
-    enemy[i].weapon=items[0]
+    enemy[i].weapon=items[24]
     enemy[i].atkCD=0
     enemy[i].drops={
         coin:100,
